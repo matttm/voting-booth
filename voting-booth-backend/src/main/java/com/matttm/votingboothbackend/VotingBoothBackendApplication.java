@@ -1,13 +1,13 @@
-package com.matttm.bugtracker.demo;
+package com.matttm.votingboothbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class VotingBoothBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(VotingBoothBackendApplication.class, args);
 	}
 
 }

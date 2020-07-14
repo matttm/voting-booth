@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'com.matttm.bug-tracker'
+group = 'com.matttm'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '14'
 
