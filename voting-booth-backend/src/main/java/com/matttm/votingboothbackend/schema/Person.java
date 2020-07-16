@@ -1,9 +1,5 @@
 package com.matttm.votingboothbackend.schema;
 
-import org.springframework.data.annotation.Id;
-
-import java.sql.Date;
-
 /**
  * Created by Matt Maloney on 7/15/2020
  * matttm : mtm9051
@@ -13,24 +9,18 @@ import java.sql.Date;
  */
 public class Person {
 
-    // TODO: encrypt at some point
-    @Id
-    private String id;
+    private int id;
     private int ssn;
     private String firstName;
     private String lastName;
-    private String city;
-    private String state;
-    private Date dob;
+    private int zipcode;
 
-    public Person(int ssn, String firstName, String lastName,
-                  String city, String state, Date dob) {
+    public Person(int ssn, String firstName, String lastName, int zipcode) {
+        super();
         this.ssn = ssn;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.city = city;
-        this.state = state;
-        this.dob = dob;
+        this.zipcode = zipcode;
     }
 
     @Override
@@ -40,13 +30,11 @@ public class Person {
                 ", ssn=" + ssn +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", dob=" + dob +
+                ", zipcode=" + zipcode +
                 '}';
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -62,15 +50,7 @@ public class Person {
         return lastName;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public Date getDob() {
-        return dob;
+    public int getZipcode() {
+        return zipcode;
     }
 }
