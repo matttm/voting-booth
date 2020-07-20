@@ -17,18 +17,18 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int ssn;
-    private String firstName;
-    private String lastName;
-    private int zipcode;
+    private String fname;
+    private String lname;
+    private int zip;
 
     @Override
     public String toString() {
         return "Person{" +
                 "id='" + id + '\'' +
                 ", ssn=" + ssn +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", zipcode=" + zipcode +
+                ", firstName='" + fname + '\'' +
+                ", lastName='" + lname + '\'' +
+                ", zipcode=" + zip +
                 '}';
     }
 
@@ -40,15 +40,15 @@ public class Person {
         return ssn;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFname() {
+        return fname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLname() {
+        return lname;
     }
 
-    public int getZipcode() {
-        return zipcode;
+    public int getZip() {
+        return zip;
     }
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Language:  Java 1.8
  */
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/api")
 public class Controller {
 
     @Autowired
@@ -26,9 +26,9 @@ public class Controller {
 
     @GetMapping("/test")
     public String testServer() {
-//        for (Person p : personService.findAll()) {
-//            System.out.println("ssn: " + p.getSsn());
-//        }
+        for (Person p : personService.findAll()) {
+            System.out.println("ssn: " + p.getSsn());
+        }
         return "Testing...";
     }
 
