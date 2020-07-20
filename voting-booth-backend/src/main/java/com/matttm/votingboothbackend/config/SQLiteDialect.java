@@ -9,8 +9,8 @@ import org.hibernate.dialect.function.VarArgsSQLFunction;
 import org.hibernate.Hibernate;
 import org.hibernate.type.StringType;
 
-class SQLDialect extends Dialect {
-    public SQLDialect() {
+public class SQLiteDialect extends Dialect {
+    public SQLiteDialect() {
         registerColumnType(Types.BIT, "integer");
         registerColumnType(Types.TINYINT, "tinyint");
         registerColumnType(Types.SMALLINT, "smallint");

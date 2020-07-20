@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
-    @Qualifier("personRepository")
     private PersonRepository personRepository;
 
     @Override
