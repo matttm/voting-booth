@@ -5,10 +5,7 @@ import com.matttm.votingboothbackend.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Matt Maloney on 7/15/2020
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Language:  Java 1.8
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/persons")
 public class Controller {
 
     @Autowired
@@ -32,11 +29,57 @@ public class Controller {
         return "Testing...";
     }
 
-    @PostMapping("/register")
-    public void register() {}
+    /**
+     * Create a person in the database
+     * @param p person to be created in database
+     */
+    @PostMapping("/")
+    public void createPerson(@RequestBody Person p) {}
 
-    @GetMapping("/validate")
-    public ResponseEntity<Boolean> validate() {
+    /**
+     * Get all persons in person table
+     *
+     * @return an iterable of persons
+     */
+    @GetMapping("/")
+    public ResponseEntity<Iterable<Person>> getPersons() {
         return null;
     }
+
+    /**
+     * Get a person with matching id
+     * @param id the id of person of interest
+     *
+     * @return the person of interest
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Person> getPerson(@PathVariable("id") String id) {
+        return null;
+    }
+
+    /**
+     * Validate a person in the database
+     * @param p person whose existence is to be checked
+     *
+     * @return true if the person exists in the database
+     */
+    @GetMapping("/validate")
+    public ResponseEntity<Boolean> validate(@RequestBody Person p) {
+        return null;
+    }
+
+    /**
+     * Update a person in database
+     * @param id the id of person of interest
+     * @param p the info the person with id, id, is to be updated with
+     */
+    @PutMapping("/{id}")
+    public void updatePerson(@PathVariable("id") String id, @RequestBody Person p) {}
+
+    /**
+     * Delete a person from database
+     * @param id the id of the person to delete
+     */
+    @DeleteMapping("/id")
+    public void deletePerson(@PathVariable("id") String id) {}
 }
