@@ -1,7 +1,9 @@
 package com.matttm.votingboothbackend.repositories;
 
 import com.matttm.votingboothbackend.entities.Person;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,4 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("personRepository")
 public interface PersonRepository extends CrudRepository<Person, Integer> {
+
+    @Query("FROM Person WHERE ssn = :ssn")
+    public Person findBySsn(@Param("ssn") double ssn);
 }
