@@ -24,7 +24,7 @@ public class Controller {
     @GetMapping("/test")
     public String testServer() {
         for (Person p : personService.findAll()) {
-            System.out.println("ssn: " + p.getSsn());
+            System.out.println("ssn: " + p.ssnToString());
         }
         return "Testing...";
     }

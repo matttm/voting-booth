@@ -16,27 +16,31 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int ssn;
+    private double ssn;
     private String fname;
     private String lname;
     private int zip;
 
     @Override
     public String toString() {
-        return "Person{" +
+        return String.format("Person{" +
                 "id='" + id + '\'' +
-                ", ssn=" + ssn +
+                ", ssn=%.0f" +
                 ", firstName='" + fname + '\'' +
                 ", lastName='" + lname + '\'' +
                 ", zipcode=" + zip +
-                '}';
+                '}', ssn);
+    }
+
+    public String ssnToString() {
+        return String.format("%.0f", ssn);
     }
 
     public int getId() {
         return id;
     }
 
-    public int getSsn() {
+    public double getSsn() {
         return ssn;
     }
 
@@ -59,17 +63,21 @@ public class Person {
 
         Person person = (Person) o;
 
-        if (ssn != person.ssn) return false;
+        if (Double.compare(person.ssn, ssn) != 0) return false;
         if (zip != person.zip) return false;
-        if (!fname.equals(person.fname)) return false;
-        return lname.equals(person.lname);
+        if (fname != null ? !fname.equals(person.fname) : person.fname != null)
+            return false;
+        return lname != null ? lname.equals(person.lname) : person.lname == null;
     }
 
     @Override
     public int hashCode() {
-        int result = ssn;
-        result = 31 * result + fname.hashCode();
-        result = 31 * result + lname.hashCode();
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(ssn);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (fname != null ? fname.hashCode() : 0);
+        result = 31 * result + (lname != null ? lname.hashCode() : 0);
         result = 31 * result + zip;
         return result;
     }
