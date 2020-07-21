@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/persons")
-public class Controller {
+public class ApiPersonController {
     ////////////////////////////////
     // TODO: consider using query param to decide between id/ssn
     //   but ssn shouldnt be in url
@@ -28,9 +28,6 @@ public class Controller {
 
     @GetMapping("/test")
     public String testServer() {
-        for (Person p : personService.findAll()) {
-            System.out.println("ssn: " + p.getSsn());
-        }
         return "Testing...";
     }
 
