@@ -34,7 +34,9 @@ public class Controller {
      * @param p person to be created in database
      */
     @PostMapping("/")
-    public void createPerson(@RequestBody Person p) {}
+    public void createPerson(@RequestBody Person p) {
+        System.out.println("person: " + p.toString());
+    }
 
     /**
      * Get all persons in person table
