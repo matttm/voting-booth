@@ -4,6 +4,7 @@ import com.matttm.votingboothbackend.entities.Person;
 import com.matttm.votingboothbackend.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/persons")
 public class Controller {
+    ////////////////////////////////
+    // TODO: consider using query param to decide between id/ssn
+    //   but ssn shouldnt be in url
+    ///////////////////////////////
 
     @Autowired
     private PersonService personService;
@@ -36,6 +41,7 @@ public class Controller {
     @PostMapping("/")
     public void createPerson(@RequestBody Person p) {
         System.out.println("person: " + p.toString());
+        personService.save(p);
     }
 
     /**
@@ -45,7 +51,10 @@ public class Controller {
      */
     @GetMapping("/")
     public ResponseEntity<Iterable<Person>> getPersons() {
-        return null;
+        return new ResponseEntity<>(
+                personService.findAll(),
+                HttpStatus.OK
+        );
     }
 
     /**
@@ -56,7 +65,11 @@ public class Controller {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Person> getPerson(@PathVariable("id") String id) {
-        return null;
+        int _id = Integer.parseInt(id);
+        return new ResponseEntity<>(
+                personService.findById(_id),
+                HttpStatus.OK
+        );
     }
 
     /**
@@ -67,7 +80,8 @@ public class Controller {
      */
     @GetMapping("/validate")
     public ResponseEntity<Boolean> validate(@RequestBody Person p) {
-        return null;
+        System.out.println("person: " + p.toString());
+        return new ResponseEntity<>(personService.exists(p), HttpStatus.OK);
     }
 
     /**
@@ -76,12 +90,22 @@ public class Controller {
      * @param p the info the person with id, id, is to be updated with
      */
     @PutMapping("/{id}")
-    public void updatePerson(@PathVariable("id") String id, @RequestBody Person p) {}
+    public void updatePerson(@PathVariable("id") String id, @RequestBody Person p) {
+        System.out.println("person: " + p.toString());
+        // TODO: figure out how to handle discrepancies
+        personService.save(p);
+    }
 
     /**
      * Delete a person from database
      * @param id the id of the person to delete
      */
     @DeleteMapping("/id")
-    public void deletePerson(@PathVariable("id") String id) {}
+    public void deletePerson(@PathVariable("id") String id) {
+        // TODO: what if they don't have the id, only ssn
+        int _id = Integer.parseInt(id);
+        Person p = personService.findById(_id);
+        System.out.println("person: " + p.toString());
+        personService.delete(p);
+    }
 }

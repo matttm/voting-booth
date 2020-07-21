@@ -56,6 +56,26 @@ public class Person {
         return zip;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setSsn(double ssn) {
+        this.ssn = ssn;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

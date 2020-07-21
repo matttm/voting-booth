@@ -93,4 +93,14 @@ public class PersonServiceImpl implements PersonService {
     public void delete(Person p) {
         personRepository.delete(p);
     }
+
+    /**
+     * Get count of persons in database
+     *
+     * @return count of entries in table
+     */
+    @Override
+    public long count() {
+        return personRepository.count();
+    }
 }

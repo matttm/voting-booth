@@ -62,4 +62,11 @@ public interface PersonService {
      * @param p person to be deleted
      */
     void delete(Person p);
+
+    /**
+     * Get count of persons in database
+     *
+     * @return count of entries in table
+     */
+    long count();
 }
