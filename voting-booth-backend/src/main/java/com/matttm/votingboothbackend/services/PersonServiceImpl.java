@@ -3,10 +3,7 @@ package com.matttm.votingboothbackend.services;
 import com.matttm.votingboothbackend.entities.Person;
 import com.matttm.votingboothbackend.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * Created by Matt Maloney on 7/19/2020
@@ -29,7 +26,8 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     public boolean exists(Person p) {
-        return false;
+        // TODO: make another way
+        return this.findBySsn(p.getSsn()).equals(p);
     }
 
     /**
@@ -71,6 +69,7 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     public Iterable<Person> findAllWithZip(int zip) {
+        // TODO: make query for this
         return null;
     }
 

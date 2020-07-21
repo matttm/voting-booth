@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
  * mtm9051@rit.edu
  * Language:  Java 1.8
  */
-@Repository("personRepository")
 public interface PersonRepository extends CrudRepository<Person, Integer> {
 
     @Query("FROM Person WHERE ssn = :ssn")
