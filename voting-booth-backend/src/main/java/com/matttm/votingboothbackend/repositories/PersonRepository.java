@@ -16,5 +16,5 @@ import org.springframework.stereotype.Repository;
 public interface PersonRepository extends CrudRepository<Person, Integer> {
 
     @Query("FROM Person WHERE ssn = :ssn")
-    public Person findBySsn(@Param("ssn") double ssn);
+    public Person findBySsn(@Param("ssn") String ssn);
 }

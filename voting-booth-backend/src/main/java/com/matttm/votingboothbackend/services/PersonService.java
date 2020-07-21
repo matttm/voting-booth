@@ -39,7 +39,7 @@ public interface PersonService {
      *
      * @return the person with the matching ssn
      */
-    Person findBySsn(double ssn);
+    Person findBySsn(String ssn);
 
     /**
      * Find an iterable of people with given zip

@@ -16,31 +16,27 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private double ssn;
+    private String ssn;
     private String fname;
     private String lname;
     private int zip;
 
     @Override
     public String toString() {
-        return String.format("Person{" +
+        return "Person{" +
                 "id='" + id + '\'' +
-                ", ssn=%.0f" +
+                ", ssn='" + ssn + '\'' +
                 ", firstName='" + fname + '\'' +
                 ", lastName='" + lname + '\'' +
                 ", zipcode=" + zip +
-                '}', ssn);
-    }
-
-    public String ssnToString() {
-        return String.format("%.0f", ssn);
+                '}';
     }
 
     public int getId() {
         return id;
     }
 
-    public double getSsn() {
+    public String getSsn() {
         return ssn;
     }
 
@@ -60,7 +56,7 @@ public class Person {
         this.id = id;
     }
 
-    public void setSsn(double ssn) {
+    public void setSsn(String ssn) {
         this.ssn = ssn;
     }
 
@@ -83,21 +79,17 @@ public class Person {
 
         Person person = (Person) o;
 
-        if (Double.compare(person.ssn, ssn) != 0) return false;
         if (zip != person.zip) return false;
-        if (fname != null ? !fname.equals(person.fname) : person.fname != null)
-            return false;
-        return lname != null ? lname.equals(person.lname) : person.lname == null;
+        if (!ssn.equals(person.ssn)) return false;
+        if (!fname.equals(person.fname)) return false;
+        return lname.equals(person.lname);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        temp = Double.doubleToLongBits(ssn);
-        result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (fname != null ? fname.hashCode() : 0);
-        result = 31 * result + (lname != null ? lname.hashCode() : 0);
+        int result = ssn.hashCode();
+        result = 31 * result + fname.hashCode();
+        result = 31 * result + lname.hashCode();
         result = 31 * result + zip;
         return result;
     }

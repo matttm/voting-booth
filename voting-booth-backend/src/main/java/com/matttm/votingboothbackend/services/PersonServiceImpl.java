@@ -57,7 +57,7 @@ public class PersonServiceImpl implements PersonService {
      * @return the person with the matching ssn
      */
     @Override
-    public Person findBySsn(double ssn) {
+    public Person findBySsn(String ssn) {
         return personRepository.findBySsn(ssn);
     }
 
