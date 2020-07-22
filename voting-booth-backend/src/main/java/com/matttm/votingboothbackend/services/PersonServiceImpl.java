@@ -27,7 +27,8 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public boolean exists(Person p) {
         // TODO: make another way
-        return this.findBySsn(p.getSsn()).equals(p);
+        Person retrieved = this.findBySsn(p.getSsn());
+        return retrieved != null && retrieved.equals(p);
     }
 
     /**

@@ -55,30 +55,14 @@ public class ApiPersonController {
     }
 
     /**
-     * Get a person with matching id
-     * @param id the id of person of interest
-     *
-     * @return the person of interest
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<Person> getPerson(@PathVariable("id") String id) {
-        int _id = Integer.parseInt(id);
-        return new ResponseEntity<>(
-                personService.findById(_id),
-                HttpStatus.OK
-        );
-    }
-
-    /**
      * A way to get ID from the ssn
      * @param ssn a user's social security number
      *
      * @return the id of the user with the provided ssn
      */
-    @PostMapping("/forgot")
+    @PostMapping("/forgot-id")
     public ResponseEntity<Integer> getId(@RequestHeader("ssn") String ssn) {
-        // TODO: add authentication
-        // TODO: fix this responding 500
+        // TODO: add authentication for everything?
         Person tmp = personService.findBySsn(ssn);
         Integer id = tmp.getId();
         return new ResponseEntity<>(
@@ -93,10 +77,25 @@ public class ApiPersonController {
      *
      * @return true if the person exists in the database
      */
-    @GetMapping("/validate")
+    @PostMapping("/validate")
     public ResponseEntity<Boolean> validate(@RequestBody Person p) {
         System.out.println("person: " + p.toString());
         return new ResponseEntity<>(personService.exists(p), HttpStatus.OK);
+    }
+
+    /**
+     * Get a person with matching id
+     * @param id the id of person of interest
+     *
+     * @return the person of interest
+     */
+    @GetMapping("/{id:[0-9]+}")
+    public ResponseEntity<Person> getPerson(@PathVariable("id") String id) {
+        int _id = Integer.parseInt(id);
+        return new ResponseEntity<>(
+                personService.findById(_id),
+                HttpStatus.OK
+        );
     }
 
     /**
@@ -104,7 +103,7 @@ public class ApiPersonController {
      * @param id the id of person of interest
      * @param p the info the person with id, id, is to be updated with
      */
-    @PutMapping("/{id}")
+    @PutMapping("/{id:[0-9]+}")
     public void updatePerson(@PathVariable("id") String id, @RequestBody Person p) {
         System.out.println("person: " + p.toString());
         // TODO: figure out how to handle discrepancies
@@ -115,7 +114,7 @@ public class ApiPersonController {
      * Delete a person from database
      * @param id the id of the person to delete
      */
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id:[0-9]+}")
     public void deletePerson(@PathVariable("id") String id) {
         // TODO: what if they don't have the id, only ssn
         int _id = Integer.parseInt(id);
