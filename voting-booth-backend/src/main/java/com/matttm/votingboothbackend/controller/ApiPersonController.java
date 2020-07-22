@@ -70,6 +70,24 @@ public class ApiPersonController {
     }
 
     /**
+     * A way to get ID from the ssn
+     * @param ssn a user's social security number
+     *
+     * @return the id of the user with the provided ssn
+     */
+    @PostMapping("/forgot")
+    public ResponseEntity<Integer> getId(@RequestHeader("ssn") String ssn) {
+        // TODO: add authentication
+        // TODO: fix this responding 500
+        Person tmp = personService.findBySsn(ssn);
+        Integer id = tmp.getId();
+        return new ResponseEntity<>(
+                id,
+                HttpStatus.OK
+        );
+    }
+
+    /**
      * Validate a person in the database
      * @param p person whose existence is to be checked
      *
