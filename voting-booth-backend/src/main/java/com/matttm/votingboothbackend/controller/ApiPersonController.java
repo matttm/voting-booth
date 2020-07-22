@@ -1,9 +1,9 @@
 package com.matttm.votingboothbackend.controller;
 
 import com.matttm.votingboothbackend.entities.Person;
+import com.matttm.votingboothbackend.messages.SimpleMessage;
 import com.matttm.votingboothbackend.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/persons")
 public class ApiPersonController {
-    ////////////////////////////////
-    // TODO: consider using query param to decide between id/ssn
-    //   but ssn shouldnt be in url
-    ///////////////////////////////
 
     @Autowired
     private PersonService personService;
@@ -61,12 +57,12 @@ public class ApiPersonController {
      * @return the id of the user with the provided ssn
      */
     @PostMapping("/forgot-id")
-    public ResponseEntity<Integer> getId(@RequestHeader("ssn") String ssn) {
+    public ResponseEntity<SimpleMessage<Integer>> getId(@RequestHeader("ssn") String ssn) {
         // TODO: add authentication for everything?
         Person tmp = personService.findBySsn(ssn);
         Integer id = tmp.getId();
         return new ResponseEntity<>(
-                id,
+                new SimpleMessage<>(true, id),
                 HttpStatus.OK
         );
     }
@@ -78,9 +74,13 @@ public class ApiPersonController {
      * @return true if the person exists in the database
      */
     @PostMapping("/validate")
-    public ResponseEntity<Boolean> validate(@RequestBody Person p) {
+    public ResponseEntity<SimpleMessage<Boolean>> validate(@RequestBody Person p) {
         System.out.println("person: " + p.toString());
-        return new ResponseEntity<>(personService.exists(p), HttpStatus.OK);
+        boolean success = personService.exists(p);
+        return new ResponseEntity<>(
+                new SimpleMessage<>(success, success),
+                HttpStatus.OK
+        );
     }
 
     /**
@@ -104,10 +104,11 @@ public class ApiPersonController {
      * @param p the info the person with id, id, is to be updated with
      */
     @PutMapping("/{id:[0-9]+}")
-    public void updatePerson(@PathVariable("id") String id, @RequestBody Person p) {
+    public HttpStatus updatePerson(@PathVariable("id") String id, @RequestBody Person p) {
         System.out.println("person: " + p.toString());
         // TODO: figure out how to handle discrepancies
         personService.save(p);
+        return HttpStatus.OK;
     }
 
     /**
@@ -115,11 +116,12 @@ public class ApiPersonController {
      * @param id the id of the person to delete
      */
     @DeleteMapping("/{id:[0-9]+}")
-    public void deletePerson(@PathVariable("id") String id) {
+    public HttpStatus deletePerson(@PathVariable("id") String id) {
         // TODO: what if they don't have the id, only ssn
         int _id = Integer.parseInt(id);
         Person p = personService.findById(_id);
         System.out.println("person: " + p.toString());
         personService.delete(p);
+        return HttpStatus.OK;
     }
 }
