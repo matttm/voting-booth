@@ -3,8 +3,9 @@ package com.matttm.votingboothbackend.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-// import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.sqlite.SQLiteDataSource;
 
 /**
@@ -14,9 +15,11 @@ import org.sqlite.SQLiteDataSource;
  * mtm9051@rit.edu
  * Language:  Java 1.8
  */
-//@Configuration
-// @ComponentScan(basePackages = "com")
-// @EnableWebSecurity
-public class AppConfiguration { //  extends WebSecurityConfigurerAdapter {
+@Configuration
+@EnableWebSecurity
+public class AppConfiguration  extends WebSecurityConfigurerAdapter {
 
-}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {}
+
+    }
