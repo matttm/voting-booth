@@ -1,4 +1,4 @@
-package com.matttm.votingboothbackend.controller;
+package com.matttm.votingboothbackend.controllers;
 
 import com.matttm.votingboothbackend.entities.Person;
 import com.matttm.votingboothbackend.messages.SimpleMessage;
