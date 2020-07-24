@@ -21,6 +21,15 @@ public class Person {
     private String lname;
     private int zip;
 
+    public Person() {}
+
+    public Person(int id, String ssn, String first, String last, int zip) {
+        this.id = id;
+        this.fname = first;
+        this.lname = last;
+        this.zip = zip;
+    }
+
     @Override
     public String toString() {
         return "Person{" +

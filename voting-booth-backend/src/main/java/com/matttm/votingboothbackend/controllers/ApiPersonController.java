@@ -75,7 +75,6 @@ public class ApiPersonController {
      */
     @PostMapping("/validate")
     public ResponseEntity<SimpleMessage<Boolean>> validate(@RequestBody Person p) {
-        System.out.println("person: " + p.toString());
         boolean success = personService.exists(p);
         return new ResponseEntity<>(
                 new SimpleMessage<>(success, success),
@@ -104,11 +103,13 @@ public class ApiPersonController {
      * @param p the info the person with id, id, is to be updated with
      */
     @PutMapping("/{id:[0-9]+}")
-    public HttpStatus updatePerson(@PathVariable("id") String id, @RequestBody Person p) {
-        System.out.println("person: " + p.toString());
+    public ResponseEntity<SimpleMessage<String>> updatePerson(@PathVariable("id") String id, @RequestBody Person p) {
         // TODO: figure out how to handle discrepancies
         personService.save(p);
-        return HttpStatus.OK;
+        return new ResponseEntity<>(
+                new SimpleMessage<>(true, "null"),
+                HttpStatus.OK
+        );
     }
 
     /**
@@ -116,12 +117,13 @@ public class ApiPersonController {
      * @param id the id of the person to delete
      */
     @DeleteMapping("/{id:[0-9]+}")
-    public HttpStatus deletePerson(@PathVariable("id") String id) {
-        // TODO: what if they don't have the id, only ssn
+    public ResponseEntity<SimpleMessage<String>> deletePerson(@PathVariable("id") String id) {
         int _id = Integer.parseInt(id);
         Person p = personService.findById(_id);
-        System.out.println("person: " + p.toString());
         personService.delete(p);
-        return HttpStatus.OK;
+        return new ResponseEntity<>(new SimpleMessage<>(
+                true, "null"),
+                HttpStatus.OK
+        );
     }
 }
