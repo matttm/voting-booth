@@ -1,17 +1,22 @@
 {
   "name": "blockchain",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Blockchain to contain voting data",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "morgan": "~1.9.1",
-    "js-sha256": "^0.9.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matttm/voting-booth.git"
   },
-  "devDependencies": {
-  }
+  "keywords": [
+    "blockchain"
+  ],
+  "author": "matttm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matttm/voting-booth/issues"
+  },
+  "homepage": "https://github.com/matttm/voting-booth#readme"
 }
