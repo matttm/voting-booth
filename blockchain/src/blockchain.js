@@ -6,9 +6,14 @@ class Blockchain {
         this.chain = [genesisBlock()];
     }
 
-    addBlock(prevHash, data, timestamp, difficulty) {
+    addBlock(data) {
+        const lastBlock = this.chain[this.chain.length() - 1];
         this.chain.push(
-            new Block(prevHash, data, timestamp, difficulty)
+            new Block(
+                lastBlock.prevHash,
+                data,
+                lastBlock.timestamp,
+                lastBlock.difficulty)
         )
     }
 }
