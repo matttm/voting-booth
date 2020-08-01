@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/matttm/voting-booth/issues"
   },
-  "homepage": "https://github.com/matttm/voting-booth#readme"
+  "homepage": "https://github.com/matttm/voting-booth#readme",
+  "dependencies": {
+    "js-sha256": "^0.9.0"
+  }
 }
