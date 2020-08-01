@@ -12,3 +12,14 @@ class Blockchain {
         )
     }
 }
+
+/**
+ * Override of the blockchain's toString function
+ *
+ * @returns {string} string representation of the blockchain
+ */
+Blockchain.prototype.toString = () => {
+    for (let block of this.chain) {
+        console.log(block);
+    }
+};
