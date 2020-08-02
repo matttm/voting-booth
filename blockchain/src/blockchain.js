@@ -12,7 +12,7 @@ class Blockchain {
             new Block(
                 lastBlock.prevHash,
                 data,
-                lastBlock.timestamp,
+                Date.now(),
                 lastBlock.difficulty)
         )
     }
