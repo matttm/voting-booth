@@ -66,13 +66,3 @@ export class Block {
 Block.prototype.toString = () => {
     return `[Block] ${this.timestamp} ${this.hash}`;
 };
-
-/**
- * Generate a genesis block, which is a first block in
- * a blockchain
- *
- * @returns {Block} the genesis block
- */
-export function genesisBlock() {
-    return new Block(null, "Genesis", Date.now());
-}

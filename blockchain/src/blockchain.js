@@ -1,4 +1,4 @@
-import {Block, genesisBlock} from "./block";
+import {Block} from "./block";
 
 class Blockchain {
 
@@ -40,3 +40,13 @@ Blockchain.prototype.toString = () => {
         console.log(block);
     }
 };
+
+/**
+ * Generate a genesis block, which is a first block in
+ * a blockchain
+ *
+ * @returns {Block} the genesis block
+ */
+function genesisBlock() {
+    return new Block(null, "Genesis", Date.now());
+}
