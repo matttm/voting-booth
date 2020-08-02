@@ -7,7 +7,7 @@ class Blockchain {
     }
 
     addBlock(data) {
-        const lastBlock = this.chain[this.chain.length() - 1];
+        const lastBlock = this.getLatestBlock();
         this.chain.push(
             new Block(
                 lastBlock.prevHash,
@@ -15,6 +15,10 @@ class Blockchain {
                 lastBlock.timestamp,
                 lastBlock.difficulty)
         )
+    }
+
+    getLatestBlock() {
+        return this.chain[this.chain.length() - 1];
     }
 }
 
