@@ -6,6 +6,10 @@ class Blockchain {
         this.chain = [genesisBlock()];
     }
 
+    /**
+     * Adds a new block to the blockchain
+     * @param data the information that the block is to contain
+     */
     addBlock(data) {
         const lastBlock = this.getLatestBlock();
         this.chain.push(
@@ -17,8 +21,12 @@ class Blockchain {
         )
     }
 
+    /**
+     * Get the latest block in the blockchain
+     * @returns {Block} latest block in the blockchain
+     */
     getLatestBlock() {
-        return this.chain[this.chain.length() - 1];
+        return this.chain[this.chain.length - 1];
     }
 }
 
