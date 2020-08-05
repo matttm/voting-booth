@@ -1,6 +1,6 @@
 import {Block} from "./block";
 
-class Blockchain {
+export class Blockchain {
 
     constructor() {
         this.chain = [genesisBlock()];
@@ -11,6 +11,8 @@ class Blockchain {
      * @param data the information that the block is to contain
      */
     addBlock(data) {
+        // There should always be a first block because
+        //   of the genesis block
         const lastBlock = this.getLatestBlock();
         this.chain.push(
             new Block(
@@ -48,5 +50,5 @@ Blockchain.prototype.toString = () => {
  * @returns {Block} the genesis block
  */
 function genesisBlock() {
-    return new Block(null, "Genesis", Date.now());
+    return new Block(null, "Genesis", Date.now(), 3);
 }
