@@ -2,10 +2,37 @@
   "name": "blockchain-server",
   "version": "1.0.0",
   "description": "Blockchain to contain voting data",
-  "main": "bin/www",
+  "main": "",
   "scripts": {
-    "start": "node bin/www",
+    "start": "yarn run prod",
+    "build": "npx yarn-run-all clean transpile",
+    "server": "node ./dist/bin/www",
+    "dev": "cross-env NODE_ENV=development npx yarn-run-all build server",
+    "prod": "cross-env NODE_ENV=production npx yarn-run-all build server",
+    "transpile": "babel ./src --out-dir dist",
+    "clean": "rimraf dist",
+    "watch:dev": "nodemon",
     "test": "jest"
+  },
+  "nodemonConfig": {
+    "exec": "yarn run dev",
+    "watch": [
+      "server/*",
+      "public/*"
+    ],
+    "ignore": [
+      "**/__tests__/**",
+      "*.test.js",
+      "*.spec.js"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
@@ -21,11 +48,18 @@
   },
   "homepage": "https://github.com/matttm/voting-booth#readme",
   "dependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
     "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.2",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "js-sha256": "^0.9.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "yarn-run-all": "^3.1.1"
   },
   "devDependencies": {
     "jest": "^26.2.2"

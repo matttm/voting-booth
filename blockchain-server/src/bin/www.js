@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../src/server/app');
+var app = require('../server/app');
 var debug = require('debug')('blockchain:server');
 var http = require('http');
 
