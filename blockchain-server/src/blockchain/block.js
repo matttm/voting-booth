@@ -1,4 +1,4 @@
-const sha256 = require('js-sha256');
+import { sha256 } from 'js-sha256';
 
 /**
  * Class Block represents a single block in the blockchain. A block is to
@@ -48,7 +48,7 @@ export class Block {
      * @returns a string representing a 256-bit encryption
      */
     generateHash(nonce) {
-        return sha256.sha256(
+        return sha256(
             this.prevHash +
             this.timestamp +
             this.data +

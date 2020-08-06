@@ -1,10 +1,12 @@
 /**
  * Everything used in configuration of the blockchain
- * @type {{}} configuration object
+ * @type {{ address: string, peers: array}}
+ *  - address - blockchain server address to use
+ *  - peers - other blockchain servers to connect to
  */
 const config = {};
 
-config.addresss = 'https://localhost:3000';
+config.address = 'https://localhost:3000';
 config.peers = [
     'https://localhost:3000'
 ];
