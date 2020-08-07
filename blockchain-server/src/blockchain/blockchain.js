@@ -16,10 +16,11 @@ export class Blockchain {
         const lastBlock = this.getLatestBlock();
         this.chain.push(
             new Block(
-                lastBlock.prevHash,
+                lastBlock.hash,
                 data,
                 Date.now(),
-                lastBlock.difficulty)
+                lastBlock.difficulty
+            )
         )
     }
 
@@ -50,5 +51,5 @@ Blockchain.prototype.toString = () => {
  * @returns {Block} the genesis block
  */
 function genesisBlock() {
-    return new Block(null, "Genesis", Date.now(), 3);
+    return new Block('0'.repeat(64), "Genesis", Date.now(), 3);
 }
