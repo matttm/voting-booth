@@ -40,8 +40,8 @@ test("chain's hash should meet difficulty requirement", () => {
 test("prevHash of current block is the hash of previous block", () => {
     const length = 10;
     const difficulty = 3;
-    const chain = createTestBlockchain(length, difficulty);
-    for (let i = 0; i < length; i++) {
+    const chain = createTestBlockchain(length, difficulty).chain;
+    for (let i = 1; i < length; i++) {
         const prev = chain[i - 1];
         const curr = chain[i];
         expect(prev.hash).toBe(curr.prevHash);
