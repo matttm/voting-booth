@@ -54,7 +54,7 @@ describe('Blockchain Tests', () => {
         const length = 10;
         const difficulty = 3;
         const chain = createTestBlockchain(length, difficulty);
-        expect(chain.isValidChain()).toBeTruthy();
+        expect(Blockchain.isValidChain(chain.chain)).toBeTruthy();
     });
 
     test("should be an invalid chain", () => {
@@ -63,6 +63,56 @@ describe('Blockchain Tests', () => {
         const chain = createTestBlockchain(length, difficulty);
         // messing up chain
         chain.chain[2].prevHash = "13373";
-        expect(chain.isValidChain()).toBeFalsy();
+        expect(Blockchain.isValidChain(chain.chain)).toBeFalsy();
+    });
+
+    test("should accept new chain", () => {
+        // this test is based on longer chain consensus algorithm
+        const length1 = 10;
+        const length2 = 11;
+        const difficulty = 3;
+        const chain1 = createTestBlockchain(length1, difficulty);
+        const chain2 = createTestBlockchain(length2, difficulty);
+        chain1.replaceChain(chain2.chain);
+        expect(chain1.chain).toBe(chain2.chain);
+        expect(chain1.chain.length).toBe(length2);
+    });
+
+    test("should not accept new chain", () => {
+        // this test is based on longer chain consensus algorithm
+        const length1 = 10;
+        const length2 = 5;
+        const difficulty = 3;
+        const chain1 = createTestBlockchain(length1, difficulty);
+        const chain2 = createTestBlockchain(length2, difficulty);
+        const _chain1 = chain1.chain;
+        chain1.replaceChain(chain2.chain);
+        expect(chain1.chain).toBe(_chain1);
+        expect(chain1.chain.length).toBe(length1);
+    });
+
+    test("should not accept new chain due to it being invalid", () => {
+        // this test is based on longer chain consensus algorithm
+        const length1 = 10;
+        const length2 = 15;
+        const difficulty = 3;
+        const chain1 = createTestBlockchain(length1, difficulty);
+        const chain2 = createTestBlockchain(length2, difficulty);
+        const _chain1 = chain1.chain;
+        chain2.chain[2].hash = "13373";
+        chain1.replaceChain(chain2.chain);
+        expect(chain1.chain).toBe(_chain1);
+        expect(chain1.chain.length).toBe(length1);
+    });
+
+    test("should not accept new chain with same size", () => {
+        // this test is based on longer chain consensus algorithm
+        const length = 10;
+        const difficulty = 3;
+        const chain1 = createTestBlockchain(length, difficulty);
+        const chain2 = createTestBlockchain(length, difficulty);
+        const _chain1 = chain1.chain;
+        chain1.replaceChain(chain2.chain);
+        expect(chain1.chain).toBe(_chain1);
     });
 });

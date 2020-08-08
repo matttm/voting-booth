@@ -29,11 +29,11 @@ export class Blockchain {
      * @param newChain the newChain, to possibly replace the old chain
      */
     replaceChain(newChain) {
-        if (this.chain.length > newChain.length) {
-            console.log("New chain rejected: current chain is longer");
-            return;
-        } else if (!isValidChain(newChain)) {
+        if (!Blockchain.isValidChain(newChain)) {
             console.log("New chain rejected: new chain is invalid");
+            return;
+        } else if (this.chain.length >= newChain.length) {
+            console.log("New chain rejected: current chain is longer");
             return;
         }
         this.chain = newChain;
@@ -42,11 +42,12 @@ export class Blockchain {
 
     /**
      * Determine whether an entire chain is valid
+     * @param _chain the chain of a Blockchain object
      *
      * @returns {boolean} true iff every block in the chain is valid
      */
-    isValidChain() {
-        const chain = this.chain;
+    static isValidChain(_chain) {
+        const chain = _chain;
 
         // TODO: validate genesis
         // this loop verifies all blocks after genesis block
