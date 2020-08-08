@@ -49,4 +49,11 @@ describe('Blockchain Tests', () => {
             expect(prev.hash).toBe(curr.prevHash);
         }
     });
+
+    test("should be a valid chain", () => {
+        const length = 10;
+        const difficulty = 3;
+        const chain = createTestBlockchain(length, difficulty);
+        expect(chain.isValidChain()).toBeTruthy();
+    })
 });
