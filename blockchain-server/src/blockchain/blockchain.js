@@ -25,6 +25,22 @@ export class Blockchain {
     }
 
     /**
+     * Determines whether or not to replace chain and does so
+     * @param newChain the newChain, to possibly replace the old chain
+     */
+    replaceChain(newChain) {
+        if (this.chain.length > newChain.length) {
+            console.log("New chain rejected: current chain is longer");
+            return;
+        } else if (!isValidChain(newChain)) {
+            console.log("New chain rejected: new chain is invalid");
+            return;
+        }
+        this.chain = newChain;
+        console.log("New chain accepted");
+    }
+
+    /**
      * Get the latest block in the blockchain
      * @returns {Block} latest block in the blockchain
      */
