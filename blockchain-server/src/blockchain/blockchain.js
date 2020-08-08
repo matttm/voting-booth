@@ -41,6 +41,24 @@ export class Blockchain {
     }
 
     /**
+     * Determine whether an entire chain is valid
+     *
+     * @returns {boolean} true iff every block in the chain is valid
+     */
+    isValidChain() {
+        const chain = this.chain;
+
+        // TODO: validate genesis
+        // this loop verifies all blocks after genesis block
+        for (let i = 1; i < chain.length; i++) {
+            if (!chain[i].isValidBlock(chain[i-1])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Get the latest block in the blockchain
      * @returns {Block} latest block in the blockchain
      */

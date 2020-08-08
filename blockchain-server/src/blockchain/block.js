@@ -17,6 +17,25 @@ export class Block {
     }
 
     /**
+     * Determine if new block is valid
+     * @param latestBlock the most recently added block to the blockchain
+     *
+     * @returns {boolean} true iff the block is valid
+     */
+    isValidBlock(latestBlock) {
+        const hash = this.hash;
+
+        if (hash === latestBlock.hash) {
+            console.log(`Block ${this.timestamp} rejected: new hash does not match previous`);
+            return false;
+        } else if (this.isHashValid(hash)) {
+            console.log(`Block ${this.timestamp} rejected: new hash does match block's difficulty`);
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Generates a hash that matches the block's difficulty
      *   and assigns it to the block's members
      */
