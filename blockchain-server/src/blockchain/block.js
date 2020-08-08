@@ -6,7 +6,8 @@ import { sha256 } from 'js-sha256';
  *  and a hash of the previous block, a timestamp, , difficulty, nonce, and a datum/data.
  */
 export class Block {
-
+// TODO: determine best practice for static methods vs functions
+//   and then fix modularity
     constructor(prevHash, data, timestamp, difficulty) {
         this.prevHash = prevHash;
         this.timestamp = timestamp;
