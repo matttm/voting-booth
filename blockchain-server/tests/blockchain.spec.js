@@ -55,5 +55,14 @@ describe('Blockchain Tests', () => {
         const difficulty = 3;
         const chain = createTestBlockchain(length, difficulty);
         expect(chain.isValidChain()).toBeTruthy();
-    })
+    });
+
+    test("should be an invalid chain", () => {
+        const length = 10;
+        const difficulty = 3;
+        const chain = createTestBlockchain(length, difficulty);
+        // messing up chain
+        chain.chain[2].prevHash = "13373";
+        expect(chain.isValidChain()).toBeFalsy();
+    });
 });
