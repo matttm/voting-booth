@@ -2,7 +2,7 @@
  * Everything used in configuration of the blockchain
  * @type {{ address: string, peers: array, httpPort: number, wsPort: number}}
  *  - address - blockchain server address to use
- *  - peers - other blockchain servers to connect to
+ *  - peers - other blockchain servers to onConnect to
  */
 export const config = {};
 

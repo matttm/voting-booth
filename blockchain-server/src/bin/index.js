@@ -19,7 +19,6 @@ const debug = _debug('blockchain:server');
 const httpPort = normalizePort(process.env.HTTP_PORT || config.httpPort || '3000');
 const wsPort   = normalizePort(process.env.WS_PORT || config.wsPort || '5001');
 app.set('port', httpPort);
-p2p.set('port', wsPort);
 
 /**
  * Create blockchain and give to the request handler (app)
@@ -39,7 +38,9 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port);
+server.listen(httpPort);
+p2p.listen(wsPort);
+
 server.on('error', onError);
 server.on('listening', onListening);
 
