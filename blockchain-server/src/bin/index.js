@@ -4,17 +4,32 @@
  * Module dependencies.
  */
 
-import app from '../server';
+import { app, P2pServer} from '../server';
 import _debug from 'debug';
 import http from 'http';
+import {Blockchain} from "../blockchain";
+import { config } from '../config/config';
 
+const p2p = new P2pServer();
 const debug = _debug('blockchain:server');
 
 /**
  * Get port from environment and store in Express.
  */
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+const httpPort = normalizePort(process.env.HTTP_PORT || config.httpPort || '3000');
+const wsPort   = normalizePort(process.env.WS_PORT || config.wsPort || '5001');
+app.set('port', httpPort);
+p2p.set('port', wsPort);
+
+/**
+ * Create blockchain and give to the request handler (app)
+ *   and P2pServer
+ */
+// TODO: is this method for passing the chain appropriate?
+const blockchain = new Blockchain();
+p2p.set('blockchain', blockchain);
+app.set('blockchain', blockchain);
+
 
 /**
  * Create HTTP server.

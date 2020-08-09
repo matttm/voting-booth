@@ -7,9 +7,10 @@ router.get('/', function(req, res, next) {
 
 router.get('/blocks', (req, res) => {
   // TODO: is there any checks to be done here?
+  const blockchain = req.app.blockchain;
   res.status(200).json({
     success: true,
-    chain: []  // TODO: give real blockchain
+    chain: blockchain.chain
   });
 });
 
