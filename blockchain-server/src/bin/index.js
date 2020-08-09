@@ -39,7 +39,7 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 server.listen(httpPort);
-p2p.listen(wsPort);
+p2p.listen(wsPort, config.peers || []);
 
 server.on('error', onError);
 server.on('listening', onListening);
