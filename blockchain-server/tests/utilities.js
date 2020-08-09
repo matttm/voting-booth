@@ -1,7 +1,7 @@
 /**
  * This file will contain test utilities
  **/
-import {Blockchain} from "../src/blockchain/blockchain";
+import {Blockchain} from "../src/blockchain";
 
 /**
  * Creates a Blockchain where there is len blocks,

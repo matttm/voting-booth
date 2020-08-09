@@ -1,6 +1,5 @@
-import {Blockchain} from "../src/blockchain/blockchain";
+import {Blockchain, Block} from "../src/blockchain";
 import {createTestBlockchain} from "./utilities";
-import {Block} from "../src/blockchain/block";
 
 describe('Blockchain Tests', () => {
 
