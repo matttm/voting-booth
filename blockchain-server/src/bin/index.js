@@ -16,7 +16,7 @@ const debug = _debug('blockchain:server');
 /**
  * Get port from environment and store in Express.
  */
-const httpPort = normalizePort(process.env.HTTP_PORT || config.httpPort || '3000');
+const httpPort = normalizePort(process.env.HTTP_PORT || config.httpPort || '3001');
 const wsPort   = normalizePort(process.env.WS_PORT || config.wsPort || '5001');
 app.set('port', httpPort);
 
@@ -102,4 +102,5 @@ function onListening() {
       ? 'pipe ' + addr
       : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }

@@ -6,9 +6,9 @@
  */
 export const config = {};
 
-config.address = 'https://localhost:3000';
-config.peers = [
-    'https://localhost:3000'
-];
+//config.address = 'https://localhost:3000';
+//config.peers = [
+//    'https://localhost:3000'
+//];
 config.httpPort = 3001;
 config.wsPort = 5001;
