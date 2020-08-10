@@ -40,7 +40,7 @@ const server = http.createServer(app);
  */
 server.listen(httpPort);
 p2p.listen(wsPort,
-    process.env.PEERS.split(',') || config.peers || []);
+    process.env.PEERS ? process.env.PEERS.split(',') :config.peers || []);
 
 // TODO: make runnning multiple instances locally, friendlier
 
