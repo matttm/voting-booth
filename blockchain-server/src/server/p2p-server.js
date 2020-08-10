@@ -20,7 +20,7 @@ export class P2pServer {
      * @param peers array of websocket endpoints to connect to
      */
     listen(port, peers) {
-        const server = WebSocket.Server({ port: port });
+        const server = new WebSocket.Server({ port: port });
 
         server.on('connection', socket => this.connect(socket));
 

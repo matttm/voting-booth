@@ -39,7 +39,10 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 server.listen(httpPort);
-p2p.listen(wsPort, config.peers || []);
+p2p.listen(wsPort,
+    process.env.PEERS.split(',') || config.peers || []);
+
+// TODO: make runnning multiple instances locally, friendlier
 
 server.on('error', onError);
 server.on('listening', onListening);
