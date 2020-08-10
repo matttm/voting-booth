@@ -6,6 +6,7 @@ import logger from 'morgan';
 import indexRouter from './routers';
 import apiRouter from './routers/api';
 
+// TODO: wrap this in a class so its not an exported global
 export const app = express();
 
 app.use(logger('dev'));
