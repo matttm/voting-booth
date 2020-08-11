@@ -4,65 +4,32 @@
  * Module dependencies.
  */
 
-import { HttpServer, P2pServer} from '../servers';
+import { HttpServer, P2pServer } from '../servers';
 import _debug from 'debug';
-import http from 'http';
-import {Blockchain} from "../blockchain";
+import { Blockchain } from "../blockchain";
 import { config } from '../config/config';
 
-const p2p = new P2pServer();
-const debug = _debug('blockchain:app');
+const debug = _debug('blockchain:bin');
 
 /**
  * Get port from environment and store in Express.
  */
-const httpPort = normalizePort(process.env.HTTP_PORT || config.httpPort || '3001');
-const wsPort   = normalizePort(process.env.WS_PORT || config.wsPort || '5001');
-app.set('port', httpPort);
+const httpPort = process.env.HTTP_PORT || config.httpPort || '3001';
+const p2pPort  = process.env.WS_PORT || config.wsPort || '5001';
 
 /**
  * Create blockchain and give to the request handler (app)
  *   and P2pServer
  */
-// TODO: is this method for passing the chain appropriate?
+debug("Instantiating blockchain and servers");
 const blockchain = new Blockchain();
-p2p.set('blockchain', blockchain);
-app.set('blockchain', blockchain);
-
-
-/**
- * Create HTTP app.
- */
-const server = http.createServer(app);
+const httpServer = new HttpServer(blockchain, httpPort, httpAddress);
+const p2pServer = new P2pServer(blockchain, p2pPort, p3pAddress, peers);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Start the api and the peer-to-peer connection
  */
-server.listen(httpPort);
-p2p.listen(wsPort,
-    process.env.PEERS ? process.env.PEERS.split(',') :config.peers || []);
+httpServer.listen();
+p2pServer.listen();
 
-// TODO: make runnning multiple instances locally, friendlier
-
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-function normalizePort(val) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
 

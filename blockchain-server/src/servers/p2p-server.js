@@ -1,7 +1,12 @@
 import WebSocket from "ws";
+import {normalizePort} from "./utilities";
 
 export class P2pServer {
-    constructor() {
+    constructor(blockchain, host, port, peers) {
+        this.blockchain = blockchain;
+        this.host = host;
+        this.port = normalizePort(port);
+        this.peers = peers;
         this.sockets = [];
     }
 
@@ -16,17 +21,14 @@ export class P2pServer {
 
     /**
      * Create the websocket app and listen on a given port
-     * @param port the port to listen on
-     * @param peers array of websocket endpoints to connect to
      */
-    listen(port, peers) {
-        const server = new WebSocket.Server({ port: port });
+    listen() {
+        const server = new WebSocket.Server({ port: this.port, host: this.host });
         console.log('Listening on ' + port);
 
         server.on('connection', socket => this.connect(socket));
 
-        // TODO: create way to initialize with peers
-        this.connectToPeers(peers);
+        this.connectToPeers();
     }
 
     /**
