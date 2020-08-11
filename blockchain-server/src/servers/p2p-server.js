@@ -6,8 +6,8 @@ export class P2pServer {
     }
 
     /**
-     * Set properties of the server
-     * @param property the property to give the server
+     * Set properties of the app
+     * @param property the property to give the app
      * @param value the value of the property
      */
     set(property, value) {
@@ -15,7 +15,7 @@ export class P2pServer {
     }
 
     /**
-     * Create the websocket server and listen on a given port
+     * Create the websocket app and listen on a given port
      * @param port the port to listen on
      * @param peers array of websocket endpoints to connect to
      */

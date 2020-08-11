@@ -4,14 +4,14 @@
  * Module dependencies.
  */
 
-import { app, P2pServer} from '../server';
+import { HttpServer, P2pServer} from '../servers';
 import _debug from 'debug';
 import http from 'http';
 import {Blockchain} from "../blockchain";
 import { config } from '../config/config';
 
 const p2p = new P2pServer();
-const debug = _debug('blockchain:server');
+const debug = _debug('blockchain:app');
 
 /**
  * Get port from environment and store in Express.
@@ -31,7 +31,7 @@ app.set('blockchain', blockchain);
 
 
 /**
- * Create HTTP server.
+ * Create HTTP app.
  */
 const server = http.createServer(app);
 
@@ -66,41 +66,3 @@ function normalizePort(val) {
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  const bind = typeof httpPort === 'string'
-      ? 'Pipe ' + httpPort
-      : 'Port ' + httpPort;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-  console.log('Listening on ' + bind);
-}
