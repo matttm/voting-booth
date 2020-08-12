@@ -27,8 +27,8 @@ const peers       = getEnvVar('peers', []);
  */
 debug("Instantiating blockchain and servers");
 const blockchain = new Blockchain();
-const httpServer = new HttpServer(blockchain, httpPort, httpAddress);
-const p2pServer = new P2pServer(blockchain, p2pPort, p2pAddress, peers);
+const httpServer = new HttpServer(blockchain, httpAddress, httpPort);
+const p2pServer = new P2pServer(blockchain, p2pAddress, p2pPort, peers);
 
 /**
  * Start the api and the peer-to-peer connection

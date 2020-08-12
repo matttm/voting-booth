@@ -18,14 +18,14 @@ export class HttpServer {
         this.host = host;
         this.port = normalizePort(port);
         this.blockchain = blockchain;
-        this.server = HttpServer.createServer(HttpServer.createRequestListener());
+        this.server = this.createServer(this.createRequestListener());
     }
 
     /**
      * Create a request listener for a http sever, configured
      * with a logger and json middleware
      */
-    static createRequestListener() {
+    createRequestListener() {
         const app = express();
         app.use(logger('dev'));
         app.use(express.json());
@@ -33,8 +33,8 @@ export class HttpServer {
         app.use(cookieParser());
         app.use(express.static(path.join(__dirname, 'public')));
 
-        app.use('/', new IndexRouter());
-        //app.use('/api', new ApiRouter(this.blockchain));
+        app.use('/', IndexRouter());
+        app.use('/api', ApiRouter(this.blockchain));
         return app;
     }
 

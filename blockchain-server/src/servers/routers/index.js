@@ -4,20 +4,18 @@ import express from 'express';
  * This class contains the request handlers for
  * the index of the api app
  */
-export class IndexRouter extends express.Router {
-  constructor() {
-    super();
-    this.configure();
-  }
+export const IndexRouter = () => {
+  const router = express.Router();
 
   /**
    * Setup routes for this router
    */
-  configure() {
+  (function configure() {
     /* GET home page. */
-    this.get('/', function(req, res, next) {
+    router.get('/', function(req, res, next) {
       res.render('index', { title: 'Election XXXX Blockchain Server' });
     });
-  }
-}
+  })();
 
+  return router;
+};

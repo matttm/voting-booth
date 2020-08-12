@@ -26,7 +26,7 @@ export class P2pServer {
         this.server = new WebSocket.Server({ port: this.port, host: this.host });
 
         const server = this.server;
-        server.on('error', error => onError(this.port, error));
+        server.on('error', error => onError(this.port));
         // TODO: fix event listener
         console.log('Listening on ' + this.port);
         //server.on('listening', onListening(server));
@@ -59,11 +59,10 @@ export class P2pServer {
 
     /**
      * Connect to array of websocket addresses
-     * @param peers the  array of addresses
      */
-    connectToPeers(peers) {
-        console.log('peers: ' + peers);
-        peers.forEach(peer => {
+    connectToPeers() {
+        console.log('peers: ' + this.peers);
+        this.peers.forEach(peer => {
             const socket = new WebSocket(peer);
             socket.on('open', () => this.connect(socket));
         })

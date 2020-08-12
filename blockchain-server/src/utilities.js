@@ -1,4 +1,7 @@
 import { config } from './config/config';
+import _debug from 'debug';
+
+const debug = _debug('utilities');
 
 /**
  * Event listener for HTTP app "error" event.
