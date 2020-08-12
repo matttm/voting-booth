@@ -7,7 +7,7 @@
 import { HttpServer, P2pServer } from '../servers';
 import _debug from 'debug';
 import { Blockchain } from "../blockchain";
-import { config } from '../config/config';
+import { getEnvVar } from '../utilities';
 
 const debug = _debug('blockchain:bin');
 
@@ -15,11 +15,11 @@ const debug = _debug('blockchain:bin');
  * Get port from environment and store in Express.
  */
 // TODO: get args appropriately
-const httpPort = process.env.HTTP_PORT || config.httpPort || '3001';
-const p2pPort  = process.env.WS_PORT || config.wsPort || '5001';
-const httpAddress = null;
-const p2pAddress = null;
-const peers = null;
+const httpPort    = getEnvVar('http_port', '3001');
+const p2pPort     = getEnvVar('p2p_port', '5001');
+const httpAddress = getEnvVar('http_address', 'localhost');
+const p2pAddress  = getEnvVar('p2p_addr', 'localhost');
+const peers       = getEnvVar('peers', []);
 
 /**
  * Create blockchain and give to the request handler (app)

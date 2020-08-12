@@ -1,3 +1,5 @@
+import config from './config/config';
+
 /**
  * Event listener for HTTP app "error" event.
  * @param port the port being listened on
@@ -63,4 +65,17 @@ export function normalizePort(val) {
     }
 
     return false;
+}
+
+/**
+ * Gets a property, checking then environment then the config
+ * then relies on a default
+ * @param property the property being looked for
+ * @param def the default
+ *
+ * @return the property's value or default
+ */
+export function getEnvVar(property, def) {
+    return process.env[property.toLocaleUpperCase()] ||
+        config[property.toLowerCase()] || def;
 }

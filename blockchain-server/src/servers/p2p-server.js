@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import {normalizePort} from "./utilities";
+import {normalizePort} from "../utilities";
 
 export class P2pServer {
     constructor(blockchain, host, port, peers) {

@@ -6,7 +6,7 @@ import logger from 'morgan';
 
 import { IndexRouter } from './routers';
 import { ApiRouter } from './routers/api';
-import {onListening, onError, normalizePort} from "./utilities";
+import {onListening, onError, normalizePort} from "../utilities";
 
 /**
  * This class is a container for an express app
