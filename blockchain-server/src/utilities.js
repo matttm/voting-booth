@@ -3,11 +3,10 @@ import { config } from './config/config';
 /**
  * Event listener for HTTP app "error" event.
  * @param port the port being listened on
- * @param error the encountered error
  *
  * @return an error callback
  */
-export function onError(port, error) {
+export function onError(port) {
     return (error) => {
         if (error.syscall !== 'listen') {
             throw error;

@@ -46,7 +46,7 @@ export class HttpServer {
      */
     createServer(app) {
         const server = http.createServer(app);
-        server.on('error', error => onError(this.port, error));
+        server.on('error', onError(this.port));
         server.on('listening', onListening(server));
         return server;
     }
