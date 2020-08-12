@@ -1,12 +1,13 @@
-import config from './config/config';
+import { config } from './config/config';
 
 /**
  * Event listener for HTTP app "error" event.
  * @param port the port being listened on
+ * @param error the encountered error
  *
  * @return an error callback
  */
-export function onError(port) {
+export function onError(port, error) {
     return (error) => {
         if (error.syscall !== 'listen') {
             throw error;
@@ -76,6 +77,6 @@ export function normalizePort(val) {
  * @return the property's value or default
  */
 export function getEnvVar(property, def) {
-    return process.env[property.toLocaleUpperCase()] ||
+    return process.env[property.toUpperCase()] ||
         config[property.toLowerCase()] || def;
 }

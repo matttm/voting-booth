@@ -18,14 +18,14 @@ export class HttpServer {
         this.host = host;
         this.port = normalizePort(port);
         this.blockchain = blockchain;
-        this.server = HttpServer.createServer(this.createRequestListener());
+        this.server = HttpServer.createServer(HttpServer.createRequestListener());
     }
 
     /**
      * Create a request listener for a http sever, configured
      * with a logger and json middleware
      */
-    createRequestListener() {
+    static createRequestListener() {
         const app = express();
         app.use(logger('dev'));
         app.use(express.json());
@@ -34,7 +34,7 @@ export class HttpServer {
         app.use(express.static(path.join(__dirname, 'public')));
 
         app.use('/', new IndexRouter());
-        app.use('/api', new ApiRouter(this.blockchain));
+        //app.use('/api', new ApiRouter(this.blockchain));
         return app;
     }
 
@@ -44,10 +44,10 @@ export class HttpServer {
      * @param app a request listener
      * @returns {*} an configured http server
      */
-    static createServer(app) {
+    createServer(app) {
         const server = http.createServer(app);
-        server.on('error', onError);
-        server.on('listening', onListening);
+        server.on('error', error => onError(this.port, error));
+        server.on('listening', onListening(server));
         return server;
     }
 

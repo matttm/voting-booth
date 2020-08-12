@@ -6,7 +6,7 @@
   "scripts": {
     "start": "yarn run prod",
     "build": "npx yarn-run-all clean transpile",
-    "app": "node ./dist/bin/index",
+    "server": "node ./dist/bin/index",
     "dev": "cross-env NODE_ENV=development npx yarn-run-all build server",
     "prod": "cross-env NODE_ENV=production npx yarn-run-all build server",
     "transpile": "babel ./src --out-dir dist",

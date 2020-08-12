@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import {normalizePort} from "../utilities";
+import {normalizePort, onListening, onError} from "../utilities";
 
 export class P2pServer {
     constructor(blockchain, host, port, peers) {
@@ -23,9 +23,13 @@ export class P2pServer {
      * Create the websocket app and listen on a given port
      */
     listen() {
-        const server = new WebSocket.Server({ port: this.port, host: this.host });
-        console.log('Listening on ' + port);
+        this.server = new WebSocket.Server({ port: this.port, host: this.host });
 
+        const server = this.server;
+        server.on('error', error => onError(this.port, error));
+        // TODO: fix event listener
+        console.log('Listening on ' + this.port);
+        //server.on('listening', onListening(server));
         server.on('connection', socket => this.connect(socket));
 
         this.connectToPeers();
@@ -37,10 +41,11 @@ export class P2pServer {
      */
     connect(socket) {
         this.sockets.push(socket);
+        console.log('Socket connected');
 
         socket.on('message', message => P2pServer.onMessage(message));
 
-        console.log('Socket connected');
+        P2pServer.sendJsonMessage(socket, this.blockchain.chain)
     }
 
     /**
@@ -62,5 +67,15 @@ export class P2pServer {
             const socket = new WebSocket(peer);
             socket.on('open', () => this.connect(socket));
         })
+    }
+
+    /***
+     * Given a socket, a message will be sent to that client
+     * after being turned to JSON
+     * @param socket the sock that's sending the message
+     * @param message the message to be sent as JSON
+     */
+    static sendJsonMessage(socket, message) {
+        socket.send(JSON.stringify(message));
     }
 }
