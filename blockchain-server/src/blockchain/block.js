@@ -28,7 +28,7 @@ export class Block {
         if (this.prevHash !== prevBlock.hash) {
             console.log(`Block ${this.timestamp} rejected: new hash does not match previous`);
             return false;
-        } else if (!this.isHashValid(hash)) {
+        } else if (!Block.isHashValid(hash, this.difficulty)) {
             console.log(`Block ${this.timestamp} rejected: new hash does match block's difficulty`);
             return false;
         }
@@ -42,7 +42,8 @@ export class Block {
     generateValidHash() {
         let hash = '';
         let nonce = 0;
-        while (!this.isHashValid(hash)) {
+        const diff = this.difficulty;
+        while (!Block.isHashValid(hash, diff)) {
             hash = this.generateHash(nonce);
             nonce++;
         }
@@ -52,11 +53,12 @@ export class Block {
     /**
      * Determines whether the given hash is valid according to the difficulty
      * @param hash the hash that is TBD whether it is valid/invalid
+     * @param difficulty the difficult level of the mining effort
      *
      * @returns {boolean} true iff the hash is valid
      */
-    isHashValid(hash) {
-        const prefix = '0'.repeat(this.difficulty);
+    static isHashValid(hash, difficulty) {
+        const prefix = '0'.repeat(difficulty);
         return hash.startsWith(prefix);
     }
 
