@@ -19,7 +19,7 @@ const httpPort    = getEnvVar('http_port', '3001');
 const p2pPort     = getEnvVar('p2p_port', '5001');
 const httpAddress = getEnvVar('http_address', 'localhost');
 const p2pAddress  = getEnvVar('p2p_addr', 'localhost');
-const peers       = getEnvVar('peers', []);
+const peers       = process.env.PEERS ? process.env.PEERS.split(",") : [];
 
 /**
  * Create blockchain and give to the request handler (app)
