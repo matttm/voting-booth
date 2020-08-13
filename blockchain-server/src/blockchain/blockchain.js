@@ -53,7 +53,7 @@ export class Blockchain {
         // TODO: validate genesis
         // this loop verifies all blocks after genesis block
         for (let i = 1; i < chain.length; i++) {
-            if (!chain[i].isValidBlock(chain[i-1])) {
+            if (!chain[i].isValidBlock()) {
                 return false;
             }
         }
