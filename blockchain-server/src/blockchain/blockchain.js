@@ -2,8 +2,9 @@ import {Block} from "./block";
 
 export class Blockchain {
 
+    // TODO: Should add an index to block
     constructor() {
-        this.chain = [genesisBlock()];
+        this.chain = [Blockchain.genesisBlock()];
     }
 
     /**
@@ -66,6 +67,16 @@ export class Blockchain {
     getLatestBlock() {
         return this.chain[this.chain.length - 1];
     }
+
+    /**
+     * Generate a genesis block, which is a first block in
+     * a blockchain
+     *
+     * @returns {Block} the genesis block
+     */
+    static genesisBlock() {
+        return new Block('0'.repeat(64), "Genesis", Date.now(), 3);
+    }
 }
 
 /**
@@ -78,13 +89,3 @@ Blockchain.prototype.toString = () => {
         console.log(block);
     }
 };
-
-/**
- * Generate a genesis block, which is a first block in
- * a blockchain
- *
- * @returns {Block} the genesis block
- */
-function genesisBlock() {
-    return new Block('0'.repeat(64), "Genesis", Date.now(), 3);
-}
