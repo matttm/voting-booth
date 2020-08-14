@@ -28,6 +28,8 @@ const peers       = process.env.PEERS ? process.env.PEERS.split(",") : [];
 debug("Instantiating blockchain and servers");
 const blockchain = new Blockchain();
 const httpServer = new HttpServer(blockchain, httpAddress, httpPort);
+// TODO: Add another layer of encapsulation?
+// TODO: rename p2pserver to Node?
 const p2pServer = new P2pServer(blockchain, p2pAddress, p2pPort, peers);
 
 /**
