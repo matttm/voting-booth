@@ -1,10 +1,18 @@
 import {Block} from "./block";
+import {EventEmitter} from 'events';
 
+/**
+ * This class encapsulates a list of blocks and an emitter.
+ * The emitter emits 'blockAdded' event when a block is added and
+ * a 'blockchainReplaced' event when the blockchain's chain
+ * is replaced.
+ */
 export class Blockchain {
 
     // TODO: Should add an index to block
     constructor() {
         this.chain = [Blockchain.genesisBlock()];
+        this.emitter = new EventEmitter();
     }
 
     /**
@@ -22,7 +30,8 @@ export class Blockchain {
                 Date.now(),
                 lastBlock.difficulty
             )
-        )
+        );
+        this.emitter.emit('blockAdded');
     }
 
     /**
@@ -38,6 +47,7 @@ export class Blockchain {
             return;
         }
         this.chain = newChain;
+        this.emitter.emit('blockchainReplaced');
         console.log("New chain accepted");
     }
 

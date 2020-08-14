@@ -19,6 +19,11 @@ export class P2pServer {
         this[property] = value;
     }
 
+    subscribeBlockchainEvents() {
+        this.blockchain.emitter.on('blockAdded', () => null);
+        this.blockchain.emitter.on('blockchainReplaced', () => null);
+    }
+
     /**
      * Create the websocket app and listen on a given port
      */
