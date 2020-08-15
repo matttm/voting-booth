@@ -1,6 +1,6 @@
 import WebSocket from "ws";
 import {normalizePort, onListening, onError} from "../utilities";
-import {MessageType} from "./message";
+import {Message, MessageType} from "./message";
 
 export class P2pServer {
     constructor(blockchain, host, port, peers) {
@@ -25,10 +25,17 @@ export class P2pServer {
      */
     subscribeBlockchainEvents() {
         this.blockchain.emitter.on('blockAdded', () => {
-            this.broadcast(this.blockchain.getLatestBlock());
+            this.broadcast(
+                MessageType.ADD_BLOCK,
+                this.blockchain.getLatestBlock()
+            );
         });
+        // TODO: keep this if api cannot replace chain?
         this.blockchain.emitter.on('blockchainReplaced', () => {
-            this.broadcast(this.blockchain.chain);
+            this.broadcast(
+                MessageType.CHAIN,
+                this.blockchain.chain
+            );
         });
     }
 
@@ -59,7 +66,14 @@ export class P2pServer {
 
         socket.on('message', message => this.onMessage(message));
 
-        P2pServer.sendJsonMessage(socket, this.blockchain.chain)
+        P2pServer.sendMessage(
+            socket,
+            // TODO: factor out message creation
+            new Message(
+                MessageType.CHAIN,
+                this.blockchain.chain
+            )
+        );
     }
 
     /**
@@ -112,17 +126,19 @@ export class P2pServer {
      * @param socket the sock that's sending the message
      * @param message the message to be sent as JSON
      */
-    static sendJsonMessage(socket, message) {
+    static sendMessage(socket, message) {
         socket.send(JSON.stringify(message));
     }
 
     /**
      * Broadcasts a message to all connected peers
-     * @param message message to be turned to JSON and sent
+     * @param type the type of the message
+     * @param payload info to be sent
      */
-    broadcast(message) {
+    broadcast(type, payload) {
+        const message = new Message(type, payload);
         this.sockets.forEach(socket => {
-            P2pServer.sendJsonMessage(socket, message)
+            P2pServer.sendMessage(socket, message)
         });
     }
 }
