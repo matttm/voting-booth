@@ -84,25 +84,30 @@ export class P2pServer {
         const data = JSON.parse(message);
         console.log('data: ', data);
         const type = data?.type;
-        const psyload = data.payload;
+        const payload = data.payload;
+        console.log(`Received ${type} message`);
         switch (type) {
             case MessageType.ADD_BLOCK:
-                // TODO: how to add block?
-                const block = data.payload;
-                const success = this.blockchain.addConstructedBlock(block);
+                const success = this.blockchain.addConstructedBlock(payload);
                 if (!success) {
-                    // TODO: SEND MESSAGE QUERYING ENTIRE CHAIN
+                    this.broadcast(
+                        MessageType.REQUEST_CHAIN,
+                        null
+                    )
                 }
                 break;
             case MessageType.CHAIN:
-                const chain = data.payload;
-                this.blockchain.replaceChain(chain);
+                this.blockchain.replaceChain(payload);
                 break;
             case MessageType.ADD_PEER:
                 // TODO: find way to coordinate peers
+                // TODO: refactor some adding peer function
                 break;
             case MessageType.REQUEST_CHAIN:
-                // TODO: send chain
+                this.broadcast(
+                    MessageType.CHAIN,
+                    this.blockchain.chain
+                );
                 break;
             default:
                 console.error('Unknown message type received');
