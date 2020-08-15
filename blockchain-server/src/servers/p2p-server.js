@@ -19,9 +19,16 @@ export class P2pServer {
         this[property] = value;
     }
 
+    /**
+     * Set subscriber for all emitted blockchain events
+     */
     subscribeBlockchainEvents() {
-        this.blockchain.emitter.on('blockAdded', () => null);
-        this.blockchain.emitter.on('blockchainReplaced', () => null);
+        this.blockchain.emitter.on('blockAdded', () => {
+            this.broadcast(this.blockchain.getLatestBlock());
+        });
+        this.blockchain.emitter.on('blockchainReplaced', () => {
+            this.broadcast(this.blockchain.chain);
+        });
     }
 
     /**
@@ -38,6 +45,7 @@ export class P2pServer {
         server.on('connection', socket => this.connect(socket));
 
         this.connectToPeers();
+        this.subscribeBlockchainEvents();
     }
 
     /**
@@ -81,5 +89,15 @@ export class P2pServer {
      */
     static sendJsonMessage(socket, message) {
         socket.send(JSON.stringify(message));
+    }
+
+    /**
+     * Broadcasts a message to all connected peers
+     * @param message message to be turned to JSON and sent
+     */
+    broadcast(message) {
+        this.sockets.forEach(socket => {
+            P2pServer.sendJsonMessage(socket, message)
+        });
     }
 }
