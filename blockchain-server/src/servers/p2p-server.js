@@ -1,5 +1,6 @@
 import WebSocket from "ws";
 import {normalizePort, onListening, onError} from "../utilities";
+import {MessageType} from "./message";
 
 export class P2pServer {
     constructor(blockchain, host, port, peers) {
@@ -54,9 +55,9 @@ export class P2pServer {
      */
     connect(socket) {
         this.sockets.push(socket);
-        console.log('Socket connected');
+        console.log(`${socket.remoteAddress} connected via WebSocket`);
 
-        socket.on('message', message => P2pServer.onMessage(message));
+        socket.on('message', message => this.onMessage(message));
 
         P2pServer.sendJsonMessage(socket, this.blockchain.chain)
     }
@@ -65,9 +66,23 @@ export class P2pServer {
      * What to do when a watched socket receives a message event
      * @param message the message received from the message event
      */
-    static onMessage(message) {
+    onMessage(message) {
         const data = JSON.parse(message);
         console.log('data: ', data);
+        const type = data?.type;
+        const psyload = data.payload;
+        switch (type) {
+            case MessageType.ADD_BLOCK:
+                // TODO: how to add block?
+                break;
+            case MessageType.CHAIN:
+                break;
+            case MessageType.ADD_PEER:
+                // TODO: find way to coordinate peers
+                break;
+            default:
+                console.error('Unknown message type received');
+        }
     }
 
     /**
