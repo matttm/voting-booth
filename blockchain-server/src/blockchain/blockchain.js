@@ -16,7 +16,7 @@ export class Blockchain {
     }
 
     /**
-     * Adds a new block to the blockchain
+     * Constructs a new block and adds it to the blockchain
      * @param data the information that the block is to contain
      */
     addBlock(data) {
@@ -34,6 +34,19 @@ export class Blockchain {
         this.emitter.emit('blockAdded');
     }
 
+    /**
+     * If valid adds it to the chain, ow ignores it
+     * @param block the new constructed block
+     *
+     * @return boolean true iff it has been added to the chain
+     */
+    addConstructedBlock(block) {
+        if (!block.isValidBlock(this.getLatestBlock().hash)) {
+            return false;
+        }
+        this.chain.push(block);
+        return true;
+    }
     /**
      * Determines whether or not to replace chain and does so
      * @param newChain the newChain, to possibly replace the old chain
@@ -63,7 +76,7 @@ export class Blockchain {
         // TODO: validate genesis
         // this loop verifies all blocks after genesis block
         for (let i = 1; i < chain.length; i++) {
-            if (!chain[i].isValidBlock()) {
+            if (!chain[i].isValidBlock(chain[i - 1].hash)) {
                 return false;
             }
         }

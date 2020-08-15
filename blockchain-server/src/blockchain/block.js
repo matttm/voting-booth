@@ -18,10 +18,11 @@ export class Block {
 
     /**
      * Determine if new block is valid
+     * @param prevHash the hash of the previous block
      *
      * @returns {boolean} true iff the block is valid
      */
-    isValidBlock() {
+    isValidBlock(prevHash) {
         const hash = this.hash;
 
         // check whether data has been tampered with
@@ -30,6 +31,10 @@ export class Block {
             return false;
         } else if (!Block.isHashValid(hash, this.difficulty)) {
             console.log(`Block ${this.timestamp} rejected: new hash does match block's difficulty`);
+            return false;
+        } else if (this.prevHash !== prevHash) {
+            console.log(`Block ${this.timestamp} rejected: new block's previous hash does not match ` +
+                `previous block's hash`);
             return false;
         }
         return true;

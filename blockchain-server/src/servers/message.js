@@ -5,8 +5,11 @@
 export const MessageType = {
     // when a block is sent
     ADD_BLOCK: 'ADD_BLOCK',
-    // when etire chain is sent
+    // when entire chain is sent
+    // TODo: change this to REPLACE_CHAIN
     CHAIN: 'CHAIN',
+    // request chain due to invalidity
+    REQUEST_CHAIN: 'REQUEST_CHAIN',
     // when a peer is sent
     ADD_PEER: 'ADD_PEER'
 };
