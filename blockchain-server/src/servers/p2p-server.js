@@ -45,12 +45,9 @@ export class P2pServer {
      */
     listen() {
         this.server = new WebSocket.Server({ port: this.port, host: this.host });
-
         const server = this.server;
-        server.on('error', error => onError(this.port));
-        // TODO: fix event listener
-        console.log('Listening on ' + this.port);
-        //server.on('listening', onListening(server));
+        server.on('listening', () => onListening(server));
+        server.on('error', error => onError(this.port)(error));
         server.on('connection', socket => this.connect(socket));
 
         this.connectToPeers();
