@@ -37,6 +37,7 @@ export class P2pServer {
                 this.blockchain.chain
             );
         });
+        // TODO: emitter for adding peer
     }
 
     /**
@@ -54,26 +55,6 @@ export class P2pServer {
 
         this.connectToPeers();
         this.subscribeBlockchainEvents();
-    }
-
-    /**
-     * Connect to a socket
-     * @param socket the socket that's connecting
-     */
-    connect(socket) {
-        this.sockets.push(socket);
-        console.log(`${socket.remoteAddress} connected via WebSocket`);
-
-        socket.on('message', message => this.onMessage(message));
-
-        P2pServer.sendMessage(
-            socket,
-            // TODO: factor out message creation
-            new Message(
-                MessageType.CHAIN,
-                this.blockchain.chain
-            )
-        );
     }
 
     /**
@@ -100,8 +81,7 @@ export class P2pServer {
                 this.blockchain.replaceChain(payload);
                 break;
             case MessageType.ADD_PEER:
-                // TODO: find way to coordinate peers
-                // TODO: refactor some adding peer function
+                this.connectToPeer(payload);
                 break;
             case MessageType.REQUEST_CHAIN:
                 this.broadcast(
@@ -115,14 +95,40 @@ export class P2pServer {
     }
 
     /**
+     * Connect to a socket
+     * @param socket the socket that's connecting
+     */
+    connect(socket) {
+        this.sockets.push(socket);
+        console.log(`${socket.remoteAddress} connected via WebSocket`);
+
+        socket.on('message', message => this.onMessage(message));
+
+        P2pServer.sendMessage(
+            socket,
+            // TODO: factor out message creation
+            new Message(
+                MessageType.CHAIN,
+                this.blockchain.chain
+            )
+        );
+    }
+
+    /**
      * Connect to array of websocket addresses
      */
     connectToPeers() {
         console.log('peers: ' + this.peers);
-        this.peers.forEach(peer => {
-            const socket = new WebSocket(peer);
-            socket.on('open', () => this.connect(socket));
-        })
+        this.peers.forEach(this.connectToPeer);
+    }
+
+    /**
+     * Connect to a single peer
+     * @param peer a websocket url to connect to
+     */
+    connectToPeer(peer) {
+        const socket = new WebSocket(peer);
+        socket.on('open', () => this.connect(socket));
     }
 
     /***
