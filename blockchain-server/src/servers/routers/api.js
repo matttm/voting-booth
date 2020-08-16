@@ -25,13 +25,14 @@ export const ApiRouter = (_blockchain) => {
     });
 
     router.post('/blocks', (req, res) => {
-      const block = req.body?.block;
-      if (!block) {
+      const data = req.body?.data;
+      if (!data) {
         res.status(400).json({
           success: false,
           message: "Request did not contain a block"
         });
       }
+      this.blockchain.addBlock(data);
       res.status(200).json({
         success: true,
         message: "Block added"
@@ -42,11 +43,11 @@ export const ApiRouter = (_blockchain) => {
 
     });
 
-    router.post('peers', (req, res) => {
+    router.post('/peers', (req, res) => {
 
     });
 
-    router.get('results', (req, res) => {
+    router.get('/results', (req, res) => {
 
     });
   })();
