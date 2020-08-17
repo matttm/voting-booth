@@ -1,0 +1,12 @@
+<form [formGroup]="form">
+  <fieldset>
+    <div class="mat-form-field">
+      <mat-label>Social Security Number</mat-label>
+      <input name="ssn" formControlName="ssn">
+    </div>
+  </fieldset>
+  <div class="form-button">
+    <button class="mat-button"
+            (click)="login()">Login</button>
+  </div>
+</form>

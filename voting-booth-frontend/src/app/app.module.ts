@@ -5,20 +5,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MatToolbarModule,
+import {
+  MatToolbarModule,
   MatMenuModule,
   MatIconModule,
   MatCardModule,
   MatButtonModule,
   MatTableModule,
-  MatDividerModule } from '@angular/material';
+  MatDividerModule, MatFormFieldModule
+} from '@angular/material';
 
 // import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/app/app.component';
+import { LoginComponent } from './components/login/login.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,9 @@ import { AppComponent } from './app.component';
     MatButtonModule,
     MatTableModule,
     MatDividerModule,
-    //AppRoutingModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    // AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
