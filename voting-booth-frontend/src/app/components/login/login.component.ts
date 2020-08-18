@@ -22,5 +22,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login() {}
+  login() {
+    const vals = this.form.value;
+    this.auth.login(vals.ssn).subscribe( () => {
+      console.log('Logging in...');
+      // this.router.navigateByUrl('/ballot');
+    });
+  }
 }
