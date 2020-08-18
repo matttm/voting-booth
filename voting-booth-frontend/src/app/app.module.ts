@@ -15,10 +15,10 @@ import {
   MatDividerModule, MatFormFieldModule
 } from '@angular/material';
 
-// import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { LoginComponent } from './components/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatDividerModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    // AppRoutingModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
