@@ -12,7 +12,7 @@ import {
   MatCardModule,
   MatButtonModule,
   MatTableModule,
-  MatDividerModule, MatFormFieldModule
+  MatDividerModule, MatFormFieldModule, MatInputModule
 } from '@angular/material';
 
 import { AppComponent } from './components/app/app.component';
@@ -42,6 +42,7 @@ import { SplashComponent } from './components/splash/splash.component';
     ReactiveFormsModule,
     MatFormFieldModule,
     AppRoutingModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

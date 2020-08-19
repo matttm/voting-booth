@@ -1,12 +1,13 @@
 <form [formGroup]="form">
   <fieldset>
-    <div class="mat-form-field">
-      <mat-label>Social Security Number</mat-label>
-      <input name="ssn" formControlName="ssn">
-    </div>
+      <mat-form-field *ngFor="let field of fields" appearance="standard">
+        <mat-label>{{field.displayName}}</mat-label>
+        <input matInput placeholder="{{field.placeholder}}"
+               name="{{field.name}}" formControlName="{{field.name}}">
+      </mat-form-field>
   </fieldset>
   <div class="form-button">
-    <button class="mat-button"
+    <button mat-flat-button color="primary"
             (click)="login()">Login</button>
   </div>
 </form>

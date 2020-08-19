@@ -10,12 +10,33 @@ import {AuthService} from '../../services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  fields: FormObject[];
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
               private router: Router) {
+    this.fields = [
+      {
+        placeholder: 'XXX-XX-XXXX',
+        name: 'ssn',
+        displayName: 'Social Security Number'
+      },
+      {
+        placeholder: 'Ameera',
+        name: 'fname',
+        displayName: 'First Name'
+      },
+      {
+        placeholder: 'Golde',
+        name: 'lname',
+        displayName: 'Last Name'
+      }
+    ];
+    // TODO: refactor this to rely on this.fields
     this.form = this.fb.group({
-      ssn: ['', Validators.required]
+      ssn: ['', Validators.required],
+      fname: ['', Validators.required],
+      lname: ['', Validators.required]
     });
   }
 
