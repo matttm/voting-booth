@@ -19,11 +19,13 @@ import { AppComponent } from './components/app/app.component';
 import { LoginComponent } from './components/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
+import { SplashComponent } from './components/splash/splash.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    SplashComponent,
   ],
   imports: [
     BrowserModule,
