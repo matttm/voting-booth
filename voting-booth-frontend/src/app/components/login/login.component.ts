@@ -32,12 +32,11 @@ export class LoginComponent implements OnInit {
         displayName: 'Last Name'
       }
     ];
-    // TODO: refactor this to rely on this.fields
-    this.form = this.fb.group({
-      ssn: ['', Validators.required],
-      fname: ['', Validators.required],
-      lname: ['', Validators.required]
-    });
+    const groupConfig = {};
+    for (const field of this.fields) {
+      groupConfig[field.name] = ['', Validators.required];
+    }
+    this.form = this.fb.group(groupConfig);
   }
 
   ngOnInit() {
