@@ -15,6 +15,7 @@ const debug = _debug('blockchain:bin');
  * Get port from environment and store in Express.
  */
 // TODO: get args appropriately
+const filename        = getEnvVar('filename', null);
 const httpPort    = getEnvVar('http_port', '3001');
 const p2pPort     = getEnvVar('p2p_port', '5001');
 const httpAddress = getEnvVar('http_address', 'localhost');
@@ -26,7 +27,7 @@ const peers       = process.env.PEERS ? process.env.PEERS.split(",") : [];
  *   and P2pServer
  */
 debug("Instantiating blockchain and servers");
-const blockchain = new Blockchain();
+const blockchain = new Blockchain(filename);
 const httpServer = new HttpServer(blockchain, httpAddress, httpPort);
 // TODO: Add another layer of encapsulation?
 // TODO: rename p2pserver to Node?

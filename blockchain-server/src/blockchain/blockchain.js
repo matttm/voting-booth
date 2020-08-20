@@ -1,5 +1,6 @@
 import {Block} from "./block";
 import {EventEmitter} from 'events';
+import fs from 'fs';
 
 /**
  * This class encapsulates a list of blocks and an emitter.
@@ -10,9 +11,10 @@ import {EventEmitter} from 'events';
 export class Blockchain {
 
     // TODO: Should add an index to block
-    constructor() {
+    constructor(filename) {
         this.chain = [Blockchain.genesisBlock()];
         this.emitter = new EventEmitter();
+        this.file = filename;
     }
 
     /**
@@ -99,6 +101,30 @@ export class Blockchain {
      */
     static genesisBlock() {
         return new Block('0'.repeat(64), "Genesis", Date.now(), 3);
+    }
+
+    /**
+     * Write blockchain to file
+     */
+    writeToFile() {
+        if (!this.file) {
+            return;
+        }
+        const data = JSON.stringify(this.chain);
+        fs.writeFileSync(this.file, data);
+    }
+
+    /**
+     * Set blockchain from file
+     *
+     * Note: the file must be an array of block objects
+     */
+    setBlockchainFromFile() {
+        if (!this.file) {
+            return;
+        }
+        const data = fs.readFileSync(this.file);
+        this.chain = JSON.parse(data);
     }
 }
 
