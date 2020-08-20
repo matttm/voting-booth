@@ -46,10 +46,6 @@ export const ApiRouter = (_blockchain) => {
     router.post('/peers', (req, res) => {
 
     });
-
-    router.get('/results', (req, res) => {
-
-    });
   })();
   return router;
 };
