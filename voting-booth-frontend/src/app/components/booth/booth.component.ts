@@ -12,6 +12,7 @@ import {VotingService} from '../../services/voting/voting.service';
   styleUrls: ['./booth.component.css']
 })
 export class BoothComponent implements OnInit {
+  selected: string;
   candidates: string[];
   form: FormGroup;
 
@@ -31,5 +32,7 @@ export class BoothComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  vote() {}
 
 }

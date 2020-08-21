@@ -12,12 +12,12 @@ import {
   MatCardModule,
   MatButtonModule,
   MatTableModule,
-  MatDividerModule, MatFormFieldModule, MatInputModule
+  MatDividerModule, MatFormFieldModule, MatInputModule, MatRadioModule
 } from '@angular/material';
 
 import { AppComponent } from './components/app/app.component';
 import { LoginComponent } from './components/login/login.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import { SplashComponent } from './components/splash/splash.component';
 import { BoothComponent } from './components/booth/booth.component';
@@ -45,6 +45,8 @@ import { BoothComponent } from './components/booth/booth.component';
     MatFormFieldModule,
     AppRoutingModule,
     MatInputModule,
+    MatRadioModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

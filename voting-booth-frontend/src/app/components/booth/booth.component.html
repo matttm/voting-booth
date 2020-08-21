@@ -1,3 +1,12 @@
-<p>
-  booth works!
-</p>
+<label id="candidates-label">Select a candidate:</label>
+<mat-radio-group
+  aria-labelledby="candidates-label"
+  class="candidates-radio-group"
+  [(ngModel)]="selected"
+>
+  <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates"
+                    [value]="candidate">
+    {{candidate}}
+  </mat-radio-button>
+</mat-radio-group>
+<button mat-flat-button (click)="vote()"  color="primary">Submit Vote</button>
