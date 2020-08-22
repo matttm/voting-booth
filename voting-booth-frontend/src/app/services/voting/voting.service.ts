@@ -19,4 +19,11 @@ export class VotingService {
    */
   vote(nomination: string) {
   }
+
+  /**
+   * Determines whether a person has voted
+   */
+  hasVoted() {
+    return true;
+  }
 }
