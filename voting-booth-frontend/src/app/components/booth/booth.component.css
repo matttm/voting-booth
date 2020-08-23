@@ -8,3 +8,15 @@
 .candidate-radio-button {
   margin: 5px;
 }
+
+#booth-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#form-container {
+  padding: 10px;
+}
+#info-container {
+  padding: 10px;
+}

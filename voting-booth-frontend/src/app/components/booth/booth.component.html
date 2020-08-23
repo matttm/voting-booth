@@ -1,22 +1,26 @@
-<div *ngIf="votingService.hasVoted(); else hasVoted">
-  <label id="candidates-label">Select a candidate:</label>
-  <mat-radio-group
-    aria-labelledby="candidates-label"
-    class="candidates-radio-group"
-    [(ngModel)]="selected"
-  >
-    <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates"
-                      [value]="candidate"
-                      (mouseenter)="onMouseEnter()"
-                      (mouseleave)="onMouseLeave()"
-    >
-      {{candidate}}
-    </mat-radio-button>
-  </mat-radio-group>
-  <div *ngIf="isInfoVisible">
+<div id="booth-container" *ngIf="votingService.hasVoted(); else hasVoted">
+  <div id="form-container">
+    <!-- <form id="vote-form" [formGroup]="form"> -->
+      <label id="candidates-label">Select a candidate:</label>
+      <mat-radio-group
+        aria-labelledby="candidates-label"
+        class="candidates-radio-group"
+        [(ngModel)]="selected"
+      >
+        <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates"
+                          [value]="candidate"
+                          (mouseenter)="onMouseEnter(candidate)"
+                          (mouseleave)="onMouseLeave()"
+        >
+          {{candidate}}
+        </mat-radio-button>
+      </mat-radio-group>
+      <button mat-flat-button (click)="vote()"  color="primary">Submit Vote</button>
+    <!-- </form> -->
+  </div>
+  <div id="info-container" *ngIf="isInfoVisible">
     <app-candidate-info [candidate]="hovered"></app-candidate-info>
   </div>
-  <button mat-flat-button (click)="vote()"  color="primary">Submit Vote</button>
 </div>
 <ng-template #hasVoted>
   <div>America thanks  you for voting</div>

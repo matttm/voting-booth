@@ -40,12 +40,14 @@ export class BoothComponent implements OnInit {
 
   vote() {}
 
-  onMouseEnter() {
+  onMouseEnter(name: string) {
     this.isInfoVisible = true;
+    this.hovered = name;
   }
 
   onMouseLeave() {
     this.isInfoVisible = false;
+    this.hovered = null;
   }
 
 }
