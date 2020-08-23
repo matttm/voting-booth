@@ -12,13 +12,18 @@ import {VotingService} from '../../services/voting/voting.service';
   styleUrls: ['./booth.component.css']
 })
 export class BoothComponent implements OnInit {
+  hovered: string;
   selected: string;
+  isInfoVisible: boolean;
   candidates: string[];
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
               private votingService: VotingService
   ) {
+    this.hovered = null;
+    this.selected = null;
+    this.isInfoVisible = false;
     this.candidates = [
       'Jo Jorgenson',
       'Joe Biden',
@@ -34,5 +39,13 @@ export class BoothComponent implements OnInit {
   }
 
   vote() {}
+
+  onMouseEnter() {
+    this.isInfoVisible = true;
+  }
+
+  onMouseLeave() {
+    this.isInfoVisible = false;
+  }
 
 }

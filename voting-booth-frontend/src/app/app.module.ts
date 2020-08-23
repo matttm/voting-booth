@@ -21,6 +21,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import { SplashComponent } from './components/splash/splash.component';
 import { BoothComponent } from './components/booth/booth.component';
+import { CandidateInfoComponent } from './components/candidate-info/candidate-info.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { BoothComponent } from './components/booth/booth.component';
     LoginComponent,
     SplashComponent,
     BoothComponent,
+    CandidateInfoComponent,
   ],
   imports: [
     BrowserModule,

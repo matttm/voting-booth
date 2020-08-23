@@ -1,6 +1,7 @@
 .candidates-radio-group {
   display: flex;
   flex-direction: column;
+  width: fit-content;
   margin: 15px 0;
 }
 

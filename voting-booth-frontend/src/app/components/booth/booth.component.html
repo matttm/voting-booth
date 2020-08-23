@@ -6,10 +6,16 @@
     [(ngModel)]="selected"
   >
     <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates"
-                      [value]="candidate">
+                      [value]="candidate"
+                      (mouseenter)="onMouseEnter()"
+                      (mouseleave)="onMouseLeave()"
+    >
       {{candidate}}
     </mat-radio-button>
   </mat-radio-group>
+  <div *ngIf="isInfoVisible">
+    <app-candidate-info [candidate]="hovered"></app-candidate-info>
+  </div>
   <button mat-flat-button (click)="vote()"  color="primary">Submit Vote</button>
 </div>
 <ng-template #hasVoted>
