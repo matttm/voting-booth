@@ -1,11 +1,46 @@
 [
   {
-    "name": "Joe Biden"
+    "name": "Joe Biden",
+    "image": "",
+    "running-mate": "Kamela Harris",
+    "party": "Democrat",
+    "stances": [
+      "Abolish the death penalty",
+      "Raise minimum wage to $15/hr",
+      "Two year colleges should be free",
+      "Expand/fix student debt relief programs",
+      "Tax carbon emissions",
+      "Marijuana legalization",
+      "Some limits to abortion"
+    ]
   },
   {
-    "name": "Jo Jorgenson"
+    "name": "Jo Jorgensen",
+    "image": "",
+    "running-mate": "Spike Cohen",
+    "party": "Libertarian",
+    "stances": [
+      "Remove troops from Iraq",
+      "Reduce Healthcare cost",
+      "Reduce government spending",
+      "Pro-climate change",
+      "End war on drugs",
+      "Pardon victimless crime",
+      "Reduce taxrs"
+    ]
   },
   {
-    "name": "Donald Trump"
+    "name": "Donald Trump",
+    "image": "",
+    "running-mate": "Mike Pence",
+    "party": "Republican",
+    "stances": [
+      "Ban late term abortion",
+      "Reducing taxes",
+      "Increase military spending",
+      "Lowering corporate taxes",
+      "Anti-climate change",
+      "Building a border wall"
+    ]
   }
 ]
