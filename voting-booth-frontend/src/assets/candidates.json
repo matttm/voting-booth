@@ -2,7 +2,7 @@
   {
     "name": "Joe Biden",
     "image": "",
-    "running-mate": "Kamela Harris",
+    "runningMate": "Kamela Harris",
     "party": "Democrat",
     "stances": [
       "Abolish the death penalty",
@@ -17,7 +17,7 @@
   {
     "name": "Jo Jorgensen",
     "image": "",
-    "running-mate": "Spike Cohen",
+    "runningMate": "Spike Cohen",
     "party": "Libertarian",
     "stances": [
       "Remove troops from Iraq",
@@ -32,7 +32,7 @@
   {
     "name": "Donald Trump",
     "image": "",
-    "running-mate": "Mike Pence",
+    "runningMate": "Mike Pence",
     "party": "Republican",
     "stances": [
       "Ban late term abortion",
