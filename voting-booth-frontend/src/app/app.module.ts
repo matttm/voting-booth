@@ -22,6 +22,10 @@ import {AppRoutingModule} from './app-routing.module';
 import { SplashComponent } from './components/splash/splash.component';
 import { BoothComponent } from './components/booth/booth.component';
 import { CandidateInfoComponent } from './components/candidate-info/candidate-info.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -49,6 +53,8 @@ import { CandidateInfoComponent } from './components/candidate-info/candidate-in
     MatInputModule,
     MatRadioModule,
     FormsModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent]

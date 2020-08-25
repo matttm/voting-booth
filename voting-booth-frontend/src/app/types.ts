@@ -5,7 +5,10 @@ interface FormObject {
   displayName: string;
 }
 
-interface Candidate {
+/**
+ * Data for Store Objects
+ */
+interface CandidateData {
   name: string;
   image: string;
   runningMate: string;

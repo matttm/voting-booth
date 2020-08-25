@@ -134,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "voting-booth-frontend"
+  "defaultProject": "voting-booth-frontend",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
