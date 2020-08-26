@@ -1,24 +1,24 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {first} from "rxjs/operators";
+import {first} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../reducers';
+import {LoadCandidateAction} from '../../actions/candidate.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidacyService {
-  candidates: Candidate[];
 
-  constructor(private httpClient: HttpClient) {
-    this.httpClient.get<Candidate[]>('assets/candidates.json').pipe(first())
-      .subscribe((data: any[]) => {
+  constructor(
+    private store: Store<AppState>,
+    private httpClient: HttpClient
+  ) {
+    this.httpClient.get<CandidateData[]>('assets/candidates.json').pipe(first())
+      .subscribe((data: CandidateData[]) => {
         console.log(data);
-        this.candidates = data;
+        this.store.dispatch(new LoadCandidateAction({candidateData: data }));
       });
   }
-
-  getCandidatesNames() {
-    return this.candidates.map(candidate => candidate.name);
-  }
-  getCandidate(name: string) {}
 }

@@ -9,33 +9,54 @@ import { environment } from '../../environments/environment';
 import {CandidateAction, CandidateActionTypes} from '../actions/candidate.actions';
 
 export interface AppState {
-  candidate: CandidateState;
+  candidatesState: CandidatesState;
 }
 
-export interface CandidateState {
-  candidateData: CandidateData | null;
+export interface CandidatesState {
+  candidates: CandidateData[];
 }
 
-const initialCandidateState: CandidateState = {
-  candidateData: null
+const initialCandidatesState: CandidatesState = {
+  candidates: []
 };
 
 export function candidateReducer(
-  state: CandidateState = initialCandidateState,
+  state: CandidatesState = initialCandidatesState,
   action: CandidateAction
-): CandidateState {
+): CandidatesState {
+  let newState: CandidatesState;
   switch (action.type) {
     case CandidateActionTypes.loadCandidates:
+      newState = {
+        ...state,
+        candidates: [...state.candidates.concat(action.payload.candidateData)]
+      };
+      break;
+
+    case CandidateActionTypes.addCandidate:
+      newState = {
+        candidates: [...state.candidates]
+      };
+      newState.candidates.concat(action.payload.candidateData);
+      break;
+
+    case CandidateActionTypes.removeCandidate:
+      newState = {
+        candidates: [...state.candidates]
+      };
+      newState.candidates = newState.candidates
+        .filter(c => c.name !== action.payload.name);
+      break;
+
     case CandidateActionTypes.candidatesError:
     default:
       return state;
   }
+  return newState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  candidate: candidateReducer
+  candidatesState: candidateReducer
 };
 
-export const selectCandidateState = (state: AppState) => state.candidate;
-
-export const metaReducers: MetaReducer<CandidateState>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [] : [];

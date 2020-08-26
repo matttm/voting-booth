@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {VotingService} from '../../services/voting/voting.service';
+import {select, Store} from '@ngrx/store';
+import {selectCandidatesNames} from '../../selectors';
+import {Observable} from "rxjs";
 import {CandidacyService} from "../../services/candidacy/candidacy.service";
 
 /**
  * Component represents the actual voting booth, in which a person
- * nominates a presidential candidates
+ * nominates a presidential candidatesState
  */
 @Component({
   selector: 'app-booth',
@@ -16,17 +19,20 @@ export class BoothComponent implements OnInit {
   hovered: string;
   selected: string;
   isInfoVisible: boolean;
-  candidates: string[];
+  candidates: Observable<string[]>;
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private candidacyService: CandidacyService,
-              private votingService: VotingService
+              private store: Store,
+              private votingService: VotingService,
+              private x: CandidacyService
   ) {
     this.hovered = null;
     this.selected = null;
     this.isInfoVisible = false;
-    this.candidates = candidacyService.getCandidatesNames();
+    this.candidates = store.pipe(
+      select(selectCandidatesNames)
+    );
     const groupConfig = {};
     // @ts-ignore
     groupConfig.select = ['', Validators.required];
