@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -22,10 +22,11 @@ import {AppRoutingModule} from './app-routing.module';
 import { SplashComponent } from './components/splash/splash.component';
 import { BoothComponent } from './components/booth/booth.component';
 import { CandidateInfoComponent } from './components/candidate-info/candidate-info.component';
-import { StoreModule } from '@ngrx/store';
+import {Store, StoreModule} from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import {CandidacyService} from "./services/candidacy/candidacy.service";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,19 @@ import { environment } from '../environments/environment';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [],
+  providers: [
+    CandidacyService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (cs: CandidacyService) => () => null, //cs.configureApp,
+      multi: true,
+      deps: [
+        CandidacyService,
+        HttpClient,
+        Store
+      ]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

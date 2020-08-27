@@ -24,8 +24,7 @@ export class BoothComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private store: Store,
-              private votingService: VotingService,
-              private x: CandidacyService
+              private votingService: VotingService
   ) {
     this.hovered = null;
     this.selected = null;

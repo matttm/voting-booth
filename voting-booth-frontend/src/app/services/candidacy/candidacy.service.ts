@@ -6,9 +6,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../reducers';
 import {LoadCandidateAction} from '../../actions/candidate.actions';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CandidacyService {
 
   constructor(
@@ -19,6 +17,15 @@ export class CandidacyService {
       .subscribe((data: CandidateData[]) => {
         console.log(data);
         this.store.dispatch(new LoadCandidateAction({candidateData: data }));
+      });
+  }
+
+  configureApp(httpClient: HttpClient, store: Store) {
+    return httpClient.get<CandidateData[]>('assets/candidates.json').pipe(first())
+      .toPromise()
+      .then((data: CandidateData[]) => {
+        console.log(data);
+        store.dispatch(new LoadCandidateAction({candidateData: data }));
       });
   }
 }
