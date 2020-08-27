@@ -1,32 +1,34 @@
-import { BrowserModule } from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {
-  MatToolbarModule,
-  MatMenuModule,
-  MatIconModule,
-  MatCardModule,
   MatButtonModule,
+  MatCardModule,
+  MatDividerModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatRadioModule,
   MatTableModule,
-  MatDividerModule, MatFormFieldModule, MatInputModule, MatRadioModule
+  MatToolbarModule
 } from '@angular/material';
 
-import { AppComponent } from './components/app/app.component';
-import { LoginComponent } from './components/login/login.component';
+import {AppComponent} from './components/app/app.component';
+import {LoginComponent} from './components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
-import { SplashComponent } from './components/splash/splash.component';
-import { BoothComponent } from './components/booth/booth.component';
-import { CandidateInfoComponent } from './components/candidate-info/candidate-info.component';
-import {Store, StoreModule} from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
-import {CandidacyService} from "./services/candidacy/candidacy.service";
+import {SplashComponent} from './components/splash/splash.component';
+import {BoothComponent} from './components/booth/booth.component';
+import {CandidateInfoComponent} from './components/candidate-info/candidate-info.component';
+import {StoreModule} from '@ngrx/store';
+import {metaReducers, reducers} from './reducers';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -57,19 +59,7 @@ import {CandidacyService} from "./services/candidacy/candidacy.service";
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [
-    CandidacyService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (cs: CandidacyService) => () => null, //cs.configureApp,
-      multi: true,
-      deps: [
-        CandidacyService,
-        HttpClient,
-        Store
-      ]
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
