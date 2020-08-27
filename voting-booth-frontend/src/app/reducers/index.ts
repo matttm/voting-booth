@@ -37,7 +37,7 @@ export function candidateReducer(
       newState = {
         candidates: [...state.candidates]
       };
-      newState.candidates.concat(action.payload.candidateData);
+      newState.candidates.push(action.payload.candidateData as CandidateData);
       break;
 
     case CandidateActionTypes.removeCandidate:
