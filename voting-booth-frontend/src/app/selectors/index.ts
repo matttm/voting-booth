@@ -8,6 +8,11 @@ export const selectCandidates = createSelector(
   (state: CandidatesState) => state.candidates
 );
 
+export const selectCandidate = createSelector(
+  selectCandidates,
+  (state: CandidateData[], name: string) => state.filter(c => c.name === name)
+);
+
 export const selectCandidatesNames = createSelector(
   selectCandidates,
   (candidates: CandidateData[]) => candidates.map(c => c.name)
