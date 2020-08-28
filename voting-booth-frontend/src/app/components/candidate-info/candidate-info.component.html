@@ -1,3 +1,17 @@
-<p>
-  Name: {{candidate$ | async}}
-</p>
+<div *ngIf="candidate$ | async; let candidate">
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{candidate.name}}</mat-card-title>
+      <mat-card-subtitle>{{candidate.party}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{candidate.image}}" alt="Photo of a {{candidate.name}}">
+    <mat-card-content>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>VOTE</button>
+    </mat-card-actions>
+  </mat-card>
+
+</div>
