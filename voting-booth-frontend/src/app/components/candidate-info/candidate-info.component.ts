@@ -1,18 +1,27 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Observable} from "rxjs";
+import {AppState} from "../../reducers";
+import {select, Store} from "@ngrx/store";
+import {selectCandidate} from "../../selectors";
 
 @Component({
   selector: 'app-candidate-info',
   templateUrl: './candidate-info.component.html',
   styleUrls: ['./candidate-info.component.css']
 })
-export class CandidateInfoComponent implements OnInit {
+export class CandidateInfoComponent implements OnInit, OnChanges {
 
   @Input()
-  candidate: string;
+  candidateName: string;
 
-  constructor() { }
+  candidate: Observable<CandidateData>;
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.candidate = this.store.pipe(select(selectCandidate, this.candidateName));
+  }
 }

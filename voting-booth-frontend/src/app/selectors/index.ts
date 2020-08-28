@@ -10,7 +10,7 @@ export const selectCandidates = createSelector(
 
 export const selectCandidate = createSelector(
   selectCandidates,
-  (state: CandidateData[], name: string) => state.filter(c => c.name === name)
+  (state: CandidateData[], name: string) => state.find(c => c.name === name)
 );
 
 export const selectCandidatesNames = createSelector(
