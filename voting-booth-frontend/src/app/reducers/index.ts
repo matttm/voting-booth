@@ -1,12 +1,7 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
-} from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import {ActionReducerMap, MetaReducer} from '@ngrx/store';
+import {environment} from '../../environments/environment';
 import {CandidateAction, CandidateActionTypes} from '../actions/candidate.actions';
+import {CandidateData} from '../types';
 
 export interface AppState {
   candidatesState: CandidatesState;

@@ -1,8 +1,9 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Observable} from "rxjs";
-import {AppState} from "../../reducers";
-import {select, Store} from "@ngrx/store";
-import {selectCandidate} from "../../selectors";
+import {Observable} from 'rxjs';
+import {AppState} from '../../reducers';
+import {select, Store} from '@ngrx/store';
+import {selectCandidate} from '../../selectors';
+import {CandidateData} from '../../types';
 
 @Component({
   selector: 'app-candidate-info',

@@ -1,5 +1,5 @@
 
-interface FormObject {
+export interface FormObject {
   placeholder: string;
   name: string;
   displayName: string;
@@ -8,7 +8,7 @@ interface FormObject {
 /**
  * Data for Store Objects
  */
-interface CandidateData {
+export interface CandidateData {
   name: string;
   image: string;
   runningMate: string;
@@ -16,7 +16,7 @@ interface CandidateData {
   stances: string[];
 }
 
-interface JsonWebToken {
+export interface JsonWebToken {
   tokenId: string;
   expiresIn: number;
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {shareReplay} from 'rxjs/operators';
+import {JsonWebToken} from '../../types';
 
 /**
  * Service class in charge of authenticating credentials
@@ -26,6 +27,6 @@ export class AuthService {
   private setSession(authToken: JsonWebToken) {
     const expiresAt  = authToken.expiresIn;
     localStorage.setItem('id_token', authToken.tokenId);
-    localStorage.setItem('expires_at', expiresAt);
+    localStorage.setItem('expires_at', String(expiresAt));
   }
 }
