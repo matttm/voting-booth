@@ -7,7 +7,7 @@
         class="candidates-radio-group"
         [(ngModel)]="selected"
       >
-        <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates | async"
+        <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates$ | async"
                           [value]="candidate"
                           (mouseenter)="onMouseEnter(candidate)"
                           (mouseleave)="onMouseLeave()"

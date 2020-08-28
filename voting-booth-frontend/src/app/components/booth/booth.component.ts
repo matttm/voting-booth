@@ -3,8 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {VotingService} from '../../services/voting/voting.service';
 import {select, Store} from '@ngrx/store';
 import {selectCandidatesNames} from '../../selectors';
-import {Observable} from "rxjs";
-import {CandidacyService} from "../../services/candidacy/candidacy.service";
+import {Observable} from 'rxjs';
 
 /**
  * Component represents the actual voting booth, in which a person
@@ -19,7 +18,7 @@ export class BoothComponent implements OnInit {
   hovered: string;
   selected: string;
   isInfoVisible: boolean;
-  candidates: Observable<string[]>;
+  candidates$: Observable<string[]>;
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -29,7 +28,7 @@ export class BoothComponent implements OnInit {
     this.hovered = null;
     this.selected = null;
     this.isInfoVisible = false;
-    this.candidates = store.pipe(
+    this.candidates$ = store.pipe(
       select(selectCandidatesNames)
     );
     const groupConfig = {};

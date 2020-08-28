@@ -14,7 +14,7 @@ export class CandidateInfoComponent implements OnInit, OnChanges {
   @Input()
   candidateName: string;
 
-  candidate: Observable<CandidateData>;
+  candidate$: Observable<CandidateData>;
 
   constructor(private store: Store<AppState>) { }
 
@@ -22,6 +22,6 @@ export class CandidateInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.candidate = this.store.pipe(select(selectCandidate, this.candidateName));
+    this.candidate$ = this.store.pipe(select(selectCandidate, this.candidateName));
   }
 }
