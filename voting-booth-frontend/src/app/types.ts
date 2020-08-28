@@ -15,3 +15,8 @@ interface CandidateData {
   party: string;
   stances: string[];
 }
+
+interface JsonWebToken {
+  tokenId: string;
+  expiresIn: number;
+}

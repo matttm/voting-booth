@@ -20,4 +20,12 @@ export class AuthService {
     return this.http.post('api/login', {ssn})
       .pipe(shareReplay());
   }
+
+  logout() {}
+
+  private setSession(authToken: JsonWebToken) {
+    const expiresAt  = authToken.expiresIn;
+    localStorage.setItem('id_token', authToken.tokenId);
+    localStorage.setItem('expires_at', expiresAt);
+  }
 }
