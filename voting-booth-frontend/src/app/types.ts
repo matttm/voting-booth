@@ -20,3 +20,7 @@ export interface JsonWebToken {
   tokenId: string;
   expiresIn: number;
 }
+
+export interface Results {
+  [key: string]: number;
+}

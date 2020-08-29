@@ -30,6 +30,7 @@ import {metaReducers, reducers} from './reducers';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {AuthInterceptor} from "./services/interceptors/auth/auth.interceptor";
+import { ResultComponent } from './components/result/result.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {AuthInterceptor} from "./services/interceptors/auth/auth.interceptor";
     SplashComponent,
     BoothComponent,
     CandidateInfoComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,
