@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {shareReplay} from 'rxjs/operators';
+import {shareReplay, tap} from 'rxjs/operators';
 import {JsonWebToken} from '../../types';
+import * as moment from 'moment';
 
 /**
  * Service class in charge of authenticating credentials
@@ -19,14 +20,26 @@ export class AuthService {
    */
   login(ssn: string) {
     return this.http.post('api/login', {ssn})
-      .pipe(shareReplay());
+      .pipe(
+        tap(res => this.setSession),
+        shareReplay()
+      );
   }
 
-  logout() {}
+  logout() {
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+  }
 
   private setSession(authToken: JsonWebToken) {
-    const expiresAt  = authToken.expiresIn;
+    const expiresAt  = moment().add(authToken.expiresIn);
     localStorage.setItem('id_token', authToken.tokenId);
-    localStorage.setItem('expires_at', String(expiresAt));
+    localStorage.setItem('expires_at', JSON.stringify(expiresAt));
+  }
+
+  getExpiration() {
+    const expiration = localStorage.getItem('expires_at');
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
   }
 }
