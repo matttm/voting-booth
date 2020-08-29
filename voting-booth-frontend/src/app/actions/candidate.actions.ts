@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store';
 import {Action} from '@ngrx/store';
+import {CandidateData} from '../types';
 
 export enum CandidateActionTypes {
   loadCandidates = '[Home Page] Load Candidates',
