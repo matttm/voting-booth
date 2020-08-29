@@ -31,6 +31,11 @@ export class LoginComponent implements OnInit {
         placeholder: 'Golde',
         name: 'lname',
         displayName: 'Last Name'
+      },
+      {
+        placeholder: '20852',
+        name: 'zip',
+        displayName: 'Zip Code'
       }
     ];
     const groupConfig = {};
@@ -45,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     const vals = this.form.value;
-    this.auth.login(vals.ssn).subscribe( () => {
+    this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).subscribe( () => {
       console.log('Logging in...');
       // this.router.navigateByUrl('/ballot');
     });

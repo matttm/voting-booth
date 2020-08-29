@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {shareReplay, tap} from 'rxjs/operators';
 import {JsonWebToken} from '../../types';
 import * as moment from 'moment';
+import {Observable} from 'rxjs';
 
 /**
  * Service class in charge of authenticating credentials
@@ -17,9 +18,16 @@ export class AuthService {
   /**
    * Sends information to the backend server to validate
    * @param ssn the social security number to validate
+   * @param fname the first name of person to be validated
+   * @param lname the last name of person to be validated
+   * @param zip the zip code of person to be validated
+   *
+   * @return an observable of a successful or failure during login and
+   * s JWT if successful
    */
-  login(ssn: string) {
-    return this.http.post('api/login', {ssn})
+  login(ssn: string, fname: string, lname: string, zip: string): Observable<any> {
+    const voter = { ssn, fname, lname, zip };
+    return this.http.post('api/login', voter)
       .pipe(
         tap(res => this.setSession),
         shareReplay()
