@@ -2,10 +2,10 @@ import {Action} from '@ngrx/store';
 import {CandidateData} from '../types';
 
 export enum CandidateActionTypes {
-  loadCandidates = '[Home Page] Load Candidates',
-  addCandidate = '[Home Page] Add Candidate',
-  removeCandidate = '[Home Page] Remove Candidate',
-  candidatesError = '[Home Page] Load Candidates Failed'
+  loadCandidates  = '[Candidate] Load Candidates',
+  addCandidate    = '[Candidate] Add Candidate',
+  removeCandidate = '[Candidate] Remove Candidate',
+  candidatesError = '[Candidate] Load Candidates Failed'
 }
 
 export class CandidateAction implements Action {
