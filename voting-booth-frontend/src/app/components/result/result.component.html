@@ -1,3 +1,16 @@
-<p>
-  result works!
-</p>
+<mat-table [dataSource]="results" class="mat-elevation-z8">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let entry"> {{entry.name}} </mat-cell>
+  </ng-container>
+
+  <!-- Votes Column -->
+  <ng-container matColumnDef="votes">
+    <mat-header-cell *matHeaderCellDef> Votes </mat-header-cell>
+    <mat-cell *matCellDef="let entry"> {{entry.votes}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+</mat-table>

@@ -7,11 +7,15 @@ import {Results} from "../../types";
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
-  results: Results;
+  results: any[];
+  columns: string[];
 
   constructor() {
-    this.results['test'] = 80;
-    this.results['test2'] = 69;
+    this.columns = ['name', 'votes'];
+    this.results = [
+      { name: 'test1', votes: 80 },
+      { name: 'test2', votes: 47 }
+    ];
   }
 
   ngOnInit() {
