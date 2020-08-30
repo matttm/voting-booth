@@ -1,5 +1,14 @@
 #login-form {
   display: flex;
   flex-direction: column;
-  width: 500px;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 400px;
+}
+
+#login-form-title {
+  text-align: center;
+  padding: 10px;
 }
