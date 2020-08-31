@@ -5,7 +5,7 @@ export interface CandidatesState {
   candidates: CandidateData[];
 }
 
-const initialCandidatesState: CandidatesState = {
+export const initialCandidatesState: CandidatesState = {
   candidates: []
 };
 
