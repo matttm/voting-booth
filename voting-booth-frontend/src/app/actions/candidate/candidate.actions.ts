@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {CandidateData} from '../types';
+import {CandidateData} from '../../types';
 
 export enum CandidateActionTypes {
   loadCandidates  = '[Candidate] Load Candidates',

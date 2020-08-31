@@ -1,5 +1,5 @@
 import * as fromCandidate from './candidate.actions';
-import {CandidateData} from '../types';
+import {CandidateData} from '../../types';
 
 describe('loadCandidates', () => {
   it('should return an actions', () => {
