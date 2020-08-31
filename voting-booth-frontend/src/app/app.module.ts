@@ -11,7 +11,7 @@ import {
   MatDividerModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatListModule,
   MatMenuModule,
   MatRadioModule,
   MatTableModule,
@@ -59,8 +59,9 @@ import { ResultComponent } from './components/result/result.component';
     MatInputModule,
     MatRadioModule,
     FormsModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {metaReducers}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    MatListModule,
   ],
   providers: [
     {

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs';
+import {AppState} from '../../reducers';
+import {select, Store} from '@ngrx/store';
+import {selectCandidatesNames} from '../../selectors';
 
 @Component({
   selector: 'app-splash',
@@ -6,10 +10,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./splash.component.css']
 })
 export class SplashComponent implements OnInit {
+  candidateNames$: Observable<string[]>;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private store: Store<AppState>) {
+    this.candidateNames$ = store.pipe(select(selectCandidatesNames));
   }
+
+  ngOnInit() {}
 
 }

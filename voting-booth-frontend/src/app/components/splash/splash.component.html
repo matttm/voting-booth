@@ -1,7 +1,18 @@
 <div id="splash-container">
-  <h1 id="welcome-message">
-    Welcome to the eElections
-  </h1>
+  <div id="splash-messages">
+    <h1 id="welcome-message">Welcome to the eElections</h1>
+    <h5 id="splash-submessage">Designed by Matt Maloney</h5>
+  </div>
+  <div id="splash-candidate-list-container">
+    <h3>
+      Registered candidates
+    </h3>
+    <mat-list>
+      <mat-list-item *ngFor="let name of candidateNames$ | async">
+        {{name}}
+      </mat-list-item>
+    </mat-list>
+  </div>
   <div class="splash-btn-group">
     <div class="splash-btn">
       <button mat-flat-button color="primary" routerLink="login">Vote</button>
