@@ -29,7 +29,7 @@ import {StoreModule} from '@ngrx/store';
 import {metaReducers, reducers} from './reducers';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
-import {AuthInterceptor} from "./services/interceptors/auth/auth.interceptor";
+import {AuthInterceptor} from './services/interceptors/auth/auth.interceptor';
 import { ResultComponent } from './components/result/result.component';
 
 @NgModule({
