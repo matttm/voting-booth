@@ -4,6 +4,7 @@ import {VotingService} from '../../services/voting/voting.service';
 import {select, Store} from '@ngrx/store';
 import {selectCandidatesNames} from '../../selectors';
 import {Observable} from 'rxjs';
+import {MatSnackBar} from "@angular/material";
 
 /**
  * Component represents the actual voting booth, in which a person
@@ -23,6 +24,7 @@ export class BoothComponent implements OnInit {
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
+              private snackbar: MatSnackBar,
               private store: Store,
               private votingService: VotingService
   ) {
@@ -47,6 +49,7 @@ export class BoothComponent implements OnInit {
     this.isVoting = true;
     this.votingService.vote('null').then(() => {
       this.isVoting = false;
+      this.snackbar.open('Vote Submitted', null, { duration: 5000 });
     });
   }
 

@@ -13,7 +13,7 @@ import {
   MatIconModule,
   MatInputModule, MatListModule,
   MatMenuModule, MatProgressSpinnerModule,
-  MatRadioModule,
+  MatRadioModule, MatSnackBarModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -50,6 +50,7 @@ import { ResultComponent } from './components/result/result.component';
     MatMenuModule,
     MatIconModule,
     MatCardModule,
+    MatSnackBarModule,
     MatButtonModule,
     MatTableModule,
     MatDividerModule,
