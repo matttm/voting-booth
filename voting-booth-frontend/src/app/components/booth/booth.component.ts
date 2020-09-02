@@ -18,6 +18,7 @@ export class BoothComponent implements OnInit {
   hovered: string;
   selected: string;
   isInfoVisible: boolean;
+  isVoting: boolean;
   candidates$: Observable<string[]>;
   form: FormGroup;
 
@@ -28,6 +29,7 @@ export class BoothComponent implements OnInit {
     this.hovered = null;
     this.selected = null;
     this.isInfoVisible = false;
+    this.isVoting = false;
     this.candidates$ = store.pipe(
       select(selectCandidatesNames)
     );
@@ -41,7 +43,12 @@ export class BoothComponent implements OnInit {
   }
 
   // TODO: add a progess bar or something for voting http request
-  vote() {}
+  vote() {
+    this.isVoting = true;
+    this.votingService.vote('null').then(() => {
+      this.isVoting = false;
+    });
+  }
 
   onMouseEnter(name: string) {
     this.isInfoVisible = true;

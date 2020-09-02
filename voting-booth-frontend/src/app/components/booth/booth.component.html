@@ -1,6 +1,5 @@
-<div id="booth-container" *ngIf="votingService.hasVoted(); else hasVoted">
+<div class="booth-container" *ngIf="!isVoting; else voting">
   <div id="form-container">
-    <!-- <form id="vote-form" [formGroup]="form"> -->
       <label id="candidates-label">Select a candidate:</label>
       <mat-radio-group
         aria-labelledby="candidates-label"
@@ -16,12 +15,11 @@
         </mat-radio-button>
       </mat-radio-group>
       <button mat-flat-button (click)="vote()"  color="primary">Submit Vote</button>
-    <!-- </form> -->
   </div>
-  <!-- <div id="info-container" *ngIf="isInfoVisible">
-    <app-candidate-info [candidateName]="hovered"></app-candidate-info>
-  </div> -->
 </div>
-<ng-template #hasVoted>
-  <div>America thanks  you for voting</div>
+<ng-template #voting>
+  <div class="booth-container">
+    <mat-spinner></mat-spinner>
+    <p>Submitting Vote</p>
+  </div>
 </ng-template>

@@ -12,7 +12,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule, MatListModule,
-  MatMenuModule,
+  MatMenuModule, MatProgressSpinnerModule,
   MatRadioModule,
   MatTableModule,
   MatToolbarModule
@@ -62,6 +62,7 @@ import { ResultComponent } from './components/result/result.component';
     StoreModule.forRoot(reducers, {metaReducers}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     MatListModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

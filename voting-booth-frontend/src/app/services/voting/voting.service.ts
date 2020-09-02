@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from "rxjs";
-import {shareReplay, tap} from "rxjs/operators";
-import {log} from "util";
+import {Observable} from 'rxjs';
+import {shareReplay, tap} from 'rxjs/operators';
 
 /**
  * Service is in charge of voting, which includes tallying votes
@@ -20,8 +19,12 @@ export class VotingService {
    *
    * @param nomination a string of the person who is being voted for
    */
-  vote(nomination: string) {
-    this.httpClient.post('/vote', null);
+  vote(nomination: string): Promise<any> {
+    // return this.httpClient.post('/vote', null)
+    //   .pipe(
+    //     shareReplay()
+    //   ).toPromise();
+    return new Promise((resolve) => setTimeout(resolve, 5000));
   }
 
   /**
