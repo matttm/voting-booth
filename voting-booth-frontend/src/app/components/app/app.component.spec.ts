@@ -1,12 +1,24 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {RouterModule} from '@angular/router';
+import {MatToolbarModule} from '@angular/material';
+import {provideMockStore} from "@ngrx/store/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {AppRoutingModule} from "../../app-routing.module";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        MatToolbarModule,
+        HttpClientTestingModule
+      ],
       declarations: [
         AppComponent
       ],
+      providers: [provideMockStore()]
     }).compileComponents();
   }));
 
@@ -16,16 +28,17 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'voting-booth-frontend'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('voting-booth-frontend');
-  });
-
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to voting-booth-frontend!');
+    expect(compiled.querySelector('h1').textContent).toContain('Voting Booth');
+  });
+
+  it('should have a toolbar', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('mat-toolbar')).toBeDefined();
   });
 });
