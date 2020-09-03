@@ -20,25 +20,39 @@ export class VotingService {
    * @param nomination a string of the person who is being voted for
    */
   vote(nomination: string): Promise<any> {
-    // return this.httpClient.post('/vote', null)
-    //   .pipe(
-    //     shareReplay()
-    //   ).toPromise();
-    return new Promise((resolve) => setTimeout(resolve, 5000));
+    return this.httpClient.post('/vote', null)
+      .pipe(
+        shareReplay()
+      ).toPromise();
   }
 
   /**
-   * Determines whether a person has voted
+   * Determine if a voter has voted or not
+   * @param ssn the uid ssn of the voter
+   *
+   * @return a promise of the answer
    */
-  hasVoted() {
-    return true;
+  hasVoted(ssn: string): Promise<any> {
+    const body = {
+      ssn
+    };
+    return this.httpClient.post('/voted', body)
+      .pipe(
+        tap(console.log),
+        shareReplay()
+      ).toPromise();
   }
 
-  getReaults(): Observable<any> {
+  /**
+   * Get current standing's results of current election
+   *
+   * @return a promise of the results
+   */
+  getResults(): Promise<any> {
     return this.httpClient.get('/results')
       .pipe(
         tap(console.log),
         shareReplay()
-      );
+      ).toPromise();
   }
 }
