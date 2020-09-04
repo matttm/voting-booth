@@ -15,6 +15,10 @@ export class CandidacyService {
     private store: Store<AppState>,
     private httpClient: HttpClient
   ) {
+    this.getCandidates();
+  }
+
+  getCandidates() {
     this.httpClient.get<CandidateData[]>('assets/candidates.json').pipe(first())
       .subscribe((data: CandidateData[]) => {
         console.log(data);
