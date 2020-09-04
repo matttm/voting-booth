@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     const vals = this.form.value;
-    this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).subscribe( () => {
+    this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).then( () => {
       console.log('Logging in...');
       // this.router.navigateByUrl('/ballot');
     });

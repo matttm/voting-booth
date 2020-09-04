@@ -25,20 +25,20 @@ export class AuthService {
    * @return an observable of a successful or failure during login and
    * s JWT if successful
    */
-  login(ssn: string, fname: string, lname: string, zip: string): Observable<any> {
+  login(ssn: string, fname: string, lname: string, zip: string): Promise<any> {
     const voter = { ssn, fname, lname, zip };
-    return this.http.post('api/login', voter)
+    return this.http.post('/api/login', voter)
       .pipe(
-        tap(res => this.setSession),
+        tap(this.setSession),
         shareReplay()
-      );
+      ).toPromise();
   }
 
   /**
    * Removes saved tokens used for authentication
    */
   logout() {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('token_id');
     localStorage.removeItem('expires_at');
   }
 
@@ -58,6 +58,6 @@ export class AuthService {
   getExpiration() {
     const expiration = localStorage.getItem('expires_at');
     const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
+    return expiresAt ? moment(expiresAt) : null;
   }
 }
