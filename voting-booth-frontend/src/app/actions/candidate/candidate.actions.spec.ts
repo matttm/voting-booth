@@ -19,7 +19,7 @@ describe('addCandidate', () => {
       stances: []
     };
     const action = new fromCandidate.AddCandidateAction({ candidateData: payload});
-    expect(action.type).toBe('[Candidate] Load Candidate');
+    expect(action.type).toBe('[Candidate] Add Candidate');
   });
 });
 
