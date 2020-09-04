@@ -4,6 +4,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {AuthInterceptor} from './auth.interceptor';
 import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {establishLocalStorageSpies} from '../../../test.utilities.spec';
 
 /**
  * TestService is a utility to help test the interceptor
@@ -31,29 +32,7 @@ describe('VotingService', () => {
         ]
       }).compileComponents();
 
-      let store = {};
-      const mockLocalStorage = {
-        getItem: (key: string): string => {
-          return key in store ? store[key] : null;
-        },
-        setItem: (key: string, value: string) => {
-          store[key] = `${value}`;
-        },
-        removeItem: (key: string) => {
-          delete store[key];
-        },
-        clear: () => {
-          store = {};
-        }
-      };
-      spyOn(localStorage, 'getItem')
-        .and.callFake(mockLocalStorage.getItem);
-      spyOn(localStorage, 'setItem')
-        .and.callFake(mockLocalStorage.setItem);
-      spyOn(localStorage, 'removeItem')
-        .and.callFake(mockLocalStorage.removeItem);
-      spyOn(localStorage, 'clear')
-        .and.callFake(mockLocalStorage.clear);
+      establishLocalStorageSpies();
       service = TestBed.get(TestService);
       http = TestBed.get(HttpTestingController);
     }

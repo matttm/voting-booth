@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { CandidacyService } from './candidacy.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {provideMockStore} from "@ngrx/store/testing";
+import {provideMockStore} from '@ngrx/store/testing';
 
 describe('CanidacyService', () => {
   let service: CandidacyService;
