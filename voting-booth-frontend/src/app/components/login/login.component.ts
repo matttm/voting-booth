@@ -12,6 +12,7 @@ import {FormObject} from '../../types';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   fields: FormObject[];
+  isAuthenticating: boolean;
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
@@ -43,14 +44,17 @@ export class LoginComponent implements OnInit {
       groupConfig[field.name] = ['', Validators.required];
     }
     this.form = this.fb.group(groupConfig);
+    this.isAuthenticating = false;
   }
 
   ngOnInit() {
   }
 
   login() {
+    this.isAuthenticating = true;
     const vals = this.form.value;
     this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).then( () => {
+      this.isAuthenticating = false;
       console.log('Logging in...');
       // this.router.navigateByUrl('/ballot');
     });

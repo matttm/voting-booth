@@ -26,12 +26,13 @@ export class AuthService {
    * s JWT if successful
    */
   login(ssn: string, fname: string, lname: string, zip: string): Promise<any> {
-    const voter = { ssn, fname, lname, zip };
-    return this.http.post('/api/login', voter)
-      .pipe(
-        tap(this.setSession),
-        shareReplay()
-      ).toPromise();
+    // const voter = { ssn, fname, lname, zip };
+    // return this.http.post('/api/login', voter)
+    //   .pipe(
+    //     tap(this.setSession),
+    //     shareReplay()
+    //   ).toPromise();
+    return new Promise<any>(resolve => setTimeout(resolve, 5000));
   }
 
   /**

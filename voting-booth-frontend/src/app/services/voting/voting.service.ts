@@ -20,10 +20,11 @@ export class VotingService {
    * @param nomination a string of the person who is being voted for
    */
   vote(nomination: string): Promise<any> {
-    return this.httpClient.post('/vote', null)
-      .pipe(
-        shareReplay()
-      ).toPromise();
+    // return this.httpClient.post('/vote', null)
+    //   .pipe(
+    //     shareReplay()
+    //   ).toPromise();
+    return new Promise( resolve => setTimeout(resolve, 5000));
   }
 
   /**

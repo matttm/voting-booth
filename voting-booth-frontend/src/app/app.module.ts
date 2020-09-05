@@ -31,6 +31,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {AuthInterceptor} from './services/interceptors/auth/auth.interceptor';
 import { ResultComponent } from './components/result/result.component';
+import { SubmissionComponent } from './components/submission/submission.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ResultComponent } from './components/result/result.component';
     BoothComponent,
     CandidateInfoComponent,
     ResultComponent,
+    SubmissionComponent,
   ],
   imports: [
     BrowserModule,
