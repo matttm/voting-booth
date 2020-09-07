@@ -1,9 +1,15 @@
 <mat-dialog-content>
-
   <div *ngIf="candidate$ | async; let candidate">
     <h3 mat-dialog-title>{{candidate.name}}</h3>
-    <p>test</p>
     <img mat-card-image src="{{candidate.image}}" alt="Photo of a {{candidate.name}}">
+    <p>Running Mate: {{candidate.runningMate}}</p>
+    <p>Party: {{candidate.party}}</p>
+    <mat-list>
+      <p>Stances</p>
+      <mat-list-item *ngFor="let stance of candidate.stances">
+        {{stance}}
+      </mat-list-item>
+    </mat-list>
   </div>
 
 </mat-dialog-content>
