@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResultComponent } from './result.component';
-import {MatTableModule} from "@angular/material";
+import {MatTableModule} from '@angular/material';
 
 describe('ResultComponent', () => {
   let component: ResultComponent;
