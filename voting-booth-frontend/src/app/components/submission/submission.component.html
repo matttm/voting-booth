@@ -1,8 +1,8 @@
-<div class="submission-container" *ngIf="!conditionVar; else loading">
+<div id="non-loading" class="submission-container" *ngIf="!conditionVar; else loading">
   <ng-content></ng-content>
 </div>
 <ng-template #loading>
-  <div class="submission-container">
+  <div id="loading" class="submission-container">
     <mat-spinner></mat-spinner>
     <p>{{submissionText}}</p>
   </div>
