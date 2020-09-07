@@ -21,6 +21,7 @@ export class SplashComponent implements OnInit {
   ngOnInit() {}
 
   onCandidateClick(name: string) {
+    // TODO: create custom modal
     const dialogRef = this.dialog.open(CandidateInfoComponent);
     const comp = dialogRef.componentInstance;
     comp.selectCandidate(name);
