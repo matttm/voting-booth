@@ -10,19 +10,13 @@ import {CandidateData} from '../../types';
   templateUrl: './candidate-info.component.html',
   styleUrls: ['./candidate-info.component.css']
 })
-export class CandidateInfoComponent implements OnInit, OnChanges {
-
-  @Input()
-  candidateName: string;
+export class CandidateInfoComponent {
 
   candidate$: Observable<CandidateData>;
 
   constructor(private store: Store<AppState>) { }
 
-  ngOnInit() {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.candidate$ = this.store.pipe(select(selectCandidate, this.candidateName));
+  selectCandidate(name: string): void {
+    this.candidate$ = this.store.pipe(select(selectCandidate, name));
   }
 }

@@ -8,7 +8,7 @@
       Registered candidates
     </h3>
     <mat-list>
-      <mat-list-item *ngFor="let name of candidateNames$ | async">
+      <mat-list-item (click)="onCandidateClick(name)" *ngFor="let name of candidateNames$ | async">
         {{name}}
       </mat-list-item>
     </mat-list>

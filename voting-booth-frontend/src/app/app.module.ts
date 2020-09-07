@@ -9,6 +9,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDividerModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule, MatListModule,
@@ -39,9 +40,9 @@ import { SubmissionComponent } from './components/submission/submission.componen
     LoginComponent,
     SplashComponent,
     BoothComponent,
-    CandidateInfoComponent,
     ResultComponent,
     SubmissionComponent,
+    CandidateInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +50,7 @@ import { SubmissionComponent } from './components/submission/submission.componen
     BrowserAnimationsModule,
     FlexLayoutModule,
     MatToolbarModule,
+    MatDialogModule,
     MatMenuModule,
     MatIconModule,
     MatCardModule,
@@ -74,6 +76,9 @@ import { SubmissionComponent } from './components/submission/submission.componen
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CandidateInfoComponent
+  ]
 })
 export class AppModule { }
