@@ -82,7 +82,8 @@ describe('SplashComponent', () => {
     content = el.querySelector('mat-dialog-content');
     expect(content).toBeDefined();
     // simulate closing click
-    el.querySelector('#splash-container').click();
+    el.querySelector('#splash-container')
+      .dispatchEvent(new Event('mousedown'));
     content = el.querySelector('mat-dialog-content');
     expect(content).toBeFalsy();
   });
