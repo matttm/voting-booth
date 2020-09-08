@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {FormObject} from '../../types';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
-              private router: Router) {
+              private snackbar: MatSnackBar,
+              private router: Router
+  ) {
     this.fields = [
       {
         placeholder: 'XXX-XX-XXXX',
@@ -39,11 +42,14 @@ export class LoginComponent implements OnInit {
         displayName: 'Zip Code'
       }
     ];
-    const groupConfig = {};
-    for (const field of this.fields) {
-      groupConfig[field.name] = ['', Validators.required];
-    }
-    this.form = this.fb.group(groupConfig);
+    // TODO: add more customized validators where possible
+    this.form = this.fb.group({
+      ssn:   ['', Validators.required,
+        Validators.pattern('^(?!666|000|9\\\\d{2})\\\\d{3}-(?!00)\\\\d{2}-(?!0{4})\\\\d{4}$')],
+      fname: ['', Validators.required, Validators.min(2), Validators.max(20)],
+      lname: ['', Validators.required, Validators.min(2), Validators.max(20)],
+      zip:   ['', Validators.required, Validators.min(5), Validators.max(5)]
+    });
     this.isAuthenticating = false;
   }
 
@@ -51,12 +57,16 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.isAuthenticating = true;
-    const vals = this.form.value;
-    this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).then( () => {
-      this.isAuthenticating = false;
-      console.log('Logging in...');
-      // this.router.navigateByUrl('/ballot');
-    });
+    if (this.form.valid) {
+      this.isAuthenticating = true;
+      const vals = this.form.value;
+      this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).then(() => {
+        this.isAuthenticating = false;
+        console.log('Logging in...');
+        // this.router.navigateByUrl('/ballot');
+      });
+    } else {
+      this.snackbar.open('All fields are required', null, { duration: 5000 });
+    }
   }
 }

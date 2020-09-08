@@ -12,3 +12,7 @@ mat-form-field {
   text-align: center;
   padding: 10px;
 }
+
+.error {
+  border: 2px red;
+}
