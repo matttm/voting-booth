@@ -1,0 +1,19 @@
+<app-submission [conditionVar]="isVoting" submissionText="Submitting Vote">
+  <div id="form-container">
+      <label id="candidates-label">Select a candidate:</label>
+      <mat-radio-group
+        aria-labelledby="candidates-label"
+        class="candidates-radio-group"
+        [(ngModel)]="selected"
+      >
+        <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates$ | async"
+                          [value]="candidate"
+                          (mouseenter)="onMouseEnter(candidate)"
+                          (mouseleave)="onMouseLeave()"
+        >
+          {{candidate}}
+        </mat-radio-button>
+      </mat-radio-group>
+      <button mat-flat-button (click)="vote()"  color="primary">Submit Vote</button>
+  </div>
+</app-submission>

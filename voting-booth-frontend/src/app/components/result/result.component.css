@@ -1,0 +1,12 @@
+#results-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#results-title {}
+
+mat-table {
+  width: 400px;
+}

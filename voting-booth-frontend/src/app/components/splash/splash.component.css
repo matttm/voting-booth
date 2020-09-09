@@ -1,0 +1,33 @@
+.splash-btn {
+  padding: 5px;
+}
+
+#splash-messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+#welcome-message {}
+
+#splash-submessage {
+  font-weight: normal;
+  color: black;
+}
+
+.splash-btn-group {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+#splash-candidate-list-container {
+  padding: 5px;
+}
+
+#splash-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

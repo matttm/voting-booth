@@ -1,0 +1,8 @@
+img{
+  width: 50vw;
+  height: auto;
+}
+
+mat-dialog-content {
+  width: fit-content;
+}

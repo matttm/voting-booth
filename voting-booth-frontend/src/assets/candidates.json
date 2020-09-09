@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Joe Biden",
+    "image": "https://img.thedailybeast.com/image/upload/v1584303507/GettyImages-1206811778_uvy6vn.jpg",
+    "runningMate": "Kamela Harris",
+    "party": "Democrat",
+    "stances": [
+      "Abolish the death penalty",
+      "Raise minimum wage to $15/hr",
+      "Two year colleges should be free",
+      "Expand/fix student debt relief programs",
+      "Tax carbon emissions",
+      "Marijuana legalization",
+      "Some limits to abortion"
+    ]
+  },
+  {
+    "name": "Jo Jorgensen",
+    "image": "https://gray-kktv-prod.cdn.arcpublishing.com/resizer/wB0TFXfIDgKJT37LSe5FSmnrktI=/1200x675/smart/cloudfront-us-east-1.images.arcpublishing.com/gray/7WPLJBEDK5EHLLY5AADHQ4TGEM.jpg",
+    "runningMate": "Spike Cohen",
+    "party": "Libertarian",
+    "stances": [
+      "Remove troops from Iraq",
+      "Reduce Healthcare cost",
+      "Reduce government spending",
+      "Pro-climate change",
+      "End war on drugs",
+      "Pardon victimless crime",
+      "Reduce taxrs"
+    ]
+  },
+  {
+    "name": "Donald Trump",
+    "image": "https://i1.wp.com/lunasociety.org/wp-content/uploads/2019/05/President-Donald-J.-Trump-Portrait-Photo.jpg?fit=1572%2C1000&ssl=1",
+    "runningMate": "Mike Pence",
+    "party": "Republican",
+    "stances": [
+      "Ban late term abortion",
+      "Reducing taxes",
+      "Increase military spending",
+      "Lowering corporate taxes",
+      "Anti-climate change",
+      "Building a border wall"
+    ]
+  }
+]
