@@ -44,7 +44,6 @@ export class BoothComponent implements OnInit {
   ngOnInit() {
   }
 
-  // TODO: add a progess bar or something for voting http request
   vote() {
     this.isVoting = true;
     this.votingService.vote('null').then(() => {
