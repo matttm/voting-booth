@@ -47,6 +47,8 @@ describe('CandidateInfoComponent', () => {
 
   it('should contain div container', () => {
     const el: HTMLElement = fixture.debugElement.nativeElement;
+    component.selectCandidate('null');
+    fixture.detectChanges();
     expect(el.querySelector('div')).toBeDefined();
   });
 
@@ -57,12 +59,14 @@ describe('CandidateInfoComponent', () => {
   });
 
   it('should have an img element', () => {
+    component.selectCandidate('null');
+    fixture.detectChanges();
     const el: HTMLElement = fixture.debugElement.nativeElement;
     expect(el.querySelector('img')).toBeDefined();
   });
 
   it('should have candidate name as heading', () => {
-    component.selectCandidate('null');
+    component.selectCandidate('test');
     fixture.detectChanges();
     const el: HTMLElement = fixture.debugElement.nativeElement;
     expect(el.querySelector('h3').innerText)
