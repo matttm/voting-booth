@@ -1,16 +1,24 @@
 import fs from 'fs';
-import {isValid} from "../authentication";
+import {authenticate, isAuthenticated} from "../authentication";
 var express = require('express');
 var router = express.Router();
 
-const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
+export const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
 
 /* GET users listing. */
-router.get('/vote', (req, res) => {
-    // get all info needed to authenticate
+router.get('/vote', isAuthenticated, (req, res) => {
+
+});
+
+router.post('/voted', (req, res) => {
+
+});
+
+router.post('/login', (req, res) => {
+// get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
 
-    if (isValid(fname, lname, ssn, zip)) {
+    if (authenticate(fname, lname, ssn, zip)) {
         const userId = findUserIdForEmail(email);
         const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
@@ -25,14 +33,6 @@ router.get('/vote', (req, res) => {
     } else {
         res.sendStatus(401);
     }
-});
-
-router.post('/voted', (req, res) => {
-
-});
-
-router.post('/login', (req, res) => {
-
 });
 
 router.get('/results', (req, res) => {
