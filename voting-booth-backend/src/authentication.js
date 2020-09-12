@@ -12,6 +12,12 @@ import {RSA_PRIVATE_KEY} from "./routes/api";
 export function authenticate(fname, lname, ssn, zip) {
 }
 
+/**
+ * Middleware to determine if a user has been authenticated
+ * by checking for a valid JWT (JSON web token)
+ *
+ * @type {middleware}
+ */
 export const isAuthenticated = expressJwt({
     secret: RSA_PRIVATE_KEY
 });
