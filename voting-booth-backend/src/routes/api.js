@@ -1,6 +1,7 @@
 import fs from 'fs';
 import {authenticate, isAuthenticated} from "../authentication";
 import jwt from 'jsonwebtoken';
+import request from 'superagent';
 var express = require('express');
 var router = express.Router();
 
@@ -39,7 +40,9 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/results', (req, res) => {
-
+    request
+        .get('/results')
+        .then(res => console.log(res));
 });
 
 module.exports = router;

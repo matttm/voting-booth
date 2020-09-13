@@ -1,6 +1,6 @@
 import expressJwt from 'express-jwt';
 import {RSA_PRIVATE_KEY} from "./routes/api";
-const request = require('superagent');
+import request from 'superagent';
 
 /**
  * Determines whether provided information is of an authentic user
