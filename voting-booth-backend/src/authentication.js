@@ -18,6 +18,7 @@ export function authenticate(fname, lname, ssn, zip) {
         request
             .post('/api/authenticate')
             .send({ fname, lname, ssn, zip })
+            .catch(err => console.log(`Error: ${err}`))
             .then(res => {
                 console.log(res);
                 return res.body.data;
