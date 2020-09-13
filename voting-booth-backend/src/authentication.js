@@ -13,6 +13,7 @@ import request from 'superagent';
  */
 export function authenticate(fname, lname, ssn, zip) {
     // TODO: change records-backend's endpoint to authenticate so this works
+    // TODO: and change this action to be a GET
     return new Promise((resolve, reject) => {
         request
             .post('/api/authenticate')
