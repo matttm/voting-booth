@@ -9,8 +9,14 @@ var router = express.Router();
 export const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
 
 /* GET users listing. */
-router.get('/vote', isAuthenticated, (req, res) => {
-
+router.get('/vote', isAuthenticated, async (req, res) => {
+    const vote = req.body;
+    // ensure everything is in vote
+    if (!(vote.voter && vote.candidate)) {
+        res.status(400);
+    }
+    const status = await addBlock(vote);
+    res.status(200).json({ success: status });
 });
 
 router.post('/voted', async (req, res) => {

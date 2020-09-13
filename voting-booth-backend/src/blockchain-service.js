@@ -20,3 +20,16 @@ export function getBlockchain() {
             });
     });
 }
+
+export function addBlock(data) {
+    return new Promise((resolve, reject) => {
+        request
+            .post('/blocks')
+            .send(data)
+            .then(res => {
+                console.log(res);
+                resolve(res);
+            })
+            .catch(console.log);
+    });
+}
