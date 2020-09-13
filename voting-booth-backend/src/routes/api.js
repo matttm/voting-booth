@@ -2,6 +2,7 @@ import fs from 'fs';
 import {authenticate, isAuthenticated} from "../authentication";
 import jwt from 'jsonwebtoken';
 import request from 'superagent';
+import {getBlockchain} from "../blockchain-service";
 var express = require('express');
 var router = express.Router();
 
@@ -12,7 +13,14 @@ router.get('/vote', isAuthenticated, (req, res) => {
 
 });
 
-router.post('/voted', (req, res) => {
+router.post('/voted', async (req, res) => {
+    const chain = await getBlockchain();
+    // determine if this person voted
+    const hasVoted = chain.some(block => block.data.ssn === req.body.ssn);
+    res.json({
+        success: true,
+        hasVoted
+    })
 
 });
 
@@ -42,19 +50,7 @@ router.post('/login', async (req, res) => {
 router.get('/results', async (req, res) => {
     const results = new Map();
     // getting blockchain
-    const chain = await new Promise((resolve, reject) => {
-        request
-            .get('/results')
-            .then(res => console.log(res))
-            .then(res => {
-                const body = res.body;
-                if (body.success) {
-                    resolve(body.chain);
-                } else {
-                    console.log('There was an error in retrieving the blockchain');
-                }
-            });
-    });
+    const chain = await getBlockchain();
     // iterate blockchain and accumulate results
     for (let block of chain) {
         const vote = block.data;
