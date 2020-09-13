@@ -1,5 +1,7 @@
 import expressJwt from 'express-jwt';
 import {RSA_PRIVATE_KEY} from "./routes/api";
+const request = require('superagent');
+
 /**
  * Determines whether provided information is of an authentic user
  * on the records server
@@ -10,6 +12,16 @@ import {RSA_PRIVATE_KEY} from "./routes/api";
  * @param zip a zip code
  */
 export function authenticate(fname, lname, ssn, zip) {
+    // TODO: change records-backend's endpoint to authenticate so this works
+    return new Promise((resolve, reject) => {
+        request
+            .post('/api/authenticate')
+            .send({ fname, lname, ssn, zip })
+            .then(res => {
+                console.log(res);
+                return res.body.data;
+            }).then(response => resolve(response));
+    });
 }
 
 /**

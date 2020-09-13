@@ -15,12 +15,12 @@ router.post('/voted', (req, res) => {
 
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const expiresIn = process.env.TOKEN_TTL | 120;
     // get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
 
-    if (authenticate(fname, lname, ssn, zip)) {
+    if (await authenticate(fname, lname, ssn, zip)) {
         // TODO: find another way for user identification
         const userId = fname + lname + zip;
         const payload = { userId };
