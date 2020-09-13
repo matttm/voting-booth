@@ -39,10 +39,37 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/results', (req, res) => {
-    request
-        .get('/results')
-        .then(res => console.log(res));
+router.get('/results', async (req, res) => {
+    const results = new Map();
+    // getting blockchain
+    const chain = await new Promise((resolve, reject) => {
+        request
+            .get('/results')
+            .then(res => console.log(res))
+            .then(res => {
+                const body = res.body;
+                if (body.success) {
+                    resolve(body.chain);
+                } else {
+                    console.log('There was an error in retrieving the blockchain');
+                }
+            });
+    });
+    // iterate blockchain and accumulate results
+    for (let block of chain) {
+        const vote = block.data;
+        const name = vote.candidate;
+        if (results.has(name)) {
+            results.set(name, results.get(name) + 1);
+        } else {
+            results.set(name, 1);
+        }
+    }
+    // just send it
+    res.json({
+        success: true,
+        results
+    });
 });
 
 module.exports = router;
