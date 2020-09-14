@@ -1,8 +1,8 @@
 import fs from 'fs';
-import {authenticate, isAuthenticated} from "../authentication";
+import {authenticate, isAuthenticated} from "../authentication-service";
 import jwt from 'jsonwebtoken';
 import request from 'superagent';
-import {getBlockchain} from "../blockchain-service";
+import {addBlock, getBlockchain} from "../blockchain-service";
 var express = require('express');
 var router = express.Router();
 
@@ -19,7 +19,7 @@ router.get('/vote', isAuthenticated, async (req, res) => {
     res.status(200).json({ success: status });
 });
 
-router.post('/voted', async (req, res) => {
+router.post('/voted', isAuthenticated, async (req, res) => {
     const chain = await getBlockchain();
     // determine if this person voted
     const hasVoted = chain.some(block => block.data.ssn === req.body.ssn);
@@ -31,15 +31,16 @@ router.post('/voted', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const expiresIn = process.env.TOKEN_TTL | 120;
+    const expiresIn = process.env.TOKEN_TTL || 120;
     // get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
 
     if (await authenticate(fname, lname, ssn, zip)) {
-        // TODO: find another way for user identification
-        const userId = fname + lname + zip;
-        const payload = { userId };
-        const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
+
+        const user = { ...req.body };
+        // token must have sub claim, so a later request can determine the
+        // logged in user
+        const jwtBearerToken = jwt.sign({ sub: user }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn
         });
