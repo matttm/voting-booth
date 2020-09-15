@@ -8,7 +8,7 @@ import request from "superagent";
 export function getBlockchain() {
     return new Promise((resolve, reject) => {
         request
-            .get('/results')
+            .get(`${process.env.BLOCKCHAIN_URL}/results`)
             .then(res => console.log(res))
             .then(res => {
                 const body = res.body;
@@ -24,7 +24,7 @@ export function getBlockchain() {
 export function addBlock(data) {
     return new Promise((resolve, reject) => {
         request
-            .post('/blocks')
+            .post(`${process.env.BLOCKCHAIN_URL}/blocks`)
             .send(data)
             .then(res => {
                 console.log(res);

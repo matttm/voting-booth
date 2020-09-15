@@ -17,9 +17,9 @@ export function authenticate(fname, lname, ssn, zip) {
     // TODO: and change this action to be a GET
     return new Promise((resolve, reject) => {
         request
-            .post('/api/authenticate')
+            .post(`${process.env.AUTHENTICATOR_URL}/api/authenticate`)
             .send({ fname, lname, ssn, zip })
-            .catch(err => console.log(`Error: ${err}`))
+            .catch(err => console.error(`Error: ${err}`))
             .then(res => {
                 console.log(res);
                 return res.body.data;

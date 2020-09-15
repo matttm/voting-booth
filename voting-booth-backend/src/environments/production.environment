@@ -1,0 +1,12 @@
+
+# key for server to sign authentication keys with
+SECRET_KEY='secret'
+
+# time to live for an issued json-web-token (JWT)
+TOKEN_TTL=200
+
+# url to a blockchain node's api
+BLOCKCHAIN_URL='http://localhost:3003'
+
+# url to authentication server's api
+AUTHENTICATOR_URL='http://localhost:3004'

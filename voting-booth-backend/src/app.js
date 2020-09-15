@@ -1,22 +1,28 @@
 
-var path = require('path');
+const path = require('path');
+// TODO: use an env json here?
 if (process.env.NODE_ENV) {
     console.log(`Running in ${process.env.NODE_ENV} mode`);
-    require('dotenv').config(
-        { path: path.resolve(__dirname, `../.${process.env.NODE_ENV}.env` )}
-        );
+    require('dotenv').config({
+        path: path.resolve(
+            __dirname,
+            `./environments/${process.env.NODE_ENV}.environment`
+        )
+    });
 } else {
-    // TODO: check for all needed vars and exit if they're not there
+    console.log('No node environment specified.');
+    console.log('Shutting down...');
+    process.exit(0);
 }
 
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes');
-var apiRouter = require('./routes/api');
+const indexRouter = require('./routes');
+const apiRouter = require('./routes/api');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,7 +1,5 @@
-import fs from 'fs';
 import {authenticate, isAuthenticated} from "../services/authentication-service";
 import jwt from 'jsonwebtoken';
-import request from 'superagent';
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 var express = require('express');
 var router = express.Router();
