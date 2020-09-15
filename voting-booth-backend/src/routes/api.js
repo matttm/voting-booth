@@ -1,12 +1,12 @@
 import fs from 'fs';
-import {authenticate, isAuthenticated} from "../authentication-service";
+import {authenticate, isAuthenticated} from "../services/authentication-service";
 import jwt from 'jsonwebtoken';
 import request from 'superagent';
-import {addBlock, getBlockchain} from "../blockchain-service";
+import {addBlock, getBlockchain} from "../services/blockchain-service";
 var express = require('express');
 var router = express.Router();
 
-export const RSA_PRIVATE_KEY = fs.readFileSync('./private.key');
+export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'fallbacksecret';
 
 /* GET users listing. */
 router.get('/vote', isAuthenticated, async (req, res) => {

@@ -1,5 +1,5 @@
 import expressJwt from 'express-jwt';
-import {RSA_PRIVATE_KEY} from "./routes/api";
+import {RSA_PRIVATE_KEY} from "../routes/api";
 import request from 'superagent';
 import jwt from 'jsonwebtoken';
 
