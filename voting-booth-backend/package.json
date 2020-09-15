@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node src/bin/index.js"
+    "start:dev": "cross-env NODE_ENV=development node src/bin/index.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -16,5 +16,7 @@
     "morgan": "~1.9.1",
     "superagent": "^6.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "cross-env": "^7.0.2"
+  }
 }
