@@ -1,8 +1,8 @@
 import {authenticate, isAuthenticated} from "../services/authentication-service";
 import jwt from 'jsonwebtoken';
 import {addBlock, getBlockchain} from "../services/blockchain-service";
-var express = require('express');
-var router = express.Router();
+import express from 'express';
+const router = express.Router();
 
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'fallbacksecret';
 
@@ -73,4 +73,4 @@ router.get('/results', async (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

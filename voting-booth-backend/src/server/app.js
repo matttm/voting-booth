@@ -1,9 +1,16 @@
+import path from 'path';
+import {config as configureEnv} from 'dotenv';
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-const path = require('path');
+import indexRouter from './routes/index';
+import apiRouter from './routes/api';
+
 // TODO: use an env json here?
 if (process.env.NODE_ENV) {
     console.log(`Running in ${process.env.NODE_ENV} mode`);
-    require('dotenv').config({
+    configureEnv({
         path: path.resolve(
             __dirname,
             `./environments/${process.env.NODE_ENV}.environment`
@@ -14,13 +21,6 @@ if (process.env.NODE_ENV) {
     console.log('Shutting down...');
     process.exit(0);
 }
-
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
-const indexRouter = require('./routes');
-const apiRouter = require('./routes/api');
 
 const app = express();
 
@@ -38,4 +38,4 @@ app.use((err, req, res, next) => {
     }
 });
 
-module.exports = app;
+export default app;
