@@ -18,7 +18,16 @@
     "ignore": [ "**/__tests__/**", "*.test.js", "*.spec.js" ]
   },
   "babel": {
-    "presets": [ "@babel/preset-env" ]
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "10"
+          }
+        }
+      ]
+    ]
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

@@ -4,7 +4,8 @@ import {addBlock, getBlockchain} from "../services/blockchain-service";
 import express from 'express';
 const router = express.Router();
 
-export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'fallbacksecret';
+export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
+export const expiresIn = process.env.TOKEN_TTL || 120;
 
 /* GET users listing. */
 router.get('/vote', isAuthenticated, async (req, res) => {
@@ -20,25 +21,25 @@ router.get('/vote', isAuthenticated, async (req, res) => {
 router.post('/voted', isAuthenticated, async (req, res) => {
     const chain = await getBlockchain();
     // determine if this person voted
+    // TODO: reimplement without use of ssn
     const hasVoted = chain.some(block => block.data.ssn === req.body.ssn);
     res.json({
         success: true,
         hasVoted
     })
-
 });
 
 router.post('/login', async (req, res) => {
-    const expiresIn = process.env.TOKEN_TTL || 120;
     // get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
 
     if (await authenticate(fname, lname, ssn, zip)) {
 
-        const user = { ...req.body };
+        // ssn is too sensitive to be stored in the jwt as it can be  decoded by anyone
+        const user = { fname, lname, zip };
         // token must have sub claim, so a later request can determine the
         // logged in user
-        const jwtBearerToken = jwt.sign({ sub: user }, RSA_PRIVATE_KEY, {
+        const jwtBearerToken = jwt.sign({...user}, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn
         });
