@@ -35,20 +35,19 @@ router.post('/login', async (req, res) => {
 
     if (await authenticate(fname, lname, ssn, zip)) {
 
+        console.log('User is authorized');
         // ssn is too sensitive to be stored in the jwt as it can be  decoded by anyone
         const user = { fname, lname, zip };
-        // token must have sub claim, so a later request can determine the
-        // logged in user
-        const jwtBearerToken = jwt.sign({...user}, RSA_PRIVATE_KEY, {
-            algorithm: 'RS256',
-            expiresIn
-        });
+
+        console.log('making user a JWT');
+        const jwtBearerToken = jwt.sign(user, RSA_PRIVATE_KEY);
         // TODO: conform key names between apps
         res.status(200).json({
             idToken: jwtBearerToken,
             expiresIn
         })
     } else {
+        console.log('User is unauthorized');
         res.sendStatus(401);
     }
 });
