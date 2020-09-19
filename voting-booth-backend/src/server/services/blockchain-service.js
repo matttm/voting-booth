@@ -5,31 +5,15 @@ import request from "superagent";
  *
  * @return {Promise<[]>} a chain of blocks containing vote data
  */
-export function getBlockchain() {
-    return new Promise((resolve, reject) => {
-        request
-            .get(`${process.env.BLOCKCHAIN_URL}/results`)
-            .then(res => console.log(res))
-            .then(res => {
-                const body = res.body;
-                if (body.success) {
-                    resolve(body.chain);
-                } else {
-                    console.log('There was an error in retrieving the blockchain');
-                }
-            });
-    });
+export async function getBlockchain() {
+    const response = await request
+        .get(`${process.env.BLOCKCHAIN_URL}/api/blocks`);
+    return response ? response.body : [];
 }
 
-export function addBlock(data) {
-    return new Promise((resolve, reject) => {
-        request
-            .post(`${process.env.BLOCKCHAIN_URL}/blocks`)
-            .send(data)
-            .then(res => {
-                console.log(res);
-                resolve(res);
-            })
-            .catch(console.log);
-    });
+export async function addBlock(data) {
+    const response = await request
+        .post(`${process.env.BLOCKCHAIN_URL}/api/blocks`)
+        .send(data);
+    return true;
 }
