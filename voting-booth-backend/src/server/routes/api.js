@@ -40,11 +40,9 @@ router.post('/login', async (req, res) => {
 
     if (await authenticate(fname, lname, ssn, zip)) {
 
-        console.log('User is authorized');
         // ssn is too sensitive to be stored in the jwt as it can be  decoded by anyone
         const user = { fname, lname, zip };
 
-        console.log('making user a JWT');
         const jwtBearerToken = jwt.sign(user, `secret`, {
             expiresIn
         });
@@ -52,9 +50,9 @@ router.post('/login', async (req, res) => {
         res.status(200).json({
             idToken: jwtBearerToken,
             expiresIn
-        })
+        });
     } else {
-        console.log('User is unauthorized');
+        console.log('The provided credentials do not match a record');
         res.sendStatus(401);
     }
 });
