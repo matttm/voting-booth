@@ -15,6 +15,7 @@ import jwt from 'jsonwebtoken';
 export async function authenticate(fname, lname, ssn, zip) {
     // TODO: change records-backend's endpoint to authenticate so this works
     // TODO: and change this action to be a GET
+    return true;  // for testing
     return new Promise((resolve, reject) => {
         request
             .post(`${process.env.AUTHENTICATOR_URL}/api/authenticate`)
