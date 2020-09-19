@@ -35,6 +35,6 @@ export async function authenticate(fname, lname, ssn, zip) {
  * @type {middleware}
  */
 export const isAuthenticated = expressJwt({
-    secret: `${RSA_PRIVATE_KEY}`,
-    algorithms: ['RS256']
+    secret: `secret`,
+    algorithms: ['HS256']
 });
