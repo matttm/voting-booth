@@ -15,17 +15,19 @@ import jwt from 'jsonwebtoken';
 export async function authenticate(fname, lname, ssn, zip) {
     // TODO: change records-backend's endpoint to authenticate so this works
     // TODO: and change this action to be a GET
-    return Promise.resolve(true);  // for testing
-    // return new Promise((resolve, reject) => {
-    //     request
-    //         .post(`${process.env.AUTHENTICATOR_URL}/api/authenticate`)
-    //         .send({ fname, lname, ssn, zip })
-    //         .catch(err => console.error(`Error: ${err}`))
-    //         .then(res => {
-    //             console.log(res);
-    //             return res.body.data;
-    //         }).then(response => resolve(response));
-    // });
+    // return Promise.resolve(true);  // for testing
+    return new Promise((resolve, reject) => {
+        request
+            .get(`${process.env.AUTHENTICATOR_URL}/api/persons/authenticate`)
+            .send({ fname, lname, ssn, zip })
+            .catch(err => {
+                console.error(`Error: ${err}`);
+                reject(false);
+            }).then(res => {
+                console.log(res);
+                return res.body.data;
+            }).then(response => resolve(response));
+    });
 }
 
 /**

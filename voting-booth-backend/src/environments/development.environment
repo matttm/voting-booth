@@ -9,4 +9,4 @@ TOKEN_TTL="3h"
 BLOCKCHAIN_URL='http://localhost:3003'
 
 # url to authentication server's api
-AUTHENTICATOR_URL='http://localhost:3004'
+AUTHENTICATOR_URL='http://localhost:8080'
