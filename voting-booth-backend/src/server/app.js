@@ -12,8 +12,8 @@ if (process.env.NODE_ENV) {
     console.log(`Running in ${process.env.NODE_ENV} mode`);
     configureEnv({
         path: path.resolve(
-            __dirname,
-            `./environments/${process.env.NODE_ENV}.environment`
+            process.cwd(),
+            `./src/environments/${process.env.NODE_ENV}.environment`
         )
     });
 } else {

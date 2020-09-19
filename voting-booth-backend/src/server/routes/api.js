@@ -5,7 +5,7 @@ import express from 'express';
 const router = express.Router();
 
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
-export const expiresIn = process.env.TOKEN_TTL || 120;
+export const expiresIn = process.env.TOKEN_TTL || 100;
 
 /* GET users listing. */
 router.get('/vote', isAuthenticated, async (req, res) => {
@@ -32,7 +32,7 @@ router.post('/voted', isAuthenticated, async (req, res) => {
 router.post('/login', async (req, res) => {
     // get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
-
+console.log(process.env.SECRET_KEY, process.env.TOKEN_TTL);
     if (await authenticate(fname, lname, ssn, zip)) {
 
         console.log('User is authorized');
@@ -40,7 +40,9 @@ router.post('/login', async (req, res) => {
         const user = { fname, lname, zip };
 
         console.log('making user a JWT');
-        const jwtBearerToken = jwt.sign(user, RSA_PRIVATE_KEY);
+        const jwtBearerToken = jwt.sign(user, RSA_PRIVATE_KEY, {
+            expiresIn
+        });
         // TODO: conform key names between apps
         res.status(200).json({
             idToken: jwtBearerToken,
