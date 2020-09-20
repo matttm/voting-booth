@@ -14,26 +14,43 @@ const initRoute = (router) => {
 
 describe('Testing API', () => {
     let request;
+    const testPerson = {
+        fname: "Testy",
+        lname: "Test",
+        zip: "13363",
+        ssn: "290907777"
+    };
 
     beforeAll(() =>{
         request = initRoute(apiRouter);
     });
 
-    test('should receive a 401 status when logging in', async done => {
+    test('should receive a 401 status when logging in', async () => {
         const spy = jest.spyOn(authservice, 'authenticate');
         spy.mockReturnValue(false);
         const response = await request
             .get('/login')
-            .send({
-                fname: "Testy",
-                lname: "Test",
-                zip: "13363",
-                ssn: "290907777"
-            });
+            .send(testPerson);
         expect(response.status).toBe(401);
-        expect(response.header['Content-Type']).toBe(/html/);
+        expect(response.get('Content-Type')).toBe(/html/);
         expect(response.body).toBe('The provided credentials do not match a record');
         spy.mockRestore();
-        done();
-    })
+    });
+
+    test('should receive a valid JWT when logging in', async () => {
+        const spy = jest.spyOn(authservice, 'authenticate');
+        spy.mockReturnValue(true);
+        const response = await request
+            .get('/login')
+            .send(testPerson);
+        expect(response.status).toBe(200);
+        expect(response.get('Content-Type')).toBe(/json*/);
+        const { idToken, expiresIn} = response.body;
+
+        // ensure token is a valid bearer token
+        const [prefix, jwt] = idToken.split(' ');
+        expect(prefix).toBe('Bearer');
+        expect(jwt).toBeTruthy();
+        spy.mockRestore();
+    });
 });

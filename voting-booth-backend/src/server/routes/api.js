@@ -54,11 +54,11 @@ router.get('/login', async (req, res) => {
         });
         // TODO: conform key names between apps
         res.status(200).json({
-            idToken: jwtBearerToken,
+            idToken: `Bearer ${jwtBearerToken}`,
             expiresIn
         });
     } else {
-        res.sendStatus(401).send('The provided credentials do not match a record');
+        res.status(401).send('The provided credentials do not match a record');
     }
 });
 
