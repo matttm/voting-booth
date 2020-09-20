@@ -12,10 +12,8 @@ router.get('/test', isAuthenticated, (req, res) => {
     res.status(200).send("Your'e authenticated");
 });
 
-router.get('/testblock', async (req, res) => {
-    const blocks = await getBlockchain();
-    console.log(blocks);
-    res.status(200).json(blocks);
+router.get('/authentic', async (req, res) => {
+    res.status(200).send();
 });
 
 /* GET users listing. */

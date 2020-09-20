@@ -20,6 +20,9 @@ describe('Testing API', () => {
         zip: "13363",
         ssn: "290907777"
     };
+    const validToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmbmFtZSI6I' +
+        'lRlc3R5IiwibG5hbWUiOiJUZXN0IiwiemlwIjoiMTMzNjMiLCJpYXQiOjE2MDA2NDMzNzYsIm' +
+        'V4cCI6MTYwMDY1MDU3Nn0.k_7sBE5B0oq5tjOlFP2ceuc-PyxRqBAva-rTF_3XXSU';
 
     beforeAll(() =>{
         request = initRoute(apiRouter);
@@ -51,5 +54,21 @@ describe('Testing API', () => {
         expect(jwt).toBeTruthy();
         expect(expiresIn).toBeTruthy();
         spy.mockRestore();
+    });
+
+    test('should return status 200 because of an authentic jwt', async () => {
+        const response = await request
+            .get('/authentic')
+            .set('Authorization', validToken)
+            .send();
+        expect(response.status).toBe(200);
+    });
+
+    test('should return status 401 because of an inauthentic jwt', async () => {
+        const response = await request
+            .get('/authentic')
+            .set('Authorization', 'invalidtoken')
+            .send();
+        expect(response.status).toBe(401);
     });
 });
