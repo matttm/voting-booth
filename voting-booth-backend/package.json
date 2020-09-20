@@ -3,19 +3,25 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
-
   "scripts": {
-      "build": "npx yarn-run-all clean transpile",
-      "server": "node ./dist-server/bin/index.js",
-      "dev": "cross-env NODE_ENV=development npx yarn-run-all build server",
-      "prod": "cross-env NODE_ENV=production npx yarn-run-all build server",
-      "transpile": "babel ./src/server --out-dir dist-server",
-      "clean": "rimraf dist-server"
+    "build": "npx yarn-run-all clean transpile",
+    "server": "node ./dist-server/bin/index.js",
+    "dev": "cross-env NODE_ENV=development npx yarn-run-all build server",
+    "prod": "cross-env NODE_ENV=production npx yarn-run-all build server",
+    "transpile": "babel ./src/server --out-dir dist-server",
+    "clean": "rimraf dist-server"
   },
   "nodemonConfig": {
     "exec": "npm run dev",
-    "watch": [ "server/*", "public/*" ],
-    "ignore": [ "**/__tests__/**", "*.test.js", "*.spec.js" ]
+    "watch": [
+      "server/*",
+      "public/*"
+    ],
+    "ignore": [
+      "**/__tests__/**",
+      "*.test.js",
+      "*.spec.js"
+    ]
   },
   "babel": {
     "presets": [
@@ -45,8 +51,10 @@
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
     "cross-env": "^7.0.2",
+    "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
+    "supertest": "^4.0.2",
     "yarn-run-all": "^3.1.1"
   }
 }

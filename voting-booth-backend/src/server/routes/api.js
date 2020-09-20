@@ -40,7 +40,7 @@ router.post('/voted', isAuthenticated, async (req, res) => {
     })
 });
 
-router.post('/login', async (req, res) => {
+router.get('/login', async (req, res) => {
     // get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
 
@@ -58,8 +58,7 @@ router.post('/login', async (req, res) => {
             expiresIn
         });
     } else {
-        console.log('The provided credentials do not match a record');
-        res.sendStatus(401);
+        res.sendStatus(401).send('The provided credentials do not match a record');
     }
 });
 
