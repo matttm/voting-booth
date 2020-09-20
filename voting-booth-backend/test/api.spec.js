@@ -32,8 +32,7 @@ describe('Testing API', () => {
             .get('/login')
             .send(testPerson);
         expect(response.status).toBe(401);
-        expect(response.get('Content-Type')).toBe(/html/);
-        expect(response.body).toBe('The provided credentials do not match a record');
+        expect(response.text).toBe('The provided credentials do not match a record');
         spy.mockRestore();
     });
 
@@ -44,13 +43,13 @@ describe('Testing API', () => {
             .get('/login')
             .send(testPerson);
         expect(response.status).toBe(200);
-        expect(response.get('Content-Type')).toBe(/json*/);
         const { idToken, expiresIn} = response.body;
 
         // ensure token is a valid bearer token
         const [prefix, jwt] = idToken.split(' ');
         expect(prefix).toBe('Bearer');
         expect(jwt).toBeTruthy();
+        expect(expiresIn).toBeTruthy();
         spy.mockRestore();
     });
 });
