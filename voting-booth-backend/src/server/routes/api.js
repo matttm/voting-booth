@@ -7,11 +7,6 @@ const router = express.Router();
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
 export const expiresIn = process.env.TOKEN_TTL || "2h";
 
-router.get('/test', isAuthenticated, (req, res) => {
-    console.log(JSON.stringify(req.body));
-    res.status(200).send("Your'e authenticated");
-});
-
 router.get('/authentic', isAuthenticated, async (req, res) => {
     res.status(200).send();
 });

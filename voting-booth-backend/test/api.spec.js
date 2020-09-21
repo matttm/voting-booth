@@ -76,4 +76,6 @@ describe('Testing API', () => {
             .send();
         expect(response.status).toBe(401);
     });
+
+    // TODO: get a chain to use in tests
 });
