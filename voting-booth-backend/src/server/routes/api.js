@@ -12,7 +12,7 @@ router.get('/test', isAuthenticated, (req, res) => {
     res.status(200).send("Your'e authenticated");
 });
 
-router.get('/authentic', async (req, res) => {
+router.get('/authentic', isAuthenticated, async (req, res) => {
     res.status(200).send();
 });
 
