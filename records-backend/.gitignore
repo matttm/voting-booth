@@ -1,3 +1,6 @@
+### ignore databases ###
+*.db
+
 HELP.md
 .gradle
 build/
