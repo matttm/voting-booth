@@ -1,16 +1,6 @@
-import express from 'express';
-import supertest from 'supertest';
 import apiRouter from '../src/server/routes/api';
 import * as authservice from '../src/server/services/authentication-service';
-
-const initRoute = (router) => {
-    const app = express();
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-    app.use(router);
-    app.listen(3000);
-    return supertest(app);
-};
+import {initRoute} from "./utilities";
 
 describe('Testing API', () => {
     let request;
