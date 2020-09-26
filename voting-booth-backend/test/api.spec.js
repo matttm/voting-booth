@@ -85,4 +85,15 @@ describe('Testing API', () => {
         expect(results.get('Jo Jorgensen')).toBe(2);
         spy.mockRestore();
     })
+
+    t('should determine person HAS voted', async () => {
+        const chain = testChain;
+        const spy = jest.spyOn(bcservice, 'getBlockchain');
+        spy.mockReturnValue(chain);
+        const response = await request
+            .get('/voted')
+            .send();
+        expect(response.status).toBe(200);
+        spy.mockRestore();
+    })
 });
