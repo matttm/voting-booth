@@ -1,5 +1,6 @@
 import express from "express";
 import supertest from "supertest";
+import * as fs from 'fs';
 
 export const initRoute = (router) => {
     const app = express();
@@ -11,5 +12,6 @@ export const initRoute = (router) => {
 };
 
 export function getTestBlockchain() {
-
+    const chain = fs.readFileSync('test-block.json');
+    console.log(chain);
 }
