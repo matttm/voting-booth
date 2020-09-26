@@ -20,7 +20,7 @@ body: {}
 #### Reply
 Status of ```200``` if the sender is authenticated, whereas a status of ```401``` if not.
 
-```api/login```
+### Endpoint ```api/login```
 #### Description
 Used inorder for the sender to be recognized by the server, when an endpoint requires authorization.
 #### Request
