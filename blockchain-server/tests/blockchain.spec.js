@@ -27,6 +27,16 @@ describe('Blockchain Tests', () => {
         expect(chain.length).toBe(length);
     });
 
+    test("timestamps are valid", () => {
+        const length = 10;
+        const difficulty = 3;
+        const chain = createTestBlockchain(length, difficulty).chain;
+        for (let i = 0; i < length; i++) {
+            const block = chain[i];
+            expect(block.timestamp).toBeTruthy();
+        }
+    });
+
     test("chain's hash should meet difficulty requirement", () => {
         const length = 10;
         const difficulty = 3;
