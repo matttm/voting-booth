@@ -5,6 +5,7 @@
 #### Description
 Used to determine if the sender of the request is seen as an authenticated user by the server
 #### Request
+##### Type GET
 ##### Header
 Header must include an ```Authorization``` key, where the value is the JWT received from the server, preceded by ```Bearer ```
 ##### Body
@@ -24,6 +25,7 @@ Status of ```200``` if the sender is authenticated, whereas a status of ```401``
 #### Description
 Used inorder for the sender to be recognized by the server, when an endpoint requires authorization.
 #### Request
+##### Type GET
 ##### Header
 Not Applicable
 ##### Body
@@ -48,4 +50,38 @@ body: {
     idToken: "ey7..."
     expiresIn: "2 h"
 }
+```
 **Note: The ```idToken``` is not prefixed by ```Bearer ``` as the ```authenticate``` endpoint specifies.**
+### Endpoint ```api/vote```
+#### Description
+Used toncast a vote for a presidential nominee.
+#### Request
+##### Type POST
+##### Header
+Header must contain a valid bearer token
+##### Body
+Body must contain a vote, which is an object with a candidate
+##### Example
+```
+headers: {
+    ...,
+    Authorization: "Bearer e7y..."
+},
+body:
+    vote: {
+        candidate: "Jo Jorgensen"
+    }
+]
+```
+#### Reply
+A status of ```401``` will be returned if the requester is not authenticated, otherwise a status of ```200``` will be returned with a ```status``` in the body, speecifying whether the vote was successfully added.
+##### Example
+```
+body: {
+    success: {
+        true
+    }
+}
+```
+### Endpoint ```api/voted```
+### Endpoint ```api/results```
