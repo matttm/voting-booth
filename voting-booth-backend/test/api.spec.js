@@ -1,8 +1,10 @@
 import apiRouter from '../src/server/routes/api';
 import * as authservice from '../src/server/services/authentication-service';
-import {initRoute} from "./utilities";
+import * as bcservice from '../src/server/services/blockchain-service';
+import {getTestBlockchain, initRoute} from "./utilities";
 
 describe('Testing API', () => {
+    const testChain = getTestBlockchain();
     let request;
     const testPerson = {
         fname: "Testy",
@@ -67,5 +69,20 @@ describe('Testing API', () => {
         expect(response.status).toBe(401);
     });
 
-    // TODO: get a chain to use in tests
+    it('should convert blockchain to results map', async () => {
+        const chain = testChain;
+        const spy = jest.spyOn(bcservice, 'getBlockchain');
+        spy.mockReturnValue(chain);
+        const response = await request
+            .get('/results')
+            .send();
+        expect(response.status).toBe(200);
+        expect(response.body.success).toBeTruthy();
+        expect(response.body.results).toBeTruthy();
+        let results = new Map(response.body.results);
+        expect(results.get('Joe Biden')).toBe(3);
+        expect(results.get('Donald Trump')).toBe(4);
+        expect(results.get('Jo Jorgensen')).toBe(2);
+        spy.mockRestore();
+    })
 });

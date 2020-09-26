@@ -12,6 +12,13 @@ export const initRoute = (router) => {
 };
 
 export function getTestBlockchain() {
-    const chain = fs.readFileSync('test-block.json');
-    console.log(chain);
+    let chain = fs.readFileSync('test/test-block.json');
+    let votes = fs.readFileSync('test/test-block-data.json');
+    chain = JSON.parse(chain);
+    votes = JSON.parse(votes);
+    for (let i = 1; i < chain.length; i++) {
+        chain[i].data = votes[i - 1];
+    }
+    return chain;
+
 }

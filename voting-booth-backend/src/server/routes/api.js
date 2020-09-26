@@ -60,8 +60,8 @@ router.get('/results', async (req, res) => {
     // getting blockchain
     const chain = await getBlockchain();
     // iterate blockchain and accumulate results
-    for (let block of chain) {
-        const vote = block.data;
+    for (let i = 1; i < chain.length; i++) {
+        const vote = chain[i].data;
         const name = vote.candidate;
         if (results.has(name)) {
             results.set(name, results.get(name) + 1);
@@ -70,9 +70,9 @@ router.get('/results', async (req, res) => {
         }
     }
     // just send it
-    res.json({
+    res.status(200).json({
         success: true,
-        results
+        results: [...results]
     });
 });
 
