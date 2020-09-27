@@ -22,14 +22,33 @@ router.get('/vote', isAuthenticated, async (req, res) => {
     res.status(200).json({ success: status });
 });
 
-router.post('/voted', isAuthenticated, async (req, res) => {
+// TODO: move this to a user router
+router.get('/user', isAuthenticated, async (req, res) => {
+    //
+    // Only meant to be used with a query for 'hasVoted'
+    // GET  REQUEST api/user?voted=true
+    //
+    const user = req.user;
+    const hasVoted = req.query.voted;
+    // This cannot be shortened, as it is a bool and could be false
+    if (hasVoted === undefined) {
+        res.status(401).json({
+            success: false,
+            message: 'Required query not specified'
+        })
+    }
     const chain = await getBlockchain();
     // determine if this person voted
     // TODO: reimplement without use of ssn
-    const hasVoted = chain.some(block => block.data.ssn === req.body.ssn);
+    const answer = chain.some((block, idx) => {
+        if (idx === 0)
+            return;
+        const { voter } = block.data;
+        return voter.fname === user.fname && voter.lname === user.lname && voter.zip === user.zip;
+    });
     res.json({
-        success: true,
-        hasVoted
+        success: !!answer,  // force this to be a boolean
+        hasVoted: answer
     })
 });
 

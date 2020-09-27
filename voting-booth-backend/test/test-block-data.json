@@ -1,29 +1,83 @@
 [
   {
-    "candidate": "Joe Biden"
+    "candidate": "Joe Biden",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Donald Trump"
+    "candidate": "Donald Trump",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Jo Jorgensen"
+    "candidate": "Jo Jorgensen",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Joe Biden"
+    "candidate": "Joe Biden",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Jo Jorgensen"
+    "candidate": "Jo Jorgensen",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Donald Trump"
+    "candidate": "Donald Trump",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Donald Trump"
+    "candidate": "Donald Trump",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Donald Trump"
+    "candidate": "Donald Trump",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   },
   {
-    "candidate": "Joe Biden"
+    "candidate": "Joe Biden",
+    "voter": {
+      "fname":"Testy",
+      "lname": "Test",
+      "zip": "13363",
+      "ssn": "290-90-7777"
+    }
   }
 ]

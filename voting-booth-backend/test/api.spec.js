@@ -10,7 +10,7 @@ describe('Testing API', () => {
         fname: "Testy",
         lname: "Test",
         zip: "13363",
-        ssn: "290907777"
+        ssn: "290-90-7777"
     };
 
     beforeAll(() =>{
@@ -84,16 +84,40 @@ describe('Testing API', () => {
         expect(results.get('Donald Trump')).toBe(4);
         expect(results.get('Jo Jorgensen')).toBe(2);
         spy.mockRestore();
-    })
+    });
 
-    t('should determine person HAS voted', async () => {
+    it('should return 401 without an id', async () => {
         const chain = testChain;
-        const spy = jest.spyOn(bcservice, 'getBlockchain');
-        spy.mockReturnValue(chain);
+        const bcSpy = jest.spyOn(bcservice, 'getBlockchain');
+        bcSpy.mockReturnValue(chain);
+
         const response = await request
-            .get('/voted')
+            .get('/user?voted=true')
+            .send();
+        expect(response.status).toBe(401);
+        bcSpy.mockRestore();
+    });
+
+    it('should determine person HAS voted', async () => {
+        const chain = testChain;
+        const authSpy = jest.spyOn(authservice, 'authenticate');
+        const bcSpy = jest.spyOn(bcservice, 'getBlockchain');
+        authSpy.mockReturnValue(true);
+        bcSpy.mockReturnValue(chain);
+
+        let response = await request
+            .get('/login')
+            .send(testPerson);
+        expect(response.status).toBe(200);
+        const { idToken } = response.body;
+
+        response = await request
+            .get('/user?voted=true')
+            .set('Authorization', idToken)
             .send();
         expect(response.status).toBe(200);
-        spy.mockRestore();
-    })
+        expect(response.body.success).toBeTruthy();
+        expect(response.body.hasVoted).toBeTruthy();
+        bcSpy.mockRestore();
+    });
 });
