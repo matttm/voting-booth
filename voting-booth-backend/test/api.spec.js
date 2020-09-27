@@ -120,4 +120,32 @@ describe('Testing API', () => {
         expect(response.body.hasVoted).toBeTruthy();
         bcSpy.mockRestore();
     });
+
+    it('should succeed in voting', async () => {
+        const vote = {
+            candidate: 'Tulsi Gabbard'
+        };
+        const res = {
+            success: true,
+            message: 'Block added'
+        };
+        const authSpy = jest.spyOn(authservice, 'authenticate');
+        const bcSpy = jest.spyOn(bcservice, 'addBlock');
+        authSpy.mockReturnValue(true);
+        bcSpy.mockReturnValue(res);
+
+        let response = await request
+            .get('/login')
+            .send(testPerson);
+        expect(response.status).toBe(200);
+        const { idToken } = response.body;
+
+        response = await request
+            .post('/votes')
+            .set('Authorization', idToken)
+            .send(vote);
+        expect(response.status).toBe(200);
+        expect(response.body.success).toBeTruthy();
+        bcSpy.mockRestore();
+    });
 });

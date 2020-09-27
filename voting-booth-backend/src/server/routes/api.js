@@ -11,13 +11,20 @@ router.get('/authentic', isAuthenticated, async (req, res) => {
     res.status(200).send();
 });
 
-/* GET users listing. */
-router.get('/vote', isAuthenticated, async (req, res) => {
+router.post('/votes', isAuthenticated, async (req, res) => {
     const vote = req.body;
     // ensure everything is in vote
-    if (!(vote.voter && vote.candidate)) {
-        res.status(400);
+    if (!vote.candidate) {
+        res.status(400).send();
+        return;
     }
+    // add the voter info to the vote
+    const user = req.user;
+    vote.voter = {
+        fname: user.fname,
+        lname: user.lname,
+        zip: user.zip
+    };
     const status = await addBlock(vote);
     res.status(200).json({ success: status });
 });
