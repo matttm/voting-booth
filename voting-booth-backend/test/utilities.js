@@ -20,5 +20,10 @@ export function getTestBlockchain() {
         chain[i].data = votes[i - 1];
     }
     return chain;
+}
 
+function handle(promise) {
+    return promise
+        .then(data => ([data, undefined]))
+        .error(err => Promise.resolve([undefined, err]));
 }
