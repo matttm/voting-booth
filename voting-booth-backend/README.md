@@ -83,8 +83,46 @@ body: {
     }
 }
 ```
-### Endpoint ```api/voted```
+### Endpoint ```api/user```
+#### Type GET
+#### Description
+Used for determining if a user has voted
+##### Example
+```api/user?has-voted=true```
+#### Request
+##### Header
+Header must contain a JWT Bearer token
+##### Body
+Not Applicable
+##### Example
+```
+headers: {
+    ...,
+    Authorization: 'Bearer ey7...'
+},
+body: {}
+```
+#### Reply
+The response body will contain a success and a hasVoted key
+##### Example
+```
+success: true,
+hasVoted: true
+```
 ### Endpoint ```api/results```
 #### Type GET
 ##### Description
 Used to get results of election
+#### Request
+The request does not need to contain any specific information
+#### Reply
+##### Header
+Not Applicable
+##### Body
+Body will contain a success key and a results object, which is a destructured Map object
+###### Example
+```
+body: {
+    success: true,
+    results: [[ 'Timmy, 2], ['Jo', 3], ...]]
+```
