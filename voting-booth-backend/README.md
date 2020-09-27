@@ -2,9 +2,9 @@
 
 ## API Specification
 ### Endpoint ```api/authentic```
+#### Type GET
 #### Description
 Used to determine if the sender of the request is seen as an authenticated user by the server
-#### Type GET
 ##### Request
 ###### Header
 Header must include an ```Authorization``` key, where the value is the JWT received from the server, preceded by ```Bearer ```
