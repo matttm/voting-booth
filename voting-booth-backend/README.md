@@ -22,9 +22,9 @@ body: {}
 Status of ```200``` if the sender is authenticated, whereas a status of ```401``` if not.
 
 ### Endpoint ```api/login```
-#### Description
-Used inorder for the sender to be recognized by the server, when an endpoint requires authorization.
 #### Type GET
+##### Description
+Used inorder for the sender to be recognized by the server, when an endpoint requires authorization.
 ##### Request
 ###### Header
 Not Applicable
@@ -52,10 +52,10 @@ body: {
 }
 ```
 **Note: The ```idToken``` is not prefixed by ```Bearer ``` as the ```authenticate``` endpoint specifies.**
-### Endpoint ```api/vote```
+### Endpoint ```api/votes```
+#### Type POST
 #### Description
 Used toncast a vote for a presidential nominee.
-#### Type POST
 ##### Request
 ###### Header
 Header must contain a valid bearer token
@@ -85,3 +85,6 @@ body: {
 ```
 ### Endpoint ```api/voted```
 ### Endpoint ```api/results```
+#### Type GET
+##### Description
+Used to get results of election
