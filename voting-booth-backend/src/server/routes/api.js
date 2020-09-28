@@ -2,6 +2,7 @@ import {authenticate, isAuthenticated} from "../services/authentication-service"
 import jwt from 'jsonwebtoken';
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import express from 'express';
+import {handle} from "../../../test/utilities";
 const router = express.Router();
 
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
@@ -25,7 +26,10 @@ router.post('/votes', isAuthenticated, async (req, res) => {
         lname: user.lname,
         zip: user.zip
     };
-    const status = await addBlock(vote);
+    const [status, err] = await handle(addBlock(vote));
+    if (err) {
+        res.status(503).send('Voting store not reachable');
+    }
     res.status(200).json({ success: status });
 });
 
@@ -44,7 +48,10 @@ router.get('/user', isAuthenticated, async (req, res) => {
             message: 'Required query not specified'
         })
     }
-    const chain = await getBlockchain();
+    const [chain, err] = await handle(getBlockchain());
+    if (err) {
+        res.status(503).send('Voting store not reachable');
+    }
     // determine if this person voted
     // TODO: reimplement without use of ssn
     const answer = chain.some((block, idx) => {
@@ -63,8 +70,11 @@ router.get('/login', async (req, res) => {
     // get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
 
-    if (await authenticate(fname, lname, ssn, zip)) {
-
+    let [authenticated, err] = await handle(authenticate(fname, lname, ssn, zip));
+    if (err) {
+        res.status(503).send('Authentication server not reachable');
+    }
+    if (authenticated) {
         // ssn is too sensitive to be stored in the jwt as it can be  decoded by anyone
         const user = { fname, lname, zip };
 
@@ -84,7 +94,10 @@ router.get('/login', async (req, res) => {
 router.get('/results', async (req, res) => {
     const results = new Map();
     // getting blockchain
-    const chain = await getBlockchain();
+    const [chain, err] = await handle(getBlockchain());
+    if (err) {
+        res.status(503).send('Voting store not reachable');
+    }
     // iterate blockchain and accumulate results
     for (let i = 1; i < chain.length; i++) {
         const vote = chain[i].data;

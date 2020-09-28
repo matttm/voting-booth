@@ -22,7 +22,7 @@ export function getTestBlockchain() {
     return chain;
 }
 
-function handle(promise) {
+export function handle(promise) {
     return promise
         .then(data => ([data, undefined]))
         .error(err => Promise.resolve([undefined, err]));
