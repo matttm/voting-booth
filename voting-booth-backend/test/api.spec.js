@@ -5,6 +5,9 @@ import {getTestBlockchain, initRoute} from "./utilities";
 
 describe('Testing API', () => {
     const testChain = getTestBlockchain();
+    const promisedChain = Promise.resolve(testChain);
+    const promisedTrue  = Promise.resolve(true);
+    const promisedFalse = Promise.resolve(false);
     let request;
     const testPerson = {
         fname: "Testy",
@@ -19,7 +22,7 @@ describe('Testing API', () => {
 
     test('should receive a 401 status when logging in', async () => {
         const spy = jest.spyOn(authservice, 'authenticate');
-        spy.mockReturnValue(false);
+        spy.mockReturnValue(promisedFalse);
         const response = await request
             .get('/login')
             .send(testPerson);
@@ -30,7 +33,7 @@ describe('Testing API', () => {
 
     test('should receive a valid JWT when logging in', async () => {
         const spy = jest.spyOn(authservice, 'authenticate');
-        spy.mockReturnValue(true);
+        spy.mockReturnValue(promisedTrue);
         const response = await request
             .get('/login')
             .send(testPerson);
@@ -47,7 +50,7 @@ describe('Testing API', () => {
 
     test('should return status 200 because of an authentic jwt', async () => {
         const spy = jest.spyOn(authservice, 'authenticate');
-        spy.mockReturnValue(true);
+        spy.mockReturnValue(promisedTrue);
         let response = await request
             .get('/login')
             .send(testPerson);
@@ -72,7 +75,7 @@ describe('Testing API', () => {
     it('should convert blockchain to results map', async () => {
         const chain = testChain;
         const spy = jest.spyOn(bcservice, 'getBlockchain');
-        spy.mockReturnValue(chain);
+        spy.mockReturnValue(promisedChain);
         const response = await request
             .get('/results')
             .send();
@@ -89,7 +92,7 @@ describe('Testing API', () => {
     it('should return 401 without an id', async () => {
         const chain = testChain;
         const bcSpy = jest.spyOn(bcservice, 'getBlockchain');
-        bcSpy.mockReturnValue(chain);
+        bcSpy.mockReturnValue(promisedChain);
 
         const response = await request
             .get('/user?voted=true')
@@ -102,8 +105,8 @@ describe('Testing API', () => {
         const chain = testChain;
         const authSpy = jest.spyOn(authservice, 'authenticate');
         const bcSpy = jest.spyOn(bcservice, 'getBlockchain');
-        authSpy.mockReturnValue(true);
-        bcSpy.mockReturnValue(chain);
+        authSpy.mockReturnValue(promisedTrue);
+        bcSpy.mockReturnValue(promisedChain);
 
         let response = await request
             .get('/login')
@@ -131,8 +134,8 @@ describe('Testing API', () => {
         };
         const authSpy = jest.spyOn(authservice, 'authenticate');
         const bcSpy = jest.spyOn(bcservice, 'addBlock');
-        authSpy.mockReturnValue(true);
-        bcSpy.mockReturnValue(res);
+        authSpy.mockReturnValue(promisedTrue);
+        bcSpy.mockReturnValue(Promise.resolve(res));
 
         let response = await request
             .get('/login')

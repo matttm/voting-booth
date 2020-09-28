@@ -25,5 +25,5 @@ export function getTestBlockchain() {
 export function handle(promise) {
     return promise
         .then(data => ([data, undefined]))
-        .error(err => Promise.resolve([undefined, err]));
+        .catch(err => Promise.resolve([undefined, err]));
 }
