@@ -2,6 +2,12 @@ import express from "express";
 import supertest from "supertest";
 import * as fs from 'fs';
 
+/**
+ * Enables an Express controller for testing
+ *
+ * @param router an Express router
+ * @return {supertest.SuperTest<supertest.Test>} a supertest object
+ */
 export const initRoute = (router) => {
     const app = express();
     app.use(express.json());
@@ -11,6 +17,11 @@ export const initRoute = (router) => {
     return supertest(app);
 };
 
+/**
+ * Loads a blockchain with a vote object as the value for data property
+ *
+ * @return {any | Buffer} a blockchain
+ */
 export function getTestBlockchain() {
     let chain = fs.readFileSync('test/test-block.json');
     let votes = fs.readFileSync('test/test-block-data.json');

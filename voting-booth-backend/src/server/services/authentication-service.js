@@ -1,7 +1,5 @@
 import expressJwt from 'express-jwt';
-import {RSA_PRIVATE_KEY} from "../routes/api";
 import request from 'superagent';
-import jwt from 'jsonwebtoken';
 
 /**
  * Determines whether provided information is of an authentic user
@@ -13,9 +11,6 @@ import jwt from 'jsonwebtoken';
  * @param zip a zip code
  */
 export async function authenticate(fname, lname, ssn, zip) {
-    // TODO: change records-backend's endpoint to authenticate so this works
-    // TODO: and change this action to be a GET
-    // return Promise.resolve(true);  // for testing
     const response = await request
             .get(`${process.env.AUTHENTICATOR_URL}/api/persons/authenticate`)
             .send({ fname, lname, ssn, zip });

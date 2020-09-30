@@ -6,10 +6,11 @@ import request from "superagent";
  * @return {Promise<[]>} a chain of blocks containing vote data
  */
 export async function getBlockchain() {
-    return request
+    const response = await request
         .get(`${process.env.BLOCKCHAIN_URL}/api/blocks`)
-        .then(res => res.json())
-        .then(res => res.body?.chain);
+        .then(res => res.json());
+
+    return response.body?.chain;
 }
 
 /**
@@ -19,8 +20,9 @@ export async function getBlockchain() {
  * @return {Promise<boolean>}
  */
 export async function addBlock(data) {
-    return request
+    const response = await request
         .post(`${process.env.BLOCKCHAIN_URL}/api/blocks`)
-        .send(data)
-        .then(response => response.body?.success);
+        .send(data);
+
+    return response.body?.success;
 }

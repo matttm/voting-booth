@@ -81,6 +81,7 @@ router.get('/login', async (req, res) => {
         // ssn is too sensitive to be stored in the jwt as it can be  decoded by anyone
         const user = { fname, lname, zip };
 
+        // TODO: figure how to use a var for the secret
         const jwtBearerToken = jwt.sign(user, `secret`, {
             expiresIn
         });
@@ -100,6 +101,7 @@ router.get('/results', async (req, res) => {
     const [chain, err] = await handle(getBlockchain());
     if (err) {
         res.status(503).send('Voting store not reachable');
+        return;
     }
     // iterate blockchain and accumulate results
     for (let i = 1; i < chain.length; i++) {
