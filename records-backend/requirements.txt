@@ -1,0 +1,6 @@
+# dependencies needed for db generation
+sqlite3
+argparse
+sys
+re
+faker

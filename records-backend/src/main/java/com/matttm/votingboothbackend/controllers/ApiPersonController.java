@@ -73,7 +73,7 @@ public class ApiPersonController {
      *
      * @return true if the person exists in the database
      */
-    @PostMapping("/validate")
+    @GetMapping("/authenticate")
     public ResponseEntity<SimpleMessage<Boolean>> validate(@RequestBody Person p) {
         boolean success = personService.exists(p);
         return new ResponseEntity<>(
