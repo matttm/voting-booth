@@ -2,7 +2,8 @@ import {authenticate, isAuthenticated} from "../services/authentication-service"
 import jwt from 'jsonwebtoken';
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import express from 'express';
-import {handle} from "../../../test/utilities";
+import {handle} from "../utilities";
+
 const router = express.Router();
 
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
@@ -51,6 +52,7 @@ router.get('/user', isAuthenticated, async (req, res) => {
     const [chain, err] = await handle(getBlockchain());
     if (err) {
         res.status(503).send('Voting store not reachable');
+        return;
     }
     // determine if this person voted
     // TODO: reimplement without use of ssn
@@ -73,6 +75,7 @@ router.get('/login', async (req, res) => {
     let [authenticated, err] = await handle(authenticate(fname, lname, ssn, zip));
     if (err) {
         res.status(503).send('Authentication server not reachable');
+        return;
     }
     if (authenticated) {
         // ssn is too sensitive to be stored in the jwt as it can be  decoded by anyone

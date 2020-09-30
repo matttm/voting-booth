@@ -19,6 +19,7 @@ export async function authenticate(fname, lname, ssn, zip) {
     const response = await request
             .get(`${process.env.AUTHENTICATOR_URL}/api/persons/authenticate`)
             .send({ fname, lname, ssn, zip });
+
     return response.body?.data;
 }
 
