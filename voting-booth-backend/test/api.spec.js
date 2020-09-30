@@ -8,7 +8,6 @@ describe('Testing API', () => {
     const promisedChain = Promise.resolve(testChain);
     const promisedTrue  = Promise.resolve(true);
     const promisedFalse = Promise.resolve(false);
-    const promisedReject = new Promise((res, rej) => setTimeout(rej, 0));
     let request;
     const testPerson = {
         fname: "Testy",
@@ -19,16 +18,6 @@ describe('Testing API', () => {
 
     beforeAll(() =>{
         request = initRoute(apiRouter);
-    });
-
-    test('should return 503 when auth server times out', async () => {
-        const spy = jest.spyOn(authservice, 'authenticate');
-        spy.mockReturnValue(promisedReject);
-        const response = await request
-            .get('/login')
-            .send(testPerson);
-        expect(response.status).toBe(503);
-        spy.mockRestore();
     });
 
     test('should receive a 401 status when logging in', async () => {
