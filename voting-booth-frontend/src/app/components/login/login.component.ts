@@ -60,10 +60,16 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       this.isAuthenticating = true;
       const vals = this.form.value;
-      this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).then(() => {
+      this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).then(res => {
         this.isAuthenticating = false;
         console.log('Logging in...');
-        // this.router.navigateByUrl('/ballot');
+        if (res.status === 200) {
+          this.snackbar.open('Login Successful', null, { duration: 5000 });
+          this.router.navigateByUrl('/ballot');
+        } else {
+          const message = res.body.message;
+          this.snackbar.open(message, null, { duration: 5000 });
+        }
       });
     } else {
       this.snackbar.open('All fields are required', null, { duration: 5000 });

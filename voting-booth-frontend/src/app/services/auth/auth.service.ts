@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {shareReplay, tap} from 'rxjs/operators';
-import {JsonWebToken} from '../../types';
+import {JsonWebToken, JwtMessage} from '../../types';
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
 
@@ -25,14 +25,20 @@ export class AuthService {
    * @return an observable of a successful or failure during login and
    * s JWT if successful
    */
-  login(ssn: string, fname: string, lname: string, zip: string): Promise<any> {
-    // const voter = { ssn, fname, lname, zip };
-    // return this.http.post('/api/login', voter)
-    //   .pipe(
-    //     tap(this.setSession),
-    //     shareReplay()
-    //   ).toPromise();
-    return new Promise<any>(resolve => setTimeout(resolve, 5000));
+  login(
+    ssn: string,
+    fname: string,
+    lname: string,
+    zip: string
+  ): Promise<HttpResponse<JwtMessage>> {
+    // TODO: make the backend accept this request as POST
+    const voter = { ssn, fname, lname, zip };
+    return this.http.post<JsonWebToken>('/api/login', voter, { observe: 'response' })
+      .pipe(
+        tap(res => this.setSession(res.body)),
+        shareReplay()
+      ).toPromise();
+    // return new Promise<any>(resolve => setTimeout(resolve, 5000));
   }
 
   /**

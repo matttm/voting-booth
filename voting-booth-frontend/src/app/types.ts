@@ -1,4 +1,3 @@
-
 export interface FormObject {
   placeholder: string;
   name: string;
@@ -21,6 +20,15 @@ export interface JsonWebToken {
   expiresIn: number;
 }
 
+export interface SimpleMessage {
+  success: boolean;
+  message: string;
+}
+
 export interface Results {
   [key: string]: number;
 }
+
+// TODO: find a way to make this generic
+export type JwtMessage = JsonWebToken | SimpleMessage;
+export type ResultsMessage = Results | SimpleMessage;
