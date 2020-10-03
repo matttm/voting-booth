@@ -24,7 +24,7 @@ describe('Testing API', () => {
         const spy = jest.spyOn(authservice, 'authenticate');
         spy.mockReturnValue(promisedFalse);
         const response = await request
-            .get('/login')
+            .post('/login')
             .send(testPerson);
         expect(response.status).toBe(401);
         expect(response.text).toBe('The provided credentials do not match a record');
@@ -35,7 +35,7 @@ describe('Testing API', () => {
         const spy = jest.spyOn(authservice, 'authenticate');
         spy.mockReturnValue(promisedTrue);
         const response = await request
-            .get('/login')
+            .post('/login')
             .send(testPerson);
         expect(response.status).toBe(200);
         const { idToken, expiresIn} = response.body;
@@ -52,7 +52,7 @@ describe('Testing API', () => {
         const spy = jest.spyOn(authservice, 'authenticate');
         spy.mockReturnValue(promisedTrue);
         let response = await request
-            .get('/login')
+            .post('/login')
             .send(testPerson);
         expect(response.status).toBe(200);
         const { idToken } = response.body;
@@ -109,7 +109,7 @@ describe('Testing API', () => {
         bcSpy.mockReturnValue(promisedChain);
 
         let response = await request
-            .get('/login')
+            .post('/login')
             .send(testPerson);
         expect(response.status).toBe(200);
         const { idToken } = response.body;
@@ -138,7 +138,7 @@ describe('Testing API', () => {
         bcSpy.mockReturnValue(Promise.resolve(res));
 
         let response = await request
-            .get('/login')
+            .post('/login')
             .send(testPerson);
         expect(response.status).toBe(200);
         const { idToken } = response.body;

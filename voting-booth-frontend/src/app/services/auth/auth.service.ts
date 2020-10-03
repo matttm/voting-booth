@@ -4,6 +4,7 @@ import {shareReplay, tap} from 'rxjs/operators';
 import {JsonWebToken, JwtMessage} from '../../types';
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
+import {environment} from "../../../environments/environment";
 
 /**
  * Service class in charge of authenticating credentials
@@ -33,7 +34,8 @@ export class AuthService {
   ): Promise<HttpResponse<JwtMessage>> {
     // TODO: make the backend accept this request as POST
     const voter = { ssn, fname, lname, zip };
-    return this.http.post<JsonWebToken>('/api/login', voter, { observe: 'response' })
+    return this.http.post<JsonWebToken>
+    (`/api/login`, voter, { observe: 'response' })
       .pipe(
         tap(res => this.setSession(res.body)),
         shareReplay()

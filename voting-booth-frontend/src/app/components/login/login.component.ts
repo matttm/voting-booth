@@ -44,11 +44,10 @@ export class LoginComponent implements OnInit {
     ];
     // TODO: add more customized validators where possible
     this.form = this.fb.group({
-      ssn:   ['', Validators.required,
-        Validators.pattern('^(?!666|000|9\\\\d{2})\\\\d{3}-(?!00)\\\\d{2}-(?!0{4})\\\\d{4}$')],
-      fname: ['', Validators.required, Validators.min(2), Validators.max(20)],
-      lname: ['', Validators.required, Validators.min(2), Validators.max(20)],
-      zip:   ['', Validators.required, Validators.min(5), Validators.max(5)]
+      ssn:   [''], // , Validators.required, Validators.pattern('^(?!666|000|9\\\\d{2})\\\\d{3}-(?!00)\\\\d{2}-(?!0{4})\\\\d{4}$')],
+      fname: [''], // , Validators.required, Validators.min(2), Validators.max(20)],
+      lname: [''], // , Validators.required, Validators.min(2), Validators.max(20)],
+      zip:   [''], // , Validators.required, Validators.min(5), Validators.max(5)]
     });
     this.isAuthenticating = false;
   }
@@ -67,12 +66,13 @@ export class LoginComponent implements OnInit {
           this.snackbar.open('Login Successful', null, { duration: 5000 });
           this.router.navigateByUrl('/ballot');
         } else {
+          // @ts-ignore
           const message = res.body.message;
           this.snackbar.open(message, null, { duration: 5000 });
         }
       });
     } else {
-      this.snackbar.open('All fields are required', null, { duration: 5000 });
+      this.snackbar.open('Form is invalid', null, { duration: 5000 });
     }
   }
 }

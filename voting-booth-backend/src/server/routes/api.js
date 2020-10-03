@@ -68,7 +68,7 @@ router.get('/user', isAuthenticated, async (req, res) => {
     })
 });
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     // get all info needed to authenticate
     const { fname, lname, ssn, zip } = req.body;
 
