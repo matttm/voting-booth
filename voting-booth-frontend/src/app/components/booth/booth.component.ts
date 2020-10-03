@@ -44,19 +44,35 @@ export class BoothComponent implements OnInit {
   ngOnInit() {
   }
 
-  vote() {
+  handleSubmit() {
     this.isVoting = true;
-    this.votingService.vote('null').then(() => {
-      this.isVoting = false;
-      this.snackbar.open('Vote Submitted', null, { duration: 5000 });
-    });
+    this.votingService.vote('null')
+      .then(() => {
+        this.isVoting = false;
+        this.snackbar.open('Vote Submitted', null, {duration: 5000});
+      })
+      .catch(err => {
+        // TODO: factor to an error handler
+        let message = '';
+        const status = err.status;
+        if (status === 503) {
+          message = 'We are experiencing difficulties';
+        } else if (status === 401) {
+          message = 'Login before voting';
+        }
+        this.snackbar
+          .open(message, null, {duration: 6000})
+          .afterDismissed().subscribe(() => this.form.reset());
+      });
   }
 
+  // TODO: remove or find another use?
   onMouseEnter(name: string) {
     this.isInfoVisible = true;
     this.hovered = name;
   }
 
+  // TODO: remove or find another use?
   onMouseLeave() {
     this.isInfoVisible = false;
     this.hovered = null;

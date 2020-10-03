@@ -20,24 +20,21 @@ export class VotingService {
    * @param nomination a string of the person who is being voted for
    */
   vote(nomination: string): Promise<any> {
-    // return this.httpClient.post('/vote', null)
-    //   .pipe(
-    //     shareReplay()
-    //   ).toPromise();
-    return new Promise( resolve => setTimeout(resolve, 5000));
+    const vote = { vote: nomination };
+    return this.httpClient.post('/votes', vote)
+      .pipe(
+        shareReplay()
+      ).toPromise();
+    // return new Promise( resolve => setTimeout(resolve, 5000));
   }
 
   /**
    * Determine if a voter has voted or not
-   * @param ssn the uid ssn of the voter
    *
    * @return a promise of the answer
    */
-  hasVoted(ssn: string): Promise<any> {
-    const body = {
-      ssn
-    };
-    return this.httpClient.post('/voted', body)
+  hasVoted(): Promise<any> {
+    return this.httpClient.get('/api/user?voted=true')
       .pipe(
         tap(console.log),
         shareReplay()

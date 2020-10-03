@@ -25,7 +25,7 @@ describe('VotingService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should send a POST request on a vote', () => {
+  it('should send a POST request on a handleSubmit', () => {
     service.vote('Sally Dodo');
     const request = http.expectOne( `/vote`);
     expect(request.request.method).toBe('POST');
@@ -33,8 +33,8 @@ describe('VotingService', () => {
 
   it('should send a POST request with a "ssn" key on body when' +
     ' querying if someone voted', () => {
-    service.hasVoted('198-19-1902');
-    const request = http.expectOne( `/voted`);
+    service.hasVoted();
+    const request = http.expectOne( '/api/user?voted=true');
     expect(request.request.method).toBe('POST');
     expect(request.request.body.ssn).toBeDefined();
   });
