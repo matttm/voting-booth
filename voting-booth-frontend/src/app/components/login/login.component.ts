@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   fields: FormObject[];
   isAuthenticating: boolean;
+  snackbarDuration: number;
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
       zip:   [''], // , Validators.required, Validators.min(5), Validators.max(5)]
     });
     this.isAuthenticating = false;
+    this.snackbarDuration = 5000;
   }
 
   ngOnInit() {
@@ -59,20 +61,29 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       this.isAuthenticating = true;
       const vals = this.form.value;
-      this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip).then(res => {
-        this.isAuthenticating = false;
-        console.log('Logging in...');
-        if (res.status === 200) {
-          this.snackbar.open('Login Successful', null, { duration: 5000 });
-          this.router.navigateByUrl('/ballot');
-        } else {
-          // @ts-ignore
-          const message = res.body.message;
-          this.snackbar.open(message, null, { duration: 5000 });
-        }
-      });
+      this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip)
+        .then(res => {
+          this.isAuthenticating = false;
+          console.log('Logged in');
+          this.snackbar
+            .open('Login Successful', 'Reset', {duration: this.snackbarDuration});
+          this.router.navigateByUrl('/booth');
+        })
+        .catch(err => {
+          this.isAuthenticating = false;
+          let message = '';
+          const status = err.status;
+          if (status === 503) {
+            message = 'We are experiencing difficulties';
+          } else if (status === 401) {
+            message = 'Credentials were not found';
+          }
+          this.snackbar.open(message, null, {duration: this.snackbarDuration})
+            .afterDismissed().subscribe(() => this.form.reset());
+        });
     } else {
-      this.snackbar.open('Form is invalid', null, { duration: 5000 });
+      this.snackbar
+        .open('Form is invalid', null, { duration: this.snackbarDuration });
     }
   }
 }
