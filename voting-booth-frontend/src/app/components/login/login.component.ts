@@ -78,7 +78,8 @@ export class LoginComponent implements OnInit {
           } else if (status === 401) {
             message = 'Credentials were not found';
           }
-          this.snackbar.open(message, null, {duration: this.snackbarDuration})
+          this.snackbar
+            .open(message, null, {duration: this.snackbarDuration})
             .afterDismissed().subscribe(() => this.form.reset());
         });
     } else {

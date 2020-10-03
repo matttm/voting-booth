@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {shareReplay, tap} from 'rxjs/operators';
 import {JsonWebToken, JwtMessage} from '../../types';
 import * as moment from 'moment';
-import {Observable} from 'rxjs';
-import {environment} from "../../../environments/environment";
 
 /**
  * Service class in charge of authenticating credentials
