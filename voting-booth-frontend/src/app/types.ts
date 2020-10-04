@@ -16,7 +16,7 @@ export interface CandidateData {
 }
 
 export interface JsonWebToken {
-  tokenId: string;
+  idToken: string;
   expiresIn: number;
 }
 

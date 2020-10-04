@@ -55,7 +55,7 @@ export class AuthService {
    */
   private setSession(authToken: JsonWebToken) {
     const expiresAt  = moment().add(authToken.expiresIn);
-    localStorage.setItem('id_token', authToken.tokenId);
+    localStorage.setItem('id_token', authToken.idToken);
     localStorage.setItem('expires_at', JSON.stringify(expiresAt));
   }
 

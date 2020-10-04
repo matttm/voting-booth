@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
         });
         // TODO: conform key names between apps
         res.status(200).json({
-            idToken: `Bearer ${jwtBearerToken}`,
+            idToken: jwtBearerToken,
             expiresIn
         });
     } else {

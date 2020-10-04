@@ -20,8 +20,8 @@ export class VotingService {
    * @param nomination a string of the person who is being voted for
    */
   vote(nomination: string): Promise<any> {
-    const vote = { vote: nomination };
-    return this.httpClient.post('/votes', vote)
+    const vote = { candidate: nomination };
+    return this.httpClient.post('/api/votes', vote)
       .pipe(
         shareReplay()
       ).toPromise();
