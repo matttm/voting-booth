@@ -8,8 +8,6 @@
       >
         <mat-radio-button class="candidate-radio-button" *ngFor="let candidate of candidates$ | async"
                           [value]="candidate"
-                          (mouseenter)="onMouseEnter(candidate)"
-                          (mouseleave)="onMouseLeave()"
         >
           {{candidate}}
         </mat-radio-button>

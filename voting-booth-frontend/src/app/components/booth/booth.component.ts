@@ -4,7 +4,7 @@ import {VotingService} from '../../services/voting/voting.service';
 import {select, Store} from '@ngrx/store';
 import {selectCandidatesNames} from '../../selectors';
 import {Observable} from 'rxjs';
-import {MatSnackBar} from "@angular/material";
+import {MatSnackBar} from '@angular/material';
 
 /**
  * Component represents the actual voting booth, in which a person
@@ -16,29 +16,20 @@ import {MatSnackBar} from "@angular/material";
   styleUrls: ['./booth.component.css']
 })
 export class BoothComponent implements OnInit {
-  hovered: string;
   selected: string;
-  isInfoVisible: boolean;
   isVoting: boolean;
   candidates$: Observable<string[]>;
-  form: FormGroup;
 
   constructor(private fb: FormBuilder,
               private snackbar: MatSnackBar,
               private store: Store,
               private votingService: VotingService
   ) {
-    this.hovered = null;
     this.selected = null;
-    this.isInfoVisible = false;
     this.isVoting = false;
     this.candidates$ = store.pipe(
       select(selectCandidatesNames)
     );
-    const groupConfig = {};
-    // @ts-ignore
-    groupConfig.select = ['', Validators.required];
-    this.form = this.fb.group(groupConfig);
   }
 
   ngOnInit() {
@@ -46,36 +37,32 @@ export class BoothComponent implements OnInit {
 
   handleSubmit() {
     this.isVoting = true;
-    this.votingService.vote('null')
-      .then(() => {
-        this.isVoting = false;
-        this.snackbar.open('Vote Submitted', null, {duration: 5000});
-      })
-      .catch(err => {
-        // TODO: factor to an error handler
-        let message = '';
-        const status = err.status;
-        if (status === 503) {
-          message = 'We are experiencing difficulties';
-        } else if (status === 401) {
-          message = 'Login before voting';
-        }
-        this.snackbar
-          .open(message, null, {duration: 6000})
-          .afterDismissed().subscribe(() => this.form.reset());
-      });
+    const selected = this.selected;
+    // check whether somebody is actually selected
+    if (selected) {
+      console.log('Voting for: ' + selected);
+      this.votingService.vote(selected)
+        .then(() => {
+          this.isVoting = false;
+          this.snackbar.open('Vote Submitted', null, {duration: 5000});
+        })
+        .catch(err => {
+          // TODO: factor to an error handler
+          let message = '';
+          const status = err.status;
+          if (status === 503) {
+            message = 'We are experiencing difficulties';
+          } else if (status === 401) {
+            message = 'Login before voting';
+          }
+          this.snackbar
+            .open(message, null, {duration: 6000})
+            .afterDismissed().subscribe();
+        });
+    } else {
+      this.isVoting = false;
+      this.snackbar
+        .open('Select a candidate before submitting', null, {duration: 5000});
+    }
   }
-
-  // TODO: remove or find another use?
-  onMouseEnter(name: string) {
-    this.isInfoVisible = true;
-    this.hovered = name;
-  }
-
-  // TODO: remove or find another use?
-  onMouseLeave() {
-    this.isInfoVisible = false;
-    this.hovered = null;
-  }
-
 }
