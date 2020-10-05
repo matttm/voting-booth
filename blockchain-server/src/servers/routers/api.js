@@ -20,7 +20,7 @@ export const ApiRouter = (_blockchain) => {
     router.get('/blocks', (req, res) => {
       res.status(200).json({
         success: true,
-        chain: JSON.stringify(blockchain.chain)
+        chain: blockchain.chain
       });
     });
 
@@ -32,7 +32,7 @@ export const ApiRouter = (_blockchain) => {
           message: "Request did not contain a block"
         });
       }
-      this.blockchain.addBlock(data);
+      blockchain.addBlock(data);
       res.status(200).json({
         success: true,
         message: "Block added"
