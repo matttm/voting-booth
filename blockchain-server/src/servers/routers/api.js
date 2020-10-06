@@ -31,6 +31,7 @@ export const ApiRouter = (_blockchain) => {
           success: false,
           message: "Request did not contain a block"
         });
+        return;
       }
       blockchain.addBlock(data);
       res.status(200).json({

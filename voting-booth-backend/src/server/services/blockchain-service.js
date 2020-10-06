@@ -22,7 +22,7 @@ export async function getBlockchain() {
 export async function addBlock(data) {
     const response = await request
         .post(`${process.env.BLOCKCHAIN_URL}/api/blocks`)
-        .send(data);
+        .send({ data });
 
     return response.body?.success;
 }
