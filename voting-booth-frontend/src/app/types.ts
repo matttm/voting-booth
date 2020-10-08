@@ -26,7 +26,8 @@ export interface SimpleMessage {
 }
 
 export interface Results {
-  [key: string]: number;
+  success: boolean;
+  results: any[];
 }
 
 // TODO: find a way to make this generic

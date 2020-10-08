@@ -10,7 +10,7 @@ import {switchMap, takeUntil, tap} from 'rxjs/operators';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit, OnDestroy {
-  results$: Observable<ResultsMessage>
+  results$: Observable<ResultsMessage>;
   unsub$: Subject<any>;
   columns: string[];
 
@@ -25,6 +25,15 @@ export class ResultComponent implements OnInit, OnDestroy {
         tap(() => console.log('Getting results')),
         switchMap(() => this.votingService.getResults())
       );
+    this.results$.subscribe(
+      body => {
+        // @ts-ignore
+        const results = new Map(body.results);
+        return;
+      },
+      err => {
+        return;
+      });
   }
 
   ngOnDestroy() {
