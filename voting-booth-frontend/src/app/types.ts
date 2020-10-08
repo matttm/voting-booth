@@ -20,16 +20,21 @@ export interface JsonWebToken {
   expiresIn: number;
 }
 
-export interface SimpleMessage {
+export interface Result {
+  name: string;
+  votes: number;
+}
+
+export interface SimpleResponse {
   success: boolean;
   message: string;
 }
 
-export interface Results {
+export interface ResultsResponse {
   success: boolean;
   results: any[];
 }
 
 // TODO: find a way to make this generic
-export type JwtMessage = JsonWebToken | SimpleMessage;
-export type ResultsMessage = Results | SimpleMessage;
+export type JwtMessage = JsonWebToken | SimpleResponse;
+export type ResultsMessage = ResultsResponse | SimpleResponse;

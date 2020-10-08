@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Results, ResultsMessage} from '../../types';
+import {ResultsResponse, ResultsMessage, Result} from '../../types';
 import {interval, Observable, Subject} from 'rxjs';
 import {VotingService} from '../../services/voting/voting.service';
-import {switchMap, takeUntil, tap} from 'rxjs/operators';
+import {switchMap, takeUntil, tap, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-result',
@@ -10,7 +10,7 @@ import {switchMap, takeUntil, tap} from 'rxjs/operators';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit, OnDestroy {
-  results$: Observable<ResultsMessage>;
+  results$: Observable<Result[]>;
   unsub$: Subject<any>;
   columns: string[];
 
@@ -23,17 +23,24 @@ export class ResultComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsub$),
         tap(() => console.log('Getting results')),
-        switchMap(() => this.votingService.getResults())
+        switchMap(() => this.votingService.getResults()),
+        map<ResultsResponse, Result[]>(body => {
+          const resultsMap = new Map(body.results);
+          const ret = {};
+          for (let candidate in resultsMap) {
+            ret['candidate'] = 
+          }
+        })
       );
-    this.results$.subscribe(
-      body => {
-        // @ts-ignore
-        const results = new Map(body.results);
-        return;
-      },
-      err => {
-        return;
-      });
+    // this.results$.subscribe(
+    //   body => {
+    //     // @ts-ignore
+    //     const results = new Map(body.results);
+    //     return;
+    //   },
+    //   err => {
+    //     return;
+    //   });
   }
 
   ngOnDestroy() {
