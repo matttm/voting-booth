@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ResultsResponse, ResultsMessage, Result} from '../../types';
-import {interval, Observable, Subject} from 'rxjs';
+import {ResultsResponse, Result} from '../../types';
+import {interval, Observable, Subject, throwError} from 'rxjs';
 import {VotingService} from '../../services/voting/voting.service';
-import {switchMap, takeUntil, tap, map} from 'rxjs/operators';
+import {switchMap, takeUntil, tap, map, catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-result',
@@ -24,27 +24,32 @@ export class ResultComponent implements OnInit, OnDestroy {
         takeUntil(this.unsub$),
         tap(() => console.log('Getting results')),
         switchMap(() => this.votingService.getResults()
-          .pipe(map<ResultsResponse, Result[]>(body => {
-            const resultsMap = new Map(body.results);
-            const ret: Result[] = [];
-            for (const [k, v] of Array.from(resultsMap)) {
-              ret.push({
-                name: k,
-                votes: v
-              });
-            }
-          }))
+          .pipe(
+            catchError((err) => {
+              // TODO: make an alert service? for snackbar?
+              const status = err.status;
+              let message = '';
+              if (status === 503) {
+                message = 'We are experiencing difficulties';
+              } else if (status === 401) {
+                message = 'Login before voting';
+              }
+              return throwError(message);
+            }),
+            map<ResultsResponse, Result[]>(body => {
+              const resultsMap = new Map(body.results);
+              const ret: Result[] = [];
+              for (const [k, v] of Array.from(resultsMap)) {
+                ret.push({
+                  name: k as string,
+                  votes: v as number
+                });
+              }
+              return ret;
+            })
+          )
         )
       );
-    // this.results$.subscribe(
-    //   body => {
-    //     // @ts-ignore
-    //     const results = new Map(body.results);
-    //     return;
-    //   },
-    //   err => {
-    //     return;
-    //   });
   }
 
   ngOnDestroy() {
