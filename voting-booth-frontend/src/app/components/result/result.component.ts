@@ -23,14 +23,18 @@ export class ResultComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsub$),
         tap(() => console.log('Getting results')),
-        switchMap(() => this.votingService.getResults()),
-        map<ResultsResponse, Result[]>(body => {
-          const resultsMap = new Map(body.results);
-          const ret = {};
-          for (let candidate in resultsMap) {
-            ret['candidate'] = 
-          }
-        })
+        switchMap(() => this.votingService.getResults()
+          .pipe(map<ResultsResponse, Result[]>(body => {
+            const resultsMap = new Map(body.results);
+            const ret: Result[] = [];
+            for (const [k, v] of Array.from(resultsMap)) {
+              ret.push({
+                name: k,
+                votes: v
+              });
+            }
+          }))
+        )
       );
     // this.results$.subscribe(
     //   body => {

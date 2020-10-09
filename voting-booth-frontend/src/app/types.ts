@@ -32,7 +32,7 @@ export interface SimpleResponse {
 
 export interface ResultsResponse {
   success: boolean;
-  results: any[];
+  results: string[];
 }
 
 // TODO: find a way to make this generic
