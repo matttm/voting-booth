@@ -1,12 +1,21 @@
 import request from 'superagent';
+import { promisify } from 'util';
 /**
  * This script is designed to simulate votes, where each vote will be
  * by a person in the records.db and for a random candidate from candidate.json
  **/
+const sleep = ms => new Promise((res, rej) => setTimeout(res, ms));
 // TODO: get environment
   const BACKEND_URL = 'localhost:3001';
 // TODO: get voters
-const voters = [];
+const voters = [
+  {
+    fname: 'Testy',
+    lname: 'Test',
+    zip: 13373,
+    ssn: 136524512
+  }
+];
 // todo: get candidates
 const candidates = ['Joe Biden'];
 
@@ -16,8 +25,24 @@ const candidates = ['Joe Biden'];
  */
 for (let i = 0; i < voters.length - 1; i++) {
   // TODO: get voter credenials
-  const credentials = {};
+  const credentials = voters[i];
   let response = await request
     .post(`${BACKEND_URL}/api/login`)
     .send(credentials);
+  if (response.status !== 200) {
+    throw new Error(`Script encountered an error`);
+  }
+  const bearerToken = `Bearer ${response.body.bearerToken}`;
+  // TODO: make index random
+  const candidate = candidates[0];
+  response = await request
+    .post(`${BACKEND_URL}/api/votes`)
+    .set('Authorization', bearerToken)
+    .send({ candidate });
+  if (response.status !== 200) {
+    throw new Error(`Script encountered an error`);
+  }
+  console.log(`Sent simulated vote`);
+  // wait for a minute
+  sleep(1000 * 600);
 }
