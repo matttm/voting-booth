@@ -67,8 +67,11 @@ def add_dummy_persons(number_of_persons, faker, cur):
     :param number_of_persons: number of records to add
     :param faker: an object to generate fake data
     :param cur: a database connection cursor
+
+    NOTE: One is subtracted here so that when the individual
+      is added, the number of db entries is number_of_persons
     """
-    for i in range(number_of_persons):
+    for i in range(number_of_persons - 1):
         fname, lname = faker.name().split()[0:2]
         ssn = faker.ssn()
         zip = faker.postcode()
@@ -89,7 +92,7 @@ if __name__ == '__main__':
     Faker.seed(0)
     faker = Faker()
     try:
-        conn = create_connection(r"pythonsqlite.db")
+        conn = create_connection(r"records.db")
         cur = conn.cursor()
         build_database(cur)
         add_dummy_persons(number_of_records, faker, cur)
