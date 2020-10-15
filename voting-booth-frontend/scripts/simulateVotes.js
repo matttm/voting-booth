@@ -63,27 +63,40 @@ db.each(sql, (err, row) => {
     console.log('Skipping user...');
     return;
   }
-  // // TODO: get voter credentials
-  // const credentials = voters[i];
-  // let response = await request
-  //   .post(`${BACKEND_URL}/api/login`)
-  //   .send(credentials);
-  // if (response.status !== 200) {
-  //   throw new Error(`Script encountered an error`);
-  // }
-  // const bearerToken = `Bearer ${response.body.bearerToken}`;
-  // // TODO: make index random
-  // const candidate = candidates[0];
-  // response = await request
-  //   .post(`${BACKEND_URL}/api/votes`)
-  //   .set('Authorization', bearerToken)
-  //   .send({ candidate });
-  // if (response.status !== 200) {
-  //   throw new Error(`Script encountered an error`);
-  // }
-  console.log(`Sent simulated vote`);
+  const credentials = {
+    fname: row.Fname,
+    lname: row.lname,
+    ssn: row.ssn,
+    zip: row.zip
+  };
+  request
+    .post(`${BACKEND_URL}/api/login`)
+    .send(credentials)
+    .then(authResponse => {
+      if (authResponse.status !== 200) {
+        throw new Error(`Script encountered an error`);
+      }
+      const bearerToken = `Bearer ${authResponse.body.bearerToken}`;
+      // TODO: make index random
+      const candidate = candidates[0];
+      request
+        .post(`${BACKEND_URL}/api/votes`)
+        .set('Authorization', bearerToken)
+        .send({ candidate })
+        .then(voteResponse => {
+          if (voteResponse.status !== 200) {
+            throw new Error(`Script encountered an error`);
+          } else {
+            console.log(`Sent simulated vote`);
+          }
+        }).catch(err => {
+          console.log(`Error: ${err.status}`);
+      });
+    }).catch(err => {
+    console.log(`Error: ${JSON.stringify(err)}`);
+  });
   // wait for a minute
-  sleep(1000);
+  sleep(10);
 });
 
 db.close(err => {
