@@ -33,7 +33,7 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 // TODO: get environment
-const BACKEND_URL = 'localhost:3001';
+const BACKEND_URL = 'localhost:3000';
 // TODO: get voters
 const voters = [
   {
