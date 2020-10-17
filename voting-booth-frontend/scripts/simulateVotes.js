@@ -76,7 +76,8 @@ db.each(sql, (err, row) => {
       if (authResponse.status !== 200) {
         throw new Error(`Script encountered an error`);
       }
-      const bearerToken = `Bearer ${authResponse.body.bearerToken}`;
+      const bearerToken = `Bearer ${authResponse.body.idToken}`;
+      console.log(`Token ${bearerToken}`);
       // TODO: make index random
       const candidate = candidates[0];
       request
@@ -90,10 +91,10 @@ db.each(sql, (err, row) => {
             console.log(`Sent simulated vote`);
           }
         }).catch(err => {
-          console.log(`Error: ${err.status}`);
+          console.log(`Error @voting: ${err.status}`);
       });
     }).catch(err => {
-    console.log(`Error: ${JSON.stringify(err)}`);
+    console.log(`Error @login: ${JSON.stringify(err)}`);
   });
   // wait for a minute
   sleep(10);
