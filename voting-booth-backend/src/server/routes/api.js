@@ -100,6 +100,7 @@ router.get('/results', async (req, res) => {
     // getting blockchain
     const [chain, err] = await handle(getBlockchain());
     if (err) {
+        console.error(`Error: ${err}`);
         res.status(503).send('Voting store not reachable');
         return;
     }
