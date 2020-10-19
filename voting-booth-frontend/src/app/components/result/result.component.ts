@@ -10,12 +10,24 @@ import {switchMap, takeUntil, tap, map, catchError} from 'rxjs/operators';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit, OnDestroy {
+
+  constructor(private votingService: VotingService) {
+    this.columns = ['name', 'votes'];
+  }
   results$: Observable<Result[]>;
   unsub$: Subject<any>;
   columns: string[];
 
-  constructor(private votingService: VotingService) {
-    this.columns = ['name', 'votes'];
+  static translateResultsFromWire(body: ResultsResponse): Result[] {
+    const resultsMap = new Map(body.results);
+    const ret: Result[] = [];
+    for (const [k, v] of Array.from(resultsMap)) {
+      ret.push({
+        name: k as string,
+        votes: v as number
+      });
+    }
+    return ret;
   }
 
   ngOnInit() {
@@ -36,17 +48,7 @@ export class ResultComponent implements OnInit, OnDestroy {
               }
               return throwError(message);
             }),
-            map<ResultsResponse, Result[]>(body => {
-              const resultsMap = new Map(body.results);
-              const ret: Result[] = [];
-              for (const [k, v] of Array.from(resultsMap)) {
-                ret.push({
-                  name: k as string,
-                  votes: v as number
-                });
-              }
-              return ret;
-            })
+            map<ResultsResponse, Result[]>(ResultComponent.translateResultsFromWire)
           )
         )
       );
