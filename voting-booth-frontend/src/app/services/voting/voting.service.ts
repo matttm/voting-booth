@@ -48,7 +48,7 @@ export class VotingService {
    * @return a promise of the results
    */
   getResults(): Observable<ResultsMessage> {
-    return this.httpClient.get('/results', { observe: 'body' })
+    return this.httpClient.get('/api/results', { observe: 'body' })
       .pipe(
         tap(console.log),
         shareReplay()

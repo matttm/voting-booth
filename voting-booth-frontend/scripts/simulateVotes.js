@@ -76,7 +76,7 @@ db.each(sql, (err, row) => {
       if (authResponse.status !== 200) {
         throw new Error(`Script encountered an error`);
       }
-      const bearerToken =`Bearer ${authResponse.body?.idToken}`;
+      const bearerToken =`Bearer ${authResponse.body.idToken}`;
       // TODO: make index random
       const candidate = candidates[0];
       request

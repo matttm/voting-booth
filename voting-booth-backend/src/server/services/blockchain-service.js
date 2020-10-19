@@ -7,8 +7,7 @@ import request from "superagent";
  */
 export async function getBlockchain() {
     const response = await request
-        .get(`${process.env.BLOCKCHAIN_URL}/api/blocks`)
-        .then(res => res.json());
+        .get(`${process.env.BLOCKCHAIN_URL}/api/blocks`);
 
     return response.body?.chain;
 }
