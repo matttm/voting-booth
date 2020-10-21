@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ResultsResponse, Result} from '../../types';
+import {ResultsResponse, Result, ResultsMessage} from '../../types';
 import {interval, Observable, Subject, throwError} from 'rxjs';
 import {VotingService} from '../../services/voting/voting.service';
 import {switchMap, takeUntil, tap, map, catchError} from 'rxjs/operators';
@@ -31,27 +31,31 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // @ts-ignore
     this.results$ = interval(5000)
       .pipe(
         takeUntil(this.unsub$),
-        tap(() => console.log('Getting results')),
-        switchMap(() => this.votingService.getResults()
-          .pipe(
-            catchError((err) => {
-              // TODO: make an alert service? for snackbar?
-              const status = err.status;
-              let message = '';
-              if (status === 503) {
-                message = 'We are experiencing difficulties';
-              } else if (status === 401) {
-                message = 'Login before voting';
-              }
-              return throwError(message);
-            }),
-            map<ResultsResponse, Result[]>(ResultComponent.translateResultsFromWire)
-          )
-        )
-      );
+        // tap(() => {
+        //   console.log('Getting results');
+        // }),
+        switchMap(() => this.votingService.getResults()));
+      //     .pipe(
+      //       catchError((err) => {
+      //         // TODO: make an alert service? for snackbar?
+      //         const status = err.status;
+      //         let message = '';
+      //         if (status === 503) {
+      //           message = 'We are experiencing difficulties';
+      //         } else if (status === 401) {
+      //           message = 'Login before voting';
+      //         }
+      //         return throwError(message);
+      //       }),
+      //       map<ResultsMessage, Result[]>(ResultComponent.translateResultsFromWire)
+      //     )
+      //   )
+      // );
+    this.results$.subscribe(() => console.log('got an emission'));
   }
 
   ngOnDestroy() {

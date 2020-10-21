@@ -2,6 +2,7 @@ import {async, TestBed} from '@angular/core/testing';
 
 import { VotingService } from './voting.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {first, takeUntil} from "rxjs/operators";
 
 describe('VotingService', () => {
   let service: VotingService;
@@ -40,8 +41,10 @@ describe('VotingService', () => {
   });
 
   it('should send a GET request on results', () => {
-    service.getResults();
-    const request = http.expectOne( `/results`);
+    service.getResults().pipe(
+      first()
+    ).subscribe();
+    const request = http.expectOne( `/api/results`);
     expect(request.request.method).toBe('GET');
   });
 });

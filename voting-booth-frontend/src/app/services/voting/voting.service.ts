@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {shareReplay, tap} from 'rxjs/operators';
+import {shareReplay, tap, map} from 'rxjs/operators';
 import {ResultsMessage} from '../../types';
 
 /**
@@ -50,7 +50,8 @@ export class VotingService {
   getResults(): Observable<ResultsMessage> {
     return this.httpClient.get('/api/results', { observe: 'body' })
       .pipe(
-        tap(console.log),
+        map(body => body as ResultsMessage),
+        tap(() => console.log('Getting Results')),
         shareReplay()
       );
   }
