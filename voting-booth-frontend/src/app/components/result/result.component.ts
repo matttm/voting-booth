@@ -12,6 +12,7 @@ import {switchMap, takeUntil, tap, map, catchError} from 'rxjs/operators';
 export class ResultComponent implements OnInit, OnDestroy {
 
   constructor(private votingService: VotingService) {
+    this.unsub$ = new Subject();
     this.columns = ['name', 'votes'];
   }
   results$: Observable<Result[]>;
@@ -31,30 +32,28 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // @ts-ignore
     this.results$ = interval(5000)
       .pipe(
         takeUntil(this.unsub$),
-        // tap(() => {
-        //   console.log('Getting results');
-        // }),
-        switchMap(() => this.votingService.getResults()));
-      //     .pipe(
-      //       catchError((err) => {
-      //         // TODO: make an alert service? for snackbar?
-      //         const status = err.status;
-      //         let message = '';
-      //         if (status === 503) {
-      //           message = 'We are experiencing difficulties';
-      //         } else if (status === 401) {
-      //           message = 'Login before voting';
-      //         }
-      //         return throwError(message);
-      //       }),
-      //       map<ResultsMessage, Result[]>(ResultComponent.translateResultsFromWire)
-      //     )
-      //   )
-      // );
+        switchMap(() => this.votingService.getResults()
+          .pipe(
+            tap(res => console.log(`Response: ${JSON.stringify(res)}`)),
+            catchError((err) => {
+              // TODO: make an alert service? for snackbar?
+              const status = err.status;
+              let message = '';
+              if (status === 503) {
+                message = 'We are experiencing difficulties';
+              } else if (status === 401) {
+                message = 'Login before voting';
+              }
+              return throwError(message);
+            }),
+            map<ResultsMessage, Result[]>(ResultComponent.translateResultsFromWire),
+            tap(res => console.log(`Response: ${JSON.stringify(res)}`))
+          )
+        )
+      );
     this.results$.subscribe(() => console.log('got an emission'));
   }
 
