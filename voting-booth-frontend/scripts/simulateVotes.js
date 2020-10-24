@@ -39,15 +39,6 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-/**
- * Get a random candidate from an array of candidates
- *
- * @return {string} a candidate name
- */
-const getRandomCandidate = () => {
-  return candidates[Math.floor(Math.random() * candidates.length)];
-};
-
 // TODO: get environment
 const BACKEND_URL = 'localhost:3000';
 
@@ -57,6 +48,15 @@ candidates = JSON.parse(candidates)
   .map(candidate => candidate.name)
   .forEach(name => console.log(name));
 
+/**
+ * Get a random candidate from an array of candidates
+ *
+ * @return {string} a candidate name
+ */
+function getRandomCandidate() {
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+getRandomCandidate = getRandomCandidate.bind(this);
 let sql = `SELECT * FROM person`;
 
 /**
@@ -89,21 +89,24 @@ db.each(sql, (err, row) => {
       }
       const bearerToken =`Bearer ${authResponse.body.idToken}`;
       // TODO: make index random
+	  	  console.log(`candidate: ${getRandomCandidate}`);
+	  const candidate = getRandomCandidate();
       request
         .post(`${BACKEND_URL}/api/votes`)
         .set('Authorization', bearerToken)
-        .send({ candidate: getRandomCandidate() })
+        .send({ candidate })
         .then(voteResponse => {
+		  console.log(voteResponse.status);
           if (voteResponse.status !== 200) {
             throw new Error(`Script encountered an error`);
           } else {
             console.log(`Sent simulated vote`);
           }
         }).catch(err => {
-          console.log(`Error @voting: ${err.status}`);
+          console.log(`Error @ voting: ${err}`);
       });
     }).catch(err => {
-    console.log(`Error @login: ${err.status}`);
+    console.log(`Error @ login: ${err}`);
   });
   // wait for a minute
   sleep(10);
