@@ -1,5 +1,6 @@
 import request from 'superagent';
 import _sqlite from 'sqlite3';
+import { readFileSync } from 'fs';
 const sqlite = _sqlite.verbose();
 
 const args = process.argv;
@@ -24,6 +25,11 @@ let db = new sqlite.Database('../records-backend/records.db', sqlite.OPEN_READON
  * This script is designed to simulate votes, where each vote will be
  * by a person in the records.db and for a random candidate from candidate.json
  **/
+/**
+ * Cause the process to sleep for a given amount of time
+ *
+ * @param milliseconds time to sleep in milliseconds
+ */
 // TODO: find a more efficient 'sleep' that doesn't rely on async/await
 function sleep(milliseconds) {
   const date = Date.now();
@@ -32,19 +38,24 @@ function sleep(milliseconds) {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
+
+/**
+ * Get a random candidate from an array of candidates
+ *
+ * @return {string} a candidate name
+ */
+const getRandomCandidate = () => {
+  return candidates[Math.floor(Math.random() * candidates.length)];
+};
+
 // TODO: get environment
 const BACKEND_URL = 'localhost:3000';
-// TODO: get voters
-const voters = [
-  {
-    fname: 'Testy',
-    lname: 'Test',
-    zip: 13373,
-    ssn: 136524512
-  }
-];
+
 // todo: get candidates
-const candidates = ['Joe Biden'];
+let candidates = readFileSync('src/assets/candidates.json');
+candidates = JSON.parse(candidates)
+  .map(candidate => candidate.name)
+  .forEach(name => console.log(name));
 
 let sql = `SELECT * FROM person`;
 
@@ -57,7 +68,6 @@ db.each(sql, (err, row) => {
   if (err) {
     throw err;
   }
-  console.log(`${JSON.stringify(row)}`);
   if (user.fname === row.Fname && user.lname === row.lname
     && user.ssn === row.ssn && user.zip === row.zip) {
     console.log('Skipping user...');
@@ -69,6 +79,7 @@ db.each(sql, (err, row) => {
     ssn: row.ssn,
     zip: row.zip
   };
+  console.log(`${JSON.stringify(credentials)}`);
   request
     .post(`${BACKEND_URL}/api/login`)
     .send(credentials)
@@ -78,11 +89,10 @@ db.each(sql, (err, row) => {
       }
       const bearerToken =`Bearer ${authResponse.body.idToken}`;
       // TODO: make index random
-      const candidate = candidates[0];
       request
         .post(`${BACKEND_URL}/api/votes`)
         .set('Authorization', bearerToken)
-        .send({ candidate })
+        .send({ candidate: getRandomCandidate() })
         .then(voteResponse => {
           if (voteResponse.status !== 200) {
             throw new Error(`Script encountered an error`);
@@ -93,7 +103,7 @@ db.each(sql, (err, row) => {
           console.log(`Error @voting: ${err.status}`);
       });
     }).catch(err => {
-    console.log(`Error @login: ${JSON.stringify(err)}`);
+    console.log(`Error @login: ${err.status}`);
   });
   // wait for a minute
   sleep(10);
