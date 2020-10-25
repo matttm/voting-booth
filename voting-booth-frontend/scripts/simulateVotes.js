@@ -43,7 +43,9 @@ function sleep(milliseconds) {
 const BACKEND_URL = 'localhost:3000';
 
 // todo: get candidates
-let candidates = readFileSync('src/assets/candidates.json');
+const test = 'test';
+let candidates = 'test';
+candidates = readFileSync('src/assets/candidates.json');
 candidates = JSON.parse(candidates)
   .map(candidate => candidate.name)
   .forEach(name => console.log(name));
@@ -53,10 +55,12 @@ candidates = JSON.parse(candidates)
  *
  * @return {string} a candidate name
  */
-function getRandomCandidate() {
-  return candidates[Math.floor(Math.random() * candidates.length)];
+const getRandomCandidate = () => {
+		console.log(`test is ${test}`);
+	console.log(`candidates is ${candidates}`);
+	return 'Test';
+  // return candidates[Math.floor(Math.random() * candidates.length)];
 }
-getRandomCandidate = getRandomCandidate.bind(this);
 let sql = `SELECT * FROM person`;
 
 /**
@@ -89,14 +93,12 @@ db.each(sql, (err, row) => {
       }
       const bearerToken =`Bearer ${authResponse.body.idToken}`;
       // TODO: make index random
-	  	  console.log(`candidate: ${getRandomCandidate}`);
 	  const candidate = getRandomCandidate();
       request
         .post(`${BACKEND_URL}/api/votes`)
         .set('Authorization', bearerToken)
         .send({ candidate })
         .then(voteResponse => {
-		  console.log(voteResponse.status);
           if (voteResponse.status !== 200) {
             throw new Error(`Script encountered an error`);
           } else {
