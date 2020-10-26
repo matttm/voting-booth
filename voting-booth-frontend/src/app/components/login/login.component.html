@@ -13,7 +13,7 @@
       >
     </mat-form-field>
   <div class="form-button">
-    <button mat-flat-button color="primary"
+    <button mat-flat-button color="primary" [disabled]="!form.valid"
             (click)="login()">Login</button>
   </div>
 </form>
