@@ -45,10 +45,10 @@ export class LoginComponent implements OnInit {
     ];
     // TODO: add more customized validators where possible
     this.form = this.fb.group({
-      ssn:   ['' , Validators.required, Validators.pattern('^(?!666|000|9\\\\d{2})\\\\d{3}-(?!00)\\\\d{2}-(?!0{4})\\\\d{4}$')],
-      fname: ['' , Validators.required, Validators.min(2), Validators.max(20)],
-      lname: ['' , Validators.required, Validators.min(2), Validators.max(20)],
-      zip:   ['' , Validators.required, Validators.min(5), Validators.max(5)]
+      ssn:   ['' ],  // , Validators.required, Validators.pattern('^(?!666|000|9\\\\d{2})\\\\d{3}-(?!00)\\\\d{2}-(?!0{4})\\\\d{4}$')],
+      fname: ['' ],  // , Validators.required, Validators.minLength(2), Validators.maxLength(20)],
+      lname: ['' ],  // , Validators.required, Validators.minLength(2), Validators.maxLength(20)],
+      zip:   ['' ],  // , Validators.required, Validators.minLength(5), Validators.maxLength(5)]
     });
     this.isAuthenticating = false;
     this.snackbarDuration = 5000;
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.form.valid) {
+    // if (this.form.valid) {
       this.isAuthenticating = true;
       const vals = this.form.value;
       this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip)
@@ -82,10 +82,10 @@ export class LoginComponent implements OnInit {
             .open(message, null, {duration: this.snackbarDuration})
             .afterDismissed().subscribe(() => this.form.reset());
         });
-    } else {
-      this.form.markAsTouched();
-      this.snackbar
-        .open('Form is invalid', null, { duration: this.snackbarDuration });
-    }
+    // } else {
+    //   this.form.markAsTouched();
+    //   this.snackbar
+    //     .open('Form is invalid', null, { duration: this.snackbarDuration });
+    // }
   }
 }

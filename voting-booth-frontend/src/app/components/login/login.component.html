@@ -3,13 +3,40 @@
   Authentication Form
 </h3>
   <form id="login-form" [formGroup]="form">
-    <mat-form-field *ngFor="let field of fields" appearance="standard">
-      <mat-label>{{field.displayName}}</mat-label>
+    <mat-form-field appearance="standard">
+      <mat-label>First Name</mat-label>
       <input
         matInput
-        placeholder="{{field.placeholder}}"
-        name="{{field.name}}"
-        formControlName="{{field.name}}"
+        placeholder="Zofia"
+        name="fname"
+        formControlName="fname"
+      >
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Last Name</mat-label>
+      <input
+        matInput
+        placeholder="Romanov"
+        name="lname"
+        formControlName="lname"
+      >
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Social Security Number</mat-label>
+      <input
+        matInput
+        placeholder="XXX-XX-XXXX"
+        name="ssn"
+        formControlName="ssn"
+      >
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Zip Code</mat-label>
+      <input
+        matInput
+        placeholder="28606"
+        name="zip"
+        formControlName="zip"
       >
     </mat-form-field>
   <div class="form-button">
