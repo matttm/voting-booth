@@ -11,6 +11,10 @@
         name="fname"
         formControlName="fname"
       >
+      <mat-error
+            *ngIf="(loginFormControls.fname.touched) && loginFormControls.fname.errors?.required">
+        First name is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Last Name</mat-label>
@@ -20,6 +24,10 @@
         name="lname"
         formControlName="lname"
       >
+      <mat-error
+        *ngIf="(loginFormControls.lname.touched) && loginFormControls.lname.errors?.required">
+        Last name is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Social Security Number</mat-label>
@@ -29,6 +37,10 @@
         name="ssn"
         formControlName="ssn"
       >
+      <mat-error
+        *ngIf="(loginFormControls.ssn.touched) && loginFormControls.ssn.errors?.required">
+        Social security number is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Zip Code</mat-label>
@@ -38,6 +50,10 @@
         name="zip"
         formControlName="zip"
       >
+      <mat-error
+        *ngIf="(loginFormControls.zip.touched) && loginFormControls.zip.errors?.required">
+        Zip code is required
+      </mat-error>
     </mat-form-field>
   <div class="form-button">
     <button mat-flat-button color="primary"

@@ -57,6 +57,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  get loginFormControls() {
+    return this.form.controls;
+  }
+
   login() {
     if (this.form.valid) {
       this.isAuthenticating = true;
