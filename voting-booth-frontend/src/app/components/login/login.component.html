@@ -12,8 +12,16 @@
         formControlName="fname"
       >
       <mat-error
-            *ngIf="(loginFormControls.fname.touched) && loginFormControls.fname.errors?.required">
-        First name is required
+        *ngIf="(loginFormControls.fname.touched) && loginFormControls.fname.errors?.required">
+          First name is required
+      </mat-error>
+      <mat-error
+        *ngIf="(loginFormControls.fname.touched) && loginFormControls.fname.errors?.minlength">
+          First name must be at least two characters
+      </mat-error>
+      <mat-error
+        *ngIf="(loginFormControls.fname.touched) && loginFormControls.fname.errors?.maxlength">
+          First name cannot be more than characters
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
@@ -26,7 +34,15 @@
       >
       <mat-error
         *ngIf="(loginFormControls.lname.touched) && loginFormControls.lname.errors?.required">
-        Last name is required
+          Last name is required
+      </mat-error>
+      <mat-error
+        *ngIf="(loginFormControls.lname.touched) && loginFormControls.lname.errors?.minlength">
+          Last name must be at least two characters
+      </mat-error>
+      <mat-error
+        *ngIf="(loginFormControls.lname.touched) && loginFormControls.lname.errors?.maxlength">
+          Last name cannot be more than characters
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
@@ -39,7 +55,11 @@
       >
       <mat-error
         *ngIf="(loginFormControls.ssn.touched) && loginFormControls.ssn.errors?.required">
-        Social security number is required
+          Social security number is required
+      </mat-error>
+      <mat-error
+        *ngIf="(loginFormControls.ssn.touched) && loginFormControls.ssn.errors?.pattern">
+          Social security number must follow the correct format
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
@@ -52,7 +72,12 @@
       >
       <mat-error
         *ngIf="(loginFormControls.zip.touched) && loginFormControls.zip.errors?.required">
-        Zip code is required
+          Zip code is required
+      </mat-error>
+      <mat-error
+        *ngIf="(loginFormControls.zip.touched) &&
+        (loginFormControls.zip.errors?.min || loginFormControls.zip.errors?.max)">
+          Zip code must contain five digits and not begin with a zero
       </mat-error>
     </mat-form-field>
   <div class="form-button">
