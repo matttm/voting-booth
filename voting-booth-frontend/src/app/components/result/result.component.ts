@@ -4,6 +4,9 @@ import {interval, Observable, Subject, throwError} from 'rxjs';
 import {VotingService} from '../../services/voting/voting.service';
 import {switchMap, takeUntil, tap, map, catchError} from 'rxjs/operators';
 
+/**
+ * Component responsible for showing a table with election results
+ */
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -19,6 +22,13 @@ export class ResultComponent implements OnInit, OnDestroy {
   unsub$: Subject<any>;
   columns: string[];
 
+  /**
+   * Reformat results data from wire, uch that it is formatted
+   * for the table
+   *
+   * @param body unformatted results
+   * @return formatted data
+   */
   static translateResultsFromWire(body: ResultsResponse): Result[] {
     const resultsMap = new Map(body.results);
     const ret: Result[] = [];
@@ -31,6 +41,9 @@ export class ResultComponent implements OnInit, OnDestroy {
     return ret;
   }
 
+  /**
+   * Initialization, including subscribing to results
+   */
   ngOnInit() {
     this.results$ = interval(5000)
       .pipe(
@@ -57,6 +70,9 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.results$.subscribe(() => console.log('got an emission'));
   }
 
+  /**
+   * Unsubscribe from all subs and cleanup
+   */
   ngOnDestroy() {
     this.unsub$.next();
     this.unsub$.complete();

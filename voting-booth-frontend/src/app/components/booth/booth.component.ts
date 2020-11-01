@@ -15,7 +15,7 @@ import {MatSnackBar} from '@angular/material';
   templateUrl: './booth.component.html',
   styleUrls: ['./booth.component.css']
 })
-export class BoothComponent implements OnInit {
+export class BoothComponent {
   selected: string;
   isVoting: boolean;
   candidates$: Observable<string[]>;
@@ -32,9 +32,9 @@ export class BoothComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-  }
-
+  /**
+   * Submit selected candidate as vote
+   */
   handleSubmit() {
     this.isVoting = true;
     const selected = this.selected;

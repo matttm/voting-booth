@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {FormObject} from '../../types';
 import {MatSnackBar} from '@angular/material';
 
+/**
+ * Component is responsible for providing authentication access
+ * so a user can vote.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   form: FormGroup;
   fields: FormObject[];
   isAuthenticating: boolean;
@@ -43,7 +47,6 @@ export class LoginComponent implements OnInit {
         displayName: 'Zip Code'
       }
     ];
-    // TODO: add more customized validators where possible
     this.form = this.fb.group({
       ssn:   ['' , [Validators.required, Validators.pattern(/^\d{3}-?\d{2}-?\d{4}$/)]],
       fname: ['' , [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
@@ -54,13 +57,16 @@ export class LoginComponent implements OnInit {
     this.snackbarDuration = 5000;
   }
 
-  ngOnInit() {
-  }
-
+  /**
+   * Get all form controls
+   */
   get loginFormControls() {
     return this.form.controls;
   }
 
+  /**
+   * Submit form if it is valid.
+   */
   login() {
     if (this.form.valid) {
       this.isAuthenticating = true;
