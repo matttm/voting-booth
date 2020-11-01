@@ -68,34 +68,28 @@ export class LoginComponent {
    * Submit form if it is valid.
    */
   login() {
-    if (this.form.valid) {
-      this.isAuthenticating = true;
-      const vals = this.form.value;
-      this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip)
-        .then(res => {
-          this.isAuthenticating = false;
-          console.log('Logged in');
-          this.snackbar
-            .open('Login Successful', 'Reset', {duration: this.snackbarDuration});
-          this.router.navigateByUrl('/booth');
-        })
-        .catch(err => {
-          this.isAuthenticating = false;
-          let message = '';
-          const status = err.status;
-          if (status === 503) {
-            message = 'We are experiencing difficulties';
-          } else if (status === 401) {
-            message = 'Credentials were not found';
-          }
-          this.snackbar
-            .open(message, null, {duration: this.snackbarDuration})
-            .afterDismissed().subscribe(() => this.form.reset());
-        });
-    } else {
-      this.form.markAsTouched();
-      this.snackbar
-        .open('Form is invalid', null, { duration: this.snackbarDuration });
-    }
+    this.isAuthenticating = true;
+    const vals = this.form.value;
+    this.auth.login(vals.ssn, vals.fname, vals.lname, vals.zip)
+      .then(res => {
+        this.isAuthenticating = false;
+        console.log('Logged in');
+        this.snackbar
+          .open('Login Successful', 'Reset', {duration: this.snackbarDuration});
+        this.router.navigateByUrl('/booth');
+      })
+      .catch(err => {
+        this.isAuthenticating = false;
+        let message = '';
+        const status = err.status;
+        if (status === 503) {
+          message = 'We are experiencing difficulties';
+        } else if (status === 401) {
+          message = 'Credentials were not found';
+        }
+        this.snackbar
+          .open(message, null, {duration: this.snackbarDuration})
+          .afterDismissed().subscribe(() => this.form.reset());
+      });
   }
 }
