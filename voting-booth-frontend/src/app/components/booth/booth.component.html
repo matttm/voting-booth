@@ -12,6 +12,7 @@
           {{candidate}}
         </mat-radio-button>
       </mat-radio-group>
-      <button mat-flat-button (click)="handleSubmit()" color="primary">Submit Vote</button>
+      <button mat-flat-button (click)="handleSubmit()" [disabled]="!selected"
+              color="primary">Submit Vote</button>
   </div>
 </app-submission>
