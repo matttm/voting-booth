@@ -1,11 +1,9 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import {RouterModule} from '@angular/router';
+import {async, TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
 import {MatToolbarModule} from '@angular/material';
-import {provideMockStore} from "@ngrx/store/testing";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {AppRoutingModule} from "../../app-routing.module";
-import {RouterTestingModule} from "@angular/router/testing";
+import {provideMockStore} from '@ngrx/store/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
