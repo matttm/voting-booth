@@ -44,22 +44,29 @@ describe('BoothComponent', () => {
 
   it('should contain the form container', () => {
     const el: HTMLElement = fixture.debugElement.nativeElement;
-    expect(el.querySelector('#form-container'));
+    expect(el.querySelector('#form-container')).toBeTruthy();
   });
 
   it('should contain a radio group', () => {
     const el: HTMLElement = fixture.debugElement.nativeElement;
-    expect(el.querySelector('mat-radio-group'));
+    expect(el.querySelector('mat-radio-group')).toBeTruthy();
   });
 
   it('should have "isVoting" of false on start', () => {
     expect(component.isVoting).toBeFalsy();
   });
 
-  it('should turn "isVoting" of true on button click', () => {
+  it('should not submit when form is invalid', () => {
     const el: HTMLElement = fixture.debugElement.nativeElement;
     const button = el.querySelector('button');
     button.click();
+    expect(component.isVoting).toBeFalsy();
+  });
+
+  it('should submit when form is valid', () => {
+    const el: HTMLElement = fixture.debugElement.nativeElement;
+    const button: HTMLElement = el.querySelector('button');
+    component.handleSubmit();
     expect(component.isVoting).toBeTruthy();
   });
 });
