@@ -51,4 +51,43 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have four form fields', () => {
+    const el: HTMLElement = fixture.debugElement.nativeElement;
+    const fields: NodeListOf<Element> = el.querySelectorAll('mat-form-field');
+    expect(fields).toBeDefined();
+    expect(fields.length).toBe(4);
+  });
+
+  it('should not submit invalid form', () => {
+    const el: HTMLElement = fixture.debugElement.nativeElement;
+    const button: HTMLElement = el.querySelector('button');
+    expect(button).toBeDefined();
+    expect(component.isAuthenticating).toBeFalsy();
+    button.click();
+    expect(component.isAuthenticating).toBeTruthy();
+  });
+
+  it('should submit valid form', () => {
+    const el: HTMLElement = fixture.debugElement.nativeElement;
+    const fname: HTMLElement = el.querySelector('input[name=fname]');
+    const lname: HTMLElement = el.querySelector('input[name=lname]');
+    const ssn: HTMLElement   = el.querySelector('input[name=ssn]');
+    const zip: HTMLElement   = el.querySelector('input[name=zip]');
+    // @ts-ignore
+    fname.value = 'Matt';
+    // @ts-ignore
+    lname.value = 'Maloney';
+    // @ts-ignore
+    ssn.value = '111-11-1111';
+    // @ts-ignore
+    zip.value = '19022';
+
+    const button: HTMLElement = el.querySelector('button');
+    expect(button).toBeDefined();
+    expect(component.isAuthenticating).toBeFalsy();
+    fixture.detectChanges();
+    button.click();
+    expect(component.isAuthenticating).toBeTruthy();
+  });
 });
