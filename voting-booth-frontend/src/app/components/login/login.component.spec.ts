@@ -69,25 +69,32 @@ describe('LoginComponent', () => {
   });
 
   it('should submit valid form', () => {
-    const el: HTMLElement = fixture.debugElement.nativeElement;
-    const fname: HTMLElement = el.querySelector('input[name=fname]');
-    const lname: HTMLElement = el.querySelector('input[name=lname]');
-    const ssn: HTMLElement   = el.querySelector('input[name=ssn]');
-    const zip: HTMLElement   = el.querySelector('input[name=zip]');
-    // @ts-ignore
-    fname.value = 'Matt';
-    // @ts-ignore
-    lname.value = 'Maloney';
-    // @ts-ignore
-    ssn.value = '111-11-1111';
-    // @ts-ignore
-    zip.value = '19022';
-
-    const button: HTMLElement = el.querySelector('button');
-    expect(button).toBeDefined();
-    expect(component.isAuthenticating).toBeFalsy();
     fixture.detectChanges();
-    button.click();
-    expect(component.isAuthenticating).toBeTruthy();
+    fixture.whenStable().then(() => {
+      const el: HTMLElement = fixture.debugElement.nativeElement;
+      const fname: HTMLElement = el.querySelector('input[name=fname]');
+      const lname: HTMLElement = el.querySelector('input[name=lname]');
+      const ssn: HTMLElement   = el.querySelector('input[name=ssn]');
+      const zip: HTMLElement   = el.querySelector('input[name=zip]');
+      // @ts-ignore
+      fname.value = 'Matt';
+      // @ts-ignore
+      lname.value = 'Maloney';
+      // @ts-ignore
+      ssn.value = '111-11-1111';
+      // @ts-ignore
+      zip.value = '19022';
+      fname.dispatchEvent(new Event('input'));
+      lname.dispatchEvent(new Event('input'));
+      ssn.dispatchEvent(new Event('input'));
+      zip.dispatchEvent(new Event('input'));
+
+      const button: HTMLElement = el.querySelector('button');
+      expect(button).toBeDefined();
+      expect(component.isAuthenticating).toBeFalsy();
+      fixture.detectChanges();
+      button.click();
+      expect(component.isAuthenticating).toBeTruthy();
+    });
   });
 });
