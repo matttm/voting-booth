@@ -23,7 +23,7 @@ describe('SplashComponent', () => {
   let component: SplashComponent;
   let fixture: ComponentFixture<SplashComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         MatListModule,
@@ -35,9 +35,6 @@ describe('SplashComponent', () => {
       providers: [provideMockStore()]
     })
     .compileComponents();
-  }));
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(SplashComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -73,17 +70,21 @@ describe('SplashComponent', () => {
     expect(content).toBeFalsy();
   });
 
-  it('should  show dialog content after candidate click', () => {
+  it('should show dialog content after candidate click', () => {
     const el: HTMLElement = fixture.debugElement.nativeElement;
+    // currently not showing
     let content = el.querySelector('mat-dialog-content');
     expect(content).toBeFalsy();
-    // simulate click
-    component.onCandidateClick('Test Candidate');
+    // simulate opening click
+    el.querySelector('mat-list-item')
+      .dispatchEvent(new Event('mousedown'));
+    // now modal should be there
     content = el.querySelector('mat-dialog-content');
     expect(content).toBeDefined();
     // simulate closing click
     el.querySelector('#splash-container')
       .dispatchEvent(new Event('mousedown'));
+    // now it shouldn't be there
     content = el.querySelector('mat-dialog-content');
     expect(content).toBeFalsy();
   });
