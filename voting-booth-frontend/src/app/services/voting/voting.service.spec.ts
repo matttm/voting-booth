@@ -2,7 +2,7 @@ import {async, TestBed} from '@angular/core/testing';
 
 import { VotingService } from './voting.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {first, takeUntil} from "rxjs/operators";
+import {first} from 'rxjs/operators';
 
 describe('VotingService', () => {
   let service: VotingService;
@@ -26,18 +26,10 @@ describe('VotingService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should send a POST request on a handleSubmit', () => {
+  it('should send a POST request when voting', () => {
     service.vote('Sally Dodo');
-    const request = http.expectOne( `/vote`);
+    const request = http.expectOne( `/api/votes`);
     expect(request.request.method).toBe('POST');
-  });
-
-  it('should send a POST request with a "ssn" key on body when' +
-    ' querying if someone voted', () => {
-    service.hasVoted();
-    const request = http.expectOne( '/api/user?voted=true');
-    expect(request.request.method).toBe('POST');
-    expect(request.request.body.ssn).toBeDefined();
   });
 
   it('should send a GET request on results', () => {

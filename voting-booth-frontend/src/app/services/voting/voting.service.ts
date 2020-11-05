@@ -26,7 +26,6 @@ export class VotingService {
       .pipe(
         shareReplay()
       ).toPromise();
-    // return new Promise( resolve => setTimeout(resolve, 5000));
   }
 
   /**
