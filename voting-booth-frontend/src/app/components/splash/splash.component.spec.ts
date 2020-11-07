@@ -7,6 +7,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CandidateInfoComponent} from '../candidate-info/candidate-info.component';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {of} from "rxjs";
 
 @NgModule({
   declarations: [CandidateInfoComponent],
@@ -71,13 +72,17 @@ describe('SplashComponent', () => {
   });
 
   it('should show dialog content after candidate click', () => {
+    // give some data
+    component.candidateNames$ = of(['DummyCandidate']);
+    fixture.detectChanges();
     const el: HTMLElement = fixture.debugElement.nativeElement;
     // currently not showing
     let content = el.querySelector('mat-dialog-content');
     expect(content).toBeFalsy();
     // simulate opening click
-    el.querySelector('mat-list-item')
-      .dispatchEvent(new Event('mousedown'));
+    const candidate = el.querySelector('mat-list-item');
+    expect(candidate).toBeTruthy();
+    candidate.dispatchEvent(new Event('mousedown'));
     // now modal should be there
     content = el.querySelector('mat-dialog-content');
     expect(content).toBeDefined();
