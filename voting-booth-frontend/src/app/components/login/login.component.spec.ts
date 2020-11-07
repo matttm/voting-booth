@@ -65,7 +65,7 @@ describe('LoginComponent', () => {
     expect(button).toBeDefined();
     expect(component.isAuthenticating).toBeFalsy();
     button.click();
-    expect(component.isAuthenticating).toBeTruthy();
+    expect(component.isAuthenticating).toBeFalsy();
   });
 
   it('should submit valid form', () => {
