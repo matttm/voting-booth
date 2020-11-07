@@ -15,7 +15,7 @@ class TestService {
   test() { return this.http.get('/test').toPromise(); }
 }
 
-describe('VotingService', () => {
+describe('AuthInterceptor', () => {
   let service: TestService;
   let http: HttpTestingController;
 
@@ -45,7 +45,7 @@ describe('VotingService', () => {
   });
 
   it('should add token to request', () => {
-    localStorage.setItem('token_id', 'testy');
+    localStorage.setItem('id_token', 'testy');
     service.test();
     const request = http.expectOne('/test');
     expect(request.request.headers.has('Authorization')).toBeTruthy();
