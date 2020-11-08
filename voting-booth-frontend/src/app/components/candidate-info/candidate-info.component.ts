@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AppState} from '../../reducers';
 import {select, Store} from '@ngrx/store';
