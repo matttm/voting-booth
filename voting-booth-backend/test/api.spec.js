@@ -41,8 +41,7 @@ describe('Testing API', () => {
         const { idToken, expiresIn} = response.body;
 
         // ensure token is a valid bearer token
-        const [prefix, jwt] = idToken.split(' ');
-        expect(prefix).toBe('Bearer');
+        const jwt = idToken.split(' ');
         expect(jwt).toBeTruthy();
         expect(expiresIn).toBeTruthy();
         spy.mockRestore();
@@ -59,20 +58,12 @@ describe('Testing API', () => {
 
         response = await request
             .get('/authentic')
-            .set('Authorization', idToken)
+            .set('Authorization', `Bearer ${idToken}`)
             .send();
         expect(response.status).toBe(200);
     });
 
     it('should return status 401 because of an inauthentic jwt', async () => {
-        const response = await request
-            .get('/authentic')
-            .set('Authorization', 'invalidtoken')
-            .send();
-        expect(response.status).toBe(401);
-    });
-
-    it('should return true because person has voted', async () => {
         const response = await request
             .get('/authentic')
             .set('Authorization', 'invalidtoken')
@@ -112,9 +103,9 @@ describe('Testing API', () => {
     it('should determine person HAS voted', async () => {
         const chain = testChain;
         const authSpy = jest.spyOn(authservice, 'authenticate');
-        const bcSpy = jest.spyOn(bcservice, 'getBlockchain');
+        const bcSpy = jest.spyOn(bcservice, 'hasVoted');
         authSpy.mockReturnValue(promisedTrue);
-        bcSpy.mockReturnValue(promisedChain);
+        bcSpy.mockReturnValue(promisedTrue);
 
         let response = await request
             .post('/login')
@@ -124,7 +115,7 @@ describe('Testing API', () => {
 
         response = await request
             .get('/user?voted=true')
-            .set('Authorization', idToken)
+            .set('Authorization', `Bearer ${idToken}`)
             .send();
         expect(response.status).toBe(200);
         expect(response.body.success).toBeTruthy();
@@ -153,7 +144,7 @@ describe('Testing API', () => {
 
         response = await request
             .post('/votes')
-            .set('Authorization', idToken)
+            .set('Authorization', `Bearer ${idToken}`)
             .send(vote);
         expect(response.status).toBe(200);
         expect(response.body.success).toBeTruthy();
