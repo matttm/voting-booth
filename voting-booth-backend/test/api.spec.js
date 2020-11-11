@@ -61,6 +61,7 @@ describe('Testing API', () => {
             .set('Authorization', `Bearer ${idToken}`)
             .send();
         expect(response.status).toBe(200);
+        spy.mockRestore();
     });
 
     it('should return status 401 because of an inauthentic jwt', async () => {
@@ -120,6 +121,7 @@ describe('Testing API', () => {
         expect(response.status).toBe(200);
         expect(response.body.success).toBeTruthy();
         expect(response.body.hasVoted).toBeTruthy();
+        authSpy.mockRestore();
         bcSpy.mockRestore();
     });
 
@@ -148,6 +150,7 @@ describe('Testing API', () => {
             .send(vote);
         expect(response.status).toBe(200);
         expect(response.body.success).toBeTruthy();
+        authSpy.mockRestore();
         bcSpy.mockRestore();
     });
 });
