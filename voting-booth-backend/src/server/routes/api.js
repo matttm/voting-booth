@@ -1,6 +1,6 @@
 import {authenticate, isAuthenticated} from "../services/authentication-service";
 import jwt from 'jsonwebtoken';
-import {addBlock, getBlockchain} from "../services/blockchain-service";
+import {addBlock, getBlockchain, hasVoted} from "../services/blockchain-service";
 import express from 'express';
 import {handle} from "../utilities";
 
@@ -41,29 +41,21 @@ router.get('/user', isAuthenticated, async (req, res) => {
     // GET  REQUEST api/user?voted=true
     //
     const user = req.user;
-    const hasVoted = req.query.voted;
+    const assertVote = req.query.voted;
     // This cannot be shortened, as it is a bool and could be false
-    if (hasVoted === undefined) {
+    if (assertVote === undefined) {
         res.status(401).json({
             success: false,
             message: 'Required query not specified'
         })
     }
-    const [chain, err] = await handle(getBlockchain());
+    const [answer, err] = await handle(hasVoted(user, true));
     if (err) {
         res.status(503).send('Voting store not reachable');
         return;
     }
-    // determine if this person voted
-    // TODO: reimplement without use of ssn
-    const answer = chain.some((block, idx) => {
-        if (idx === 0)
-            return;
-        const { voter } = block.data;
-        return voter.fname === user.fname && voter.lname === user.lname && voter.zip === user.zip;
-    });
     res.json({
-        success: !!answer,  // force this to be a boolean
+        success: true,
         hasVoted: answer
     })
 });

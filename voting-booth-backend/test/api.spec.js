@@ -64,7 +64,15 @@ describe('Testing API', () => {
         expect(response.status).toBe(200);
     });
 
-    test('should return status 401 because of an inauthentic jwt', async () => {
+    it('should return status 401 because of an inauthentic jwt', async () => {
+        const response = await request
+            .get('/authentic')
+            .set('Authorization', 'invalidtoken')
+            .send();
+        expect(response.status).toBe(401);
+    });
+
+    it('should return true because person has voted', async () => {
         const response = await request
             .get('/authentic')
             .set('Authorization', 'invalidtoken')
