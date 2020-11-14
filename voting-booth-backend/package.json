@@ -9,7 +9,8 @@
     "dev": "cross-env NODE_ENV=development npx yarn-run-all build server",
     "prod": "cross-env NODE_ENV=production npx yarn-run-all build server",
     "transpile": "babel ./src/server --out-dir dist-server",
-    "clean": "rimraf dist-server"
+    "clean": "rimraf dist-server",
+    "test": "jest"
   },
   "nodemonConfig": {
     "exec": "npm run dev",
