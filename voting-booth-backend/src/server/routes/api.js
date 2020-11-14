@@ -49,11 +49,12 @@ router.get('/user', isAuthenticated, async (req, res) => {
             message: 'Required query not specified'
         })
     }
-    const [answer, err] = await handle(hasVoted(user, true));
+    const [chain, err] = await handle(getBlockchain());
     if (err) {
         res.status(503).send('Voting store not reachable');
         return;
     }
+    const answer = hasVoted(chain, user, assertVote);
     res.json({
         success: true,
         hasVoted: answer
