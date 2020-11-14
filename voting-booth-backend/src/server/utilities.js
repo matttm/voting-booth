@@ -1,4 +1,3 @@
-import { getBlockchain } from 'services/blockchain-service'
 /**
  * Handler for a promise such that the res and rej are returned as a tuple
  *   NOTE: one of these values (res, rej) will be undefined based on the promise's status

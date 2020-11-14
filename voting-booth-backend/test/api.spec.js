@@ -2,6 +2,7 @@ import apiRouter from '../src/server/routes/api';
 import * as authservice from '../src/server/services/authentication-service';
 import * as bcservice from '../src/server/services/blockchain-service';
 import {getTestBlockchain, initRoute} from "./test-utilities";
+import * as utilities from '../src/server/utilities';
 
 describe('Testing API', () => {
     const testChain = getTestBlockchain();
@@ -102,11 +103,10 @@ describe('Testing API', () => {
     });
 
     it('should determine person HAS voted', async () => {
-        const chain = testChain;
         const authSpy = jest.spyOn(authservice, 'authenticate');
-        const bcSpy = jest.spyOn(bcservice, 'hasVoted');
+        const utilSpy = jest.spyOn(utilities, 'hasVoted');
         authSpy.mockReturnValue(promisedTrue);
-        bcSpy.mockReturnValue(promisedTrue);
+        utilSpy.mockReturnValue(promisedTrue);
 
         let response = await request
             .post('/login')
@@ -122,7 +122,7 @@ describe('Testing API', () => {
         expect(response.body.success).toBeTruthy();
         expect(response.body.hasVoted).toBeTruthy();
         authSpy.mockRestore();
-        bcSpy.mockRestore();
+        utilSpy.mockRestore();
     });
 
     it('should succeed in voting', async () => {
