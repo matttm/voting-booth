@@ -19,6 +19,17 @@ describe('api-utilities', () => {
         const answer = hasVoted(testChain, voter, 'true');
         expect(answer).toBeTruthy();
     });
+
+    it('should determine a user to have not voted', async () => {
+        const voter = {
+            "fname":"Testy",
+            "lname": "Novote",
+            "zip": "13363",
+            "ssn": "290-90-7777"
+        };
+        const answer = hasVoted(testChain, voter, 'true');
+        expect(answer).toBeFalsy();
+    });
 });
 
 
