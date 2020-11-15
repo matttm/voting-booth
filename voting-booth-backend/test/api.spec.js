@@ -124,6 +124,32 @@ describe('Testing API', () => {
         bcSpy.mockRestore();
     });
 
+    it('should determine person HAS NOT voted', async () => {
+        const authSpy = jest.spyOn(authservice, 'authenticate');
+        const bcSpy = jest.spyOn(bcservice, 'getBlockchain');
+        authSpy.mockReturnValue(promisedTrue);
+        bcSpy.mockReturnValue(promisedChain);
+
+        // set to person who didn't vote
+        const clone = {...testPerson};
+        clone.lname = 'Novote';
+        let response = await request
+            .post('/login')
+            .send(clone);
+        expect(response.status).toBe(200);
+        const { idToken } = response.body;
+
+        response = await request
+            .get('/user?voted=true')
+            .set('Authorization', `Bearer ${idToken}`)
+            .send();
+        expect(response.status).toBe(200);
+        expect(response.body.success).toBeTruthy();
+        expect(response.body.hasVoted).toBeFalsy();
+        authSpy.mockRestore();
+        bcSpy.mockRestore();
+    });
+
     it('should succeed in voting', async () => {
         const vote = {
             candidate: 'Tulsi Gabbard'
