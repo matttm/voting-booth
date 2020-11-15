@@ -2,7 +2,6 @@ import apiRouter from '../src/server/routes/api';
 import * as authservice from '../src/server/services/authentication-service';
 import * as bcservice from '../src/server/services/blockchain-service';
 import {getTestBlockchain, initRoute} from "./test-utilities";
-import * as utilities from '../src/server/utilities';
 
 describe('Testing API', () => {
     const testChain = getTestBlockchain();
@@ -11,10 +10,10 @@ describe('Testing API', () => {
     const promisedFalse = Promise.resolve(false);
     let request;
     const testPerson = {
-        fname: "Testy",
-        lname: "Test",
-        zip: "13363",
-        ssn: "290-90-7777"
+        "fname":"Testy",
+        "lname": "Test",
+        "zip": "13363",
+        "ssn": "290-90-7777"
     };
 
     beforeAll(() =>{
@@ -104,9 +103,9 @@ describe('Testing API', () => {
 
     it('should determine person HAS voted', async () => {
         const authSpy = jest.spyOn(authservice, 'authenticate');
-        const utilSpy = jest.spyOn(utilities, 'hasVoted');
+        const bcSpy = jest.spyOn(bcservice, 'getBlockchain');
         authSpy.mockReturnValue(promisedTrue);
-        utilSpy.mockReturnValue(promisedTrue);
+        bcSpy.mockReturnValue(promisedChain);
 
         let response = await request
             .post('/login')
@@ -122,7 +121,7 @@ describe('Testing API', () => {
         expect(response.body.success).toBeTruthy();
         expect(response.body.hasVoted).toBeTruthy();
         authSpy.mockRestore();
-        utilSpy.mockRestore();
+        bcSpy.mockRestore();
     });
 
     it('should succeed in voting', async () => {

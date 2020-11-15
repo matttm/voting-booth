@@ -1,8 +1,8 @@
 import {authenticate, isAuthenticated} from "../services/authentication-service";
 import jwt from 'jsonwebtoken';
-import {addBlock, getBlockchain, hasVoted} from "../services/blockchain-service";
+import {addBlock, getBlockchain} from "../services/blockchain-service";
 import express from 'express';
-import {handle} from "../utilities";
+import {handle, hasVoted} from "../utilities";
 
 const router = express.Router();
 
@@ -58,7 +58,7 @@ router.get('/user', isAuthenticated, async (req, res) => {
     res.json({
         success: true,
         hasVoted: answer
-    })
+    });
 });
 
 router.post('/login', async (req, res) => {

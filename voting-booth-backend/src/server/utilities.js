@@ -32,5 +32,6 @@ export function hasVoted(chain, user, expected) {
         const {voter} = block.data;
         return voter.fname === user.fname && voter.lname === user.lname && voter.zip === user.zip;
     });
-    return actual === expected;
+    // if expected is true, then get whether user has voted
+    return actual === (expected === 'true');
 }
