@@ -27,7 +27,21 @@ router.post('/votes', isAuthenticated, async (req, res) => {
         lname: user.lname,
         zip: user.zip
     };
-    const [status, err] = await handle(addBlock(vote));
+    let [chain, err] = await handle(getBlockchain());
+    if (err) {
+        res.status(503).send('Voting store not reachable');
+        return;
+    }
+    // if user has already voted, reject
+    if (hasVoted(chain, user, 'true')) {
+        res.status(200).json({
+            success: false,
+            message: 'User has already voted'
+        });
+        return;
+    }
+    let status;
+    [status, err] = await handle(addBlock(vote));
     if (err) {
         res.status(503).send('Voting store not reachable');
     }

@@ -150,7 +150,9 @@ describe('Testing API', () => {
         bcSpy.mockRestore();
     });
 
-    it('should succeed in voting', async () => {
+    it('should NOT succeed in voting', async () => {
+        // this should NOT succeed because testPerson
+        // has already voted on the test block chain
         const vote = {
             candidate: 'Tulsi Gabbard'
         };
@@ -159,9 +161,11 @@ describe('Testing API', () => {
             message: 'Block added'
         };
         const authSpy = jest.spyOn(authservice, 'authenticate');
-        const bcSpy = jest.spyOn(bcservice, 'addBlock');
+        const bcSpy1 = jest.spyOn(bcservice, 'getBlockchain');
+        const bcSpy2 = jest.spyOn(bcservice, 'addBlock');
         authSpy.mockReturnValue(promisedTrue);
-        bcSpy.mockReturnValue(Promise.resolve(res));
+        bcSpy1.mockReturnValue(promisedChain);
+        bcSpy2.mockReturnValue(Promise.resolve(res));
 
         let response = await request
             .post('/login')
@@ -174,8 +178,43 @@ describe('Testing API', () => {
             .set('Authorization', `Bearer ${idToken}`)
             .send(vote);
         expect(response.status).toBe(200);
+        expect(response.body.success).toBeFalsy();
+        authSpy.mockRestore();
+        bcSpy1.mockRestore();
+        bcSpy2.mockRestore();
+    });
+
+    it('should succeed in voting', async () => {
+        const vote = {
+            candidate: 'Tulsi Gabbard'
+        };
+        const res = {
+            success: true,
+            message: 'Block added'
+        };
+        const authSpy = jest.spyOn(authservice, 'authenticate');
+        const bcSpy1 = jest.spyOn(bcservice, 'getBlockchain');
+        const bcSpy2 = jest.spyOn(bcservice, 'addBlock');
+        authSpy.mockReturnValue(promisedTrue);
+        bcSpy1.mockReturnValue(promisedChain);
+        bcSpy2.mockReturnValue(Promise.resolve(res));
+
+        const clone = {...testPerson};
+        clone.lname = 'NNotVoted';
+        let response = await request
+            .post('/login')
+            .send(clone);
+        expect(response.status).toBe(200);
+        const { idToken } = response.body;
+
+        response = await request
+            .post('/votes')
+            .set('Authorization', `Bearer ${idToken}`)
+            .send(vote);
+        expect(response.status).toBe(200);
         expect(response.body.success).toBeTruthy();
         authSpy.mockRestore();
-        bcSpy.mockRestore();
+        bcSpy1.mockRestore();
+        bcSpy2.mockRestore();
     });
 });
