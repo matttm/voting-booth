@@ -8,6 +8,7 @@ import {addBlock, getBlockchain} from "./services/blockchain-service";
  * will be saved and will attempt sending at a later time.
  **/
 process.on('message', async (message) => {
+    console.log('Worker got a message');
     // TODO: check to ensure message is a vote
     const interval = setInterval(async () => {
         // TODO: send vote
