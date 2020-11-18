@@ -13,18 +13,20 @@ process.on('message', async (message) => {
         // TODO: send vote
         let [chain, err] = await handle(getBlockchain());
         if (err) {
-            res.status(503).send('Voting store not reachable');
-            return;
+            console.log('Fallback service failed to file vote')
         }
         // if user has already voted, reject
         if (hasVoted(chain, user, 'true')) {
-            res.status(200).json({
-                success: false,
-                message: 'User has already voted'
-            });
-            return;
+            clearInterval(interval);
         }
         let status;
         [status, err] = await handle(addBlock(vote));
+        if (err) {
+            console.log('Fallback service failed to file vote')
+        }
+        if (status) {
+            console.log('Fallback service successfully filed vote');
+            clearInterval(interval);
+        }
     }, 10000);
 });
