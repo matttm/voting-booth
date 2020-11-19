@@ -1,6 +1,11 @@
-import {handle, hasVoted} from "./utilities";
-import {addBlock, getBlockchain} from "./services/blockchain-service";
-
+// import {handle, hasVoted} from "../utilities";
+// import {addBlock, getBlockchain} from "../services/blockchain-service";
+const utils = require('../utilities');
+const bcserv = require("../services/blockchain-service");
+const hasVoted = utils.hasVoted;
+const handle = utils.handle;
+const addBlock = bcserv.addBlock;
+const getBlockchain = bcserv.getBlockchain;
 /**
  * File contains code that a child process will execute to
  * act as a failsafe if the blockchain server is temporarily down.
