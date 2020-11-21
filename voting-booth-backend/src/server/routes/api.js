@@ -3,14 +3,16 @@ import jwt from 'jsonwebtoken';
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import express from 'express';
 import {handle, hasVoted} from "../utilities";
-import {Worker} from 'worker_threads';
+const {Worker} = require('worker_threads');
 
 const router = express.Router();
 
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
 export const expiresIn = process.env.TOKEN_TTL || "2h";
 
-const worker = new Worker('./src/server/workers/blockchain-failsafe.js');
+const worker = new Worker(
+    './src/server/workers/blockchain-failsafe.mjs',
+);
 worker.postMessage('Sending message');
 
 router.get('/authentic', isAuthenticated, async (req, res) => {
