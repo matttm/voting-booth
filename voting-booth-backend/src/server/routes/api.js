@@ -13,7 +13,6 @@ export const expiresIn = process.env.TOKEN_TTL || "2h";
 const worker = new Worker(
     './dist-server/workers/blockchain-failsafe.js',
 );
-worker.postMessage('Sending message');
 
 router.get('/authentic', isAuthenticated, async (req, res) => {
     res.status(200).send();
@@ -109,6 +108,8 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/results', async (req, res) => {
+    worker.postMessage('Sending message');
+
     const results = new Map();
     // getting blockchain
     const [chain, err] = await handle(getBlockchain());
