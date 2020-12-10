@@ -1,5 +1,6 @@
 import {handle, hasVoted} from "../utilities";
 import {addBlock, getBlockchain} from "../services/blockchain-service";
+import {parentPort} from 'worker_threads';
 
 /**
  * File contains code that a child process will execute to
@@ -7,8 +8,10 @@ import {addBlock, getBlockchain} from "../services/blockchain-service";
  * The failsafe is, if the blockchain server is unreachable, the vote
  * will be saved and will attempt sending at a later time.
  **/
-process.on('message', async (message) => {
+parentPort.on('message', async (message) => {
     console.log('Worker got a message');
+    const user = message.user;
+    const vote = message.vote;
     // TODO: check to ensure message is a vote
     const interval = setInterval(async () => {
         // TODO: send vote
@@ -18,6 +21,7 @@ process.on('message', async (message) => {
         }
         // if user has already voted, reject
         if (hasVoted(chain, user, 'true')) {
+            console.log('Fallback service determined that user already voted');
             clearInterval(interval);
         }
         let status;

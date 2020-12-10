@@ -2,7 +2,7 @@ import {authenticate, isAuthenticated} from "../services/authentication-service"
 import jwt from 'jsonwebtoken';
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import express from 'express';
-import {handle, hasVoted} from "../utilities";
+import {handle, hasVoted, runWorker} from "../utilities";
 import {Worker} from 'worker_threads';
 
 const router = express.Router();
@@ -10,13 +10,15 @@ const router = express.Router();
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
 export const expiresIn = process.env.TOKEN_TTL || "2h";
 
-const worker = new Worker(
-    './dist-server/workers/blockchain-failsafe.js',
-);
+const worker = runWorker('./dist-server/workers/blockchain-failsafe.js', () => {
+    console.log('Worker running');
+});
 
 router.get('/authentic', isAuthenticated, async (req, res) => {
     res.status(200).send();
 });
+worker.postMessage('Sending message');
+
 
 router.post('/votes', isAuthenticated, async (req, res) => {
     const vote = req.body;
@@ -34,6 +36,7 @@ router.post('/votes', isAuthenticated, async (req, res) => {
     };
     let [chain, err] = await handle(getBlockchain());
     if (err) {
+        // TODO: fire the failsafe
         res.status(503).send('Voting store not reachable');
         return;
     }
@@ -48,6 +51,7 @@ router.post('/votes', isAuthenticated, async (req, res) => {
     let status;
     [status, err] = await handle(addBlock(vote));
     if (err) {
+        // TODO: fire the failsafe
         res.status(503).send('Voting store not reachable');
     }
     res.status(200).json({ success: status });
@@ -108,8 +112,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/results', async (req, res) => {
-    worker.postMessage('Sending message');
-
     const results = new Map();
     // getting blockchain
     const [chain, err] = await handle(getBlockchain());
