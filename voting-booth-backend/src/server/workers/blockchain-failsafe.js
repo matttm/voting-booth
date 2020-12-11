@@ -12,12 +12,15 @@ parentPort.on('message', async (message) => {
     console.log('Worker got a message');
     const user = message.user;
     const vote = message.vote;
-    // TODO: check to ensure message is a vote
+    if (!user || !vote) {
+        console.log("Fallback service's message was invalid");
+        return;
+    }
     const interval = setInterval(async () => {
-        // TODO: send vote
+        console.log('Retrying vote submission');
         let [chain, err] = await handle(getBlockchain());
         if (err) {
-            console.log('Fallback service failed to file vote')
+            console.log('Fallback service failed to file vote');
         }
         // if user has already voted, reject
         if (hasVoted(chain, user, 'true')) {
@@ -31,6 +34,7 @@ parentPort.on('message', async (message) => {
         }
         if (status) {
             console.log('Fallback service successfully filed vote');
+            // TODO: send an email on success?
             clearInterval(interval);
         }
     }, 10000);

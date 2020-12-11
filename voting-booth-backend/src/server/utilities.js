@@ -59,3 +59,14 @@ export function runWorker(path, cb) {
     worker.on('message', cb);
     return worker;
 }
+
+/**
+ * Submit a message containing a user and a vote to a worker thread
+ *
+ * @param worker the spawned worker thread
+ * @param user the user who is voting
+ * @param vote the vote
+ */
+export function submitVoteToFailsafe(worker, user, vote) {
+    worker.postMessage({ user, vote });
+}
