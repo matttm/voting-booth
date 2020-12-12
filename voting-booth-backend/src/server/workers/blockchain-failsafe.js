@@ -12,6 +12,7 @@ parentPort.on('message', async (message) => {
     console.log('Worker got a message');
     const user = message.user;
     const vote = message.vote;
+    const email = message.email;
     if (!user || !vote) {
         console.log("Fallback service's message was invalid");
         return;

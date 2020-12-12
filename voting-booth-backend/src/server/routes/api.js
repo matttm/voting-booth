@@ -2,16 +2,15 @@ import {authenticate, isAuthenticated} from "../services/authentication-service"
 import jwt from 'jsonwebtoken';
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import express from 'express';
-import {handle, hasVoted, runWorker, submitVoteToFailsafe} from "../utilities";
+import failsafeRouter from './failsafe';
+import {handle, hasVoted} from "../utilities";
 
 const router = express.Router();
 
 export const RSA_PRIVATE_KEY = process.env.SECRET_KEY || 'shhhitsmyfallbacksecret';
 export const expiresIn = process.env.TOKEN_TTL || "2h";
 
-const worker = runWorker('./dist-server/workers/blockchain-failsafe.js', () => {
-    console.log('Worker is online');
-});
+router.use('/failsafe', failsafeRouter);
 
 router.get('/authentic', isAuthenticated, async (req, res) => {
     res.status(200).send();
@@ -20,13 +19,13 @@ router.get('/authentic', isAuthenticated, async (req, res) => {
 
 router.post('/votes', isAuthenticated, async (req, res) => {
     const vote = req.body;
+    const user = req.user;
     // ensure everything is in vote
     if (!vote.candidate) {
         res.status(400).send();
         return;
     }
     // add the voter info to the vote
-    const user = req.user;
     vote.voter = {
         fname: user.fname,
         lname: user.lname,
@@ -34,8 +33,6 @@ router.post('/votes', isAuthenticated, async (req, res) => {
     };
     let [chain, err] = await handle(getBlockchain());
     if (err) {
-        // TODO: change status code if this works
-        submitVoteToFailsafe(worker, user, vote);
         res.status(503).send('Voting store not currently reachable');
         return;
     }
@@ -50,8 +47,6 @@ router.post('/votes', isAuthenticated, async (req, res) => {
     let status;
     [status, err] = await handle(addBlock(vote));
     if (err) {
-        // TODO: change status code if this works
-        submitVoteToFailsafe(worker, user, vote);
         res.status(503).send('Voting store not currently reachable');
     }
     res.status(200).json({ success: status });
