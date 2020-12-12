@@ -10,3 +10,6 @@ BLOCKCHAIN_URL='http://localhost:3001'
 
 # url to authentication server's api
 AUTHENTICATOR_URL='http://localhost:8080'
+
+# the numberof attempts before the failsafe stops trying to vote
+FAILSAFE_ATTEMPTS=10

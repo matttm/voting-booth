@@ -2,6 +2,8 @@ import {handle, hasVoted} from "../utilities";
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import {parentPort} from 'worker_threads';
 
+const attempts = process.env.ATTEMPTS;
+
 /**
  * File contains code that a child process will execute to
  * act as a failsafe if the blockchain server is temporarily down.
@@ -17,8 +19,13 @@ parentPort.on('message', async (message) => {
         console.log("Fallback service's message was invalid");
         return;
     }
+    let attempt = 0;
     const interval = setInterval(async () => {
         console.log('Retrying vote submission');
+        if (attempt === attempts) {
+            console.log('Attempts reached. Stopping failsafe.');
+            clearInterval(interval);
+        }
         let [chain, err] = await handle(getBlockchain());
         if (err) {
             console.log('Fallback service failed to file vote');
@@ -38,5 +45,6 @@ parentPort.on('message', async (message) => {
             // TODO: send an email on success?
             clearInterval(interval);
         }
+        attempt++;
     }, 10000);
 });

@@ -11,7 +11,7 @@ const worker = runWorker('./dist-server/workers/blockchain-failsafe.js', () => {
 router.post('/votes', isAuthenticated, () => {
     const vote = req.body;
     const user = req.user;
-    console.log('Submitting vote to fsailsafe service');
+    console.log('Submitting vote to failsafe service');
     submitVoteToFailsafe(worker, user, vote);
 });
 
