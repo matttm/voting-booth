@@ -13,7 +13,7 @@ if (process.env.NODE_ENV) {
     configureEnv({
         path: path.resolve(
             process.cwd(),
-            `./src/environments/${process.env.NODE_ENV}.environment`
+            `./environments/${process.env.NODE_ENV}.environment`
         )
     });
 } else {
