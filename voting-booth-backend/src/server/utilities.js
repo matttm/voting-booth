@@ -70,3 +70,15 @@ export function runWorker(path, cb) {
 export function submitVoteToFailsafe(worker, user, vote) {
     worker.postMessage({ user, vote });
 }
+
+/**
+ * Prints a shutting down message and shuts down.
+ * Does NOT do any cleanup
+ *
+ * @param exitCode the exit status of application. It will be
+ * 0, if not provided.
+ */
+export function immediateShutdown(exitCode = 0) {
+    console.log('Shutting down...');
+    process.exit(exitCode);
+}
