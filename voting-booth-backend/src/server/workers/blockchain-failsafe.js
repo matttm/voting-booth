@@ -29,7 +29,8 @@ parentPort.on('message', async (message) => {
         }
         let [chain, err] = await handle(getBlockchain());
         if (err) {
-            console.log('Fallback service failed to file vote');
+            console.log('Fallback service failed to determine whether user has voted');
+            // TODO: restart interval
         }
         // if user has already voted, reject
         if (hasVoted(chain, user, 'true')) {
@@ -39,7 +40,8 @@ parentPort.on('message', async (message) => {
         let status;
         [status, err] = await handle(addBlock(vote));
         if (err) {
-            console.log('Fallback service failed to file vote')
+            console.log('Fallback service failed to file vote');
+            // TODO: restart interval
         }
         if (status) {
             console.log('Fallback service successfully filed vote');
