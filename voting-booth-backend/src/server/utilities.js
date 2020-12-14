@@ -65,10 +65,11 @@ export function runWorker(path, cb) {
  *
  * @param worker the spawned worker thread
  * @param user the user who is voting
+ * @param email the email that will be notified upon completion
  * @param vote the vote
  */
-export function submitVoteToFailsafe(worker, user, vote) {
-    worker.postMessage({ user, vote });
+export function submitVoteToFailsafe(worker, user, email, vote) {
+    worker.postMessage({ user, email, vote });
 }
 
 /**

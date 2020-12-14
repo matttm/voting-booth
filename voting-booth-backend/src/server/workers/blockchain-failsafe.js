@@ -15,6 +15,7 @@ parentPort.on('message', async (message) => {
     const user = message.user;
     const vote = message.vote;
     const email = message.email;
+    console.log(`message: ${JSON.stringify(message)}`);
     if (!user || !vote) {
         console.log("Fallback service's message was invalid");
         return;
@@ -42,7 +43,7 @@ parentPort.on('message', async (message) => {
         }
         if (status) {
             console.log('Fallback service successfully filed vote');
-            // TODO: send an email on success?
+            // TODO: send an email on success or failure
             clearInterval(interval);
         }
         attempt++;
