@@ -1,4 +1,4 @@
-import {Worker} from 'worker_threads';
+import {Worker, SHARE_ENV} from 'worker_threads';
 
 /**
  * Handler for a promise such that the res and rej are returned as a tuple
@@ -47,7 +47,7 @@ export function hasVoted(chain, user, expected) {
  */
 // TODO: give worker an id name
 export function runWorker(path, cb) {
-    const worker = new Worker(path);
+    const worker = new Worker(path, { env: SHARE_ENV });
     worker.on('exit', (exitCode) => {
         if (exitCode === 0) {
             return null;

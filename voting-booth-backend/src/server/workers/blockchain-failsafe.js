@@ -2,7 +2,7 @@ import {handle, hasVoted} from "../utilities";
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import {parentPort} from 'worker_threads';
 
-const attempts = process.env.ATTEMPTS;
+const attempts = process.env.FAILSAFE_ATTEMPTS;
 
 /**
  * File contains code that a child process will execute to
@@ -30,6 +30,7 @@ parentPort.on('message', async (message) => {
         let [chain, err] = await handle(getBlockchain());
         if (err) {
             console.log('Fallback service failed to determine whether user has voted');
+            console.log(`attempt ${attempt} attempts ${attempts}`);
             return;
         }
         // if user has already voted, reject
