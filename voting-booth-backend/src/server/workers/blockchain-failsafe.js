@@ -2,7 +2,7 @@ import {handle, hasVoted} from "../utilities";
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import {parentPort} from 'worker_threads';
 
-const attempts = process.env.FAILSAFE_ATTEMPTS;
+const attempts = parseInt(process.env.FAILSAFE_ATTEMPTS, 10);
 
 /**
  * File contains code that a child process will execute to
@@ -26,6 +26,7 @@ parentPort.on('message', async (message) => {
         if (attempt === attempts) {
             console.log('Attempts reached. Stopping failsafe.');
             clearInterval(interval);
+            return;
         }
         let [chain, err] = await handle(getBlockchain());
         if (err) {
