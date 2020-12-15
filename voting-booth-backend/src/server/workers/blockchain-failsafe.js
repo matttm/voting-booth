@@ -31,6 +31,7 @@ parentPort.on('message', async (message) => {
         if (err) {
             console.log('Fallback service failed to determine whether user has voted');
             console.log(`attempt ${attempt} attempts ${attempts}`);
+            attempt++;
             return;
         }
         // if user has already voted, reject
@@ -42,6 +43,7 @@ parentPort.on('message', async (message) => {
         [status, err] = await handle(addBlock(vote));
         if (err) {
             console.log('Fallback service failed to file vote');
+            attempt++;
             return;
         }
         if (status) {
@@ -49,6 +51,5 @@ parentPort.on('message', async (message) => {
             // TODO: send an email on success or failure
             clearInterval(interval);
         }
-        attempt++;
     }, 10000);
 });
