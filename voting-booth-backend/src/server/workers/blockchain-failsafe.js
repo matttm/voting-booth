@@ -1,7 +1,24 @@
 import {handle, hasVoted} from "../utilities";
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import {parentPort} from 'worker_threads';
+import * as nodemailer from 'nodemailer';
 
+let transport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 2525,
+    auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PASSWORD
+    }
+});
+const message = {
+    from: 'noreply@voting.com', // Sender address
+    to: undefined,
+    subject: 'Voting Status', // Subject line
+    text: undefined
+};
+const successText = 'Your vote has been successfully submitted.';
+const failureText = 'Your vote failed to be submitted. Please try again later';
 const attempts = parseInt(process.env.FAILSAFE_ATTEMPTS, 10);
 
 /**
@@ -26,6 +43,7 @@ parentPort.on('message', async (message) => {
         if (attempt === attempts) {
             console.log('Attempts reached. Stopping failsafe.');
             clearInterval(interval);
+            await mailCallback(transport, email, failureText);
             return;
         }
         let [chain, err] = await handle(getBlockchain());
@@ -49,8 +67,25 @@ parentPort.on('message', async (message) => {
         }
         if (status) {
             console.log('Fallback service successfully filed vote');
-            // TODO: send an email on success or failure
             clearInterval(interval);
+            await mailCallback(transport, email, successText);
         }
     }, 10000);
 });
+
+/**
+ * Send a message with transport
+ *
+ * @param transport the object doing the sending
+ * @param email the email the message is going to
+ * @param text the text in the message
+ */
+async function mailCallback(transport, email, text) {
+    const [info, err] =
+        await handle(transport.sendMail({...message, to: email, text: text}));
+    if (err) {
+        console.log(err)
+    } else {
+        console.log(info);
+    }
+}
