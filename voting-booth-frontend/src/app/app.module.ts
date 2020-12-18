@@ -33,6 +33,7 @@ import {environment} from '../environments/environment';
 import {AuthInterceptor} from './services/interceptors/auth/auth.interceptor';
 import { ResultComponent } from './components/result/result.component';
 import { SubmissionComponent } from './components/submission/submission.component';
+import { FailsafeComponent } from './components/failsafe/failsafe.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SubmissionComponent } from './components/submission/submission.componen
     BoothComponent,
     ResultComponent,
     SubmissionComponent,
-    CandidateInfoComponent
+    CandidateInfoComponent,
+    FailsafeComponent
   ],
   imports: [
     BrowserModule,

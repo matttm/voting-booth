@@ -1,0 +1,19 @@
+<mat-dialog-content>
+  <div id="" class="" *ngIf="!isAskingEmail; else prompt">
+    <input
+      matInput
+      placeholder="jimmydimple@gmail.com"
+      name="email"
+      formControlName="email"
+    >
+  </div>
+  <ng-template #prompt>
+    <p>Please Enter Your Email</p>
+    <div class="prompt-btn">
+      <button mat-flat-button color="primary">Nevermind</button>
+    </div>
+    <div class="prompt-btn">
+      <button mat-flat-button color="primary">Submit</button>
+    </div>
+  </ng-template>
+</mat-dialog-content>
