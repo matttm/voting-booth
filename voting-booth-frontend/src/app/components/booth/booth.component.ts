@@ -4,7 +4,8 @@ import {VotingService} from '../../services/voting/voting.service';
 import {select, Store} from '@ngrx/store';
 import {selectCandidatesNames} from '../../selectors';
 import {Observable} from 'rxjs';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {FailsafeComponent} from "../failsafe/failsafe.component";
 
 /**
  * Component represents the actual voting booth, in which a person
@@ -22,6 +23,7 @@ export class BoothComponent {
 
   constructor(private fb: FormBuilder,
               private snackbar: MatSnackBar,
+              private dialog: MatDialog,
               private store: Store,
               private votingService: VotingService
   ) {
@@ -45,6 +47,7 @@ export class BoothComponent {
         this.snackbar.open('Vote Submitted', null, {duration: 5000});
       })
       .catch(err => {
+        this.isVoting = false;
         // TODO: factor to an error handler
         let message = '';
         const status = err.status;
@@ -52,10 +55,20 @@ export class BoothComponent {
           message = 'We are experiencing difficulties';
         } else if (status === 401) {
           message = 'Login before voting';
+        } else {
+          message = 'Unhandled Error';
         }
         this.snackbar
           .open(message, null, {duration: 6000})
           .afterDismissed().subscribe();
+        this.openFailsafeDialog();
       });
+  }
+
+  /**
+   * Open failsafe dialog
+   */
+  openFailsafeDialog() {
+    const dialogRef = this.dialog.open(FailsafeComponent);
   }
 }

@@ -80,7 +80,8 @@ import { FailsafeComponent } from './components/failsafe/failsafe.component';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    CandidateInfoComponent
+    CandidateInfoComponent,
+    FailsafeComponent
   ]
 })
 export class AppModule { }

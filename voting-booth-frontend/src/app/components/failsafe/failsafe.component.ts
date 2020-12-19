@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-failsafe',
@@ -11,5 +11,9 @@ export class FailsafeComponent {
 
   constructor() {
     this.isAskingEmail = false;
+  }
+
+  switchPrompt() {
+    this.isAskingEmail = !this.isAskingEmail;
   }
 }

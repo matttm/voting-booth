@@ -1,19 +1,29 @@
 <mat-dialog-content>
-  <div id="" class="" *ngIf="!isAskingEmail; else prompt">
+  <div *ngIf="isAskingEmail; else prompt">
+    <p>Please Enter Your Email</p>
     <input
       matInput
       placeholder="jimmydimple@gmail.com"
       name="email"
       formControlName="email"
     >
-  </div>
-  <ng-template #prompt>
-    <p>Please Enter Your Email</p>
     <div class="prompt-btn">
-      <button mat-flat-button color="primary">Nevermind</button>
+      <button mat-button mat-dialog-close color="primary">Nevermind</button>
     </div>
     <div class="prompt-btn">
-      <button mat-flat-button color="primary">Submit</button>
+      <button mat-button mat-dialog-close="true" color="primary">Submit</button>
+    </div>
+  </div>
+  <ng-template #prompt>
+    <p>
+      We were unable to submit your vote at this, but
+      we can keep trying and notify you by email of our success.
+    </p>
+    <div class="prompt-btn">
+      <button mat-button mat-dialog-close color="primary">Forget it</button>
+    </div>
+    <div class="prompt-btn">
+      <button mat-button color="primary" (click)="switchPrompt()">Keep Trying</button>
     </div>
   </ng-template>
 </mat-dialog-content>
