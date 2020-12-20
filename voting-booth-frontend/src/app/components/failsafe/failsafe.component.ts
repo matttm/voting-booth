@@ -25,8 +25,8 @@ export class FailsafeComponent {
    */
   onEmailSubmit() {
     // TODO:do anything with this promise?
-    this.votingService.voteFailsafe(this.data.nominated, this.email);
-    console.log(`Failsafe ote filed ${this.data.nominated} ${this.email}`);
+    this.votingService.voteFailsafe(this.data.candidate, this.email);
+    console.log(`Failsafe vote filed ${this.data.candidate} ${this.email}`);
   }
 
   /**
