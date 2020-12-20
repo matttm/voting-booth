@@ -28,6 +28,14 @@ export class VotingService {
       ).toPromise();
   }
 
+  voteFailsafe(nomination: string, email: string) {
+    const data = { candidate: nomination, email };
+    return this.httpClient.post('/api/failsafe/votes', data)
+      .pipe(
+        shareReplay()
+      ).toPromise();
+  }
+
   /**
    * Determine if a voter has voted or not
    *

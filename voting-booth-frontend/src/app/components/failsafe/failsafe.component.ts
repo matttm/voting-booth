@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {VotingService} from '../../services/voting/voting.service';
+import {MAT_DIALOG_DATA} from "@angular/material";
 
 @Component({
   selector: 'app-failsafe',
@@ -8,11 +10,28 @@ import { Component } from '@angular/core';
 export class FailsafeComponent {
 
   isAskingEmail: boolean;
+  email: string;
 
-  constructor() {
+  constructor(
+    private votingService: VotingService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.isAskingEmail = false;
+    this.email = null;
   }
 
+  /**
+   * File a failsafe vote to the backend server
+   */
+  onEmailSubmit() {
+    // TODO:do anything with this promise?
+    this.votingService.voteFailsafe(this.data.nominated, this.email);
+    console.log(`Failsafe ote filed ${this.data.nominated} ${this.email}`);
+  }
+
+  /**
+   * Switch between email prompt and initial voting prompt
+   */
   switchPrompt() {
     this.isAskingEmail = !this.isAskingEmail;
   }

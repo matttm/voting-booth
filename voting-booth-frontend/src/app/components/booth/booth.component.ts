@@ -69,6 +69,10 @@ export class BoothComponent {
    * Open failsafe dialog
    */
   openFailsafeDialog() {
-    const dialogRef = this.dialog.open(FailsafeComponent);
+    const dialogRef = this.dialog.open(FailsafeComponent, {
+      data: {
+        candidate: this.selected
+      }
+    });
   }
 }
