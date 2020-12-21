@@ -2,17 +2,17 @@ import {handle, hasVoted} from "../utilities";
 import {addBlock, getBlockchain} from "../services/blockchain-service";
 import {parentPort} from 'worker_threads';
 import * as nodemailer from 'nodemailer';
+import sendgridTransport from 'nodemailer-sendgrid-transport';
 
-let transport = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 2525,
-    auth: {
-        user: process.env.NODEMAILER_EMAIL,
-        pass: process.env.NODEMAILER_PASSWORD
-    }
-});
+let transport = nodemailer.createTransport(
+    sendgridTransport({
+        auth: {
+            api_key: process.env.SENDGRID_API_KEY, // SG password
+        },
+    })
+);
 const message = {
-    from: 'noreply@voting.com', // Sender address
+    from: process.env.SENDGRID_USER,
     to: undefined,
     subject: 'Voting Status', // Subject line
     text: undefined
