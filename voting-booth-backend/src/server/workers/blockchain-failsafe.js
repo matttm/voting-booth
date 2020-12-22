@@ -4,10 +4,11 @@ import {parentPort} from 'worker_threads';
 import * as nodemailer from 'nodemailer';
 import sendgridTransport from 'nodemailer-sendgrid-transport';
 
-let transport = nodemailer.createTransport(
+const msPerAttempt = process.env.FAILSAFE_MS_PER_ATTEMPT;
+const transport = nodemailer.createTransport(
     sendgridTransport({
         auth: {
-            api_key: process.env.SENDGRID_API_KEY, // SG password
+            api_key: process.env.SENDGRID_API_KEY,
         },
     })
 );
@@ -70,7 +71,7 @@ parentPort.on('message', async (message) => {
             clearInterval(interval);
             await mailCallback(transport, email, successText);
         }
-    }, 10000);
+    }, msPerAttempt);
 });
 
 /**
