@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {VotingService} from '../../services/voting/voting.service';
-import {MAT_DIALOG_DATA, MatSnackBar} from "@angular/material";
-import {Router} from "@angular/router";
+import {MAT_DIALOG_DATA, MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-failsafe',

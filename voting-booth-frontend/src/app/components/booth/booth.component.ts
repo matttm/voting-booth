@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
 import {VotingService} from '../../services/voting/voting.service';
 import {select, Store} from '@ngrx/store';
 import {selectCandidatesNames} from '../../selectors';
 import {Observable} from 'rxjs';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {FailsafeComponent} from "../failsafe/failsafe.component";
+import {FailsafeComponent} from '../failsafe/failsafe.component';
 
 /**
  * Component represents the actual voting booth, in which a person
