@@ -55,12 +55,12 @@ body: {
 ### Endpoint ```api/votes```
 #### Type POST
 #### Description
-Used toncast a vote for a presidential nominee.
+Used toncast a candidate for a presidential nominee.
 ##### Request
 ###### Header
 Header must contain a valid bearer token
 ###### Body
-Body must contain a vote, which is an object with a candidate
+Body must contain a candidate, which is an object with a candidate
 ###### Example
 ```
 headers: {
@@ -68,13 +68,13 @@ headers: {
     Authorization: "Bearer e7y..."
 },
 body:
-    vote: {
+    candidate: {
         candidate: "Jo Jorgensen"
     }
 ]
 ```
 ##### Reply
-A status of ```401``` will be returned if the requester is not authenticated, otherwise a status of ```200``` will be returned with a ```status``` in the body, speecifying whether the vote was successfully added.
+A status of ```401``` will be returned if the requester is not authenticated, otherwise a status of ```200``` will be returned with a ```status``` in the body, speecifying whether the candidate was successfully added.
 ###### Example
 ```
 body: {

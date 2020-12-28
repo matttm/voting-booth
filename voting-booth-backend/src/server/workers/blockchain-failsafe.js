@@ -31,7 +31,14 @@ const attempts = parseInt(process.env.FAILSAFE_ATTEMPTS, 10);
 parentPort.on('message', async (message) => {
     console.log('Worker got a message');
     const user = message.user;
-    const vote = message.vote;
+    const vote = {
+        candidate: message.candidate,
+        voter:  {
+            fname: user.fname,
+            lname: user.lname,
+            zip: user.zip
+        }
+    };
     const email = message.email;
     console.log(`message: ${JSON.stringify(message)}`);
     if (!user || !vote) {
@@ -44,7 +51,7 @@ parentPort.on('message', async (message) => {
         if (attempt === attempts) {
             console.log('Attempts reached. Stopping failsafe.');
             clearInterval(interval);
-            await mailCallback(transport, email, failureText);
+            await sendEmail(transport, email, failureText);
             return;
         }
         let [chain, err] = await handle(getBlockchain());
@@ -69,7 +76,7 @@ parentPort.on('message', async (message) => {
         if (status) {
             console.log('Fallback service successfully filed vote');
             clearInterval(interval);
-            await mailCallback(transport, email, successText);
+            await sendEmail(transport, email, successText);
         }
     }, msPerAttempt);
 });
@@ -81,7 +88,7 @@ parentPort.on('message', async (message) => {
  * @param email the email the message is going to
  * @param text the text in the message
  */
-async function mailCallback(transport, email, text) {
+async function sendEmail(transport, email, text) {
     const [info, err] =
         await handle(transport.sendMail({...message, to: email, text: text}));
     if (err) {
