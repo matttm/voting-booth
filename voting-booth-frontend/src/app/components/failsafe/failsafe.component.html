@@ -1,5 +1,5 @@
 <div *ngIf="isAskingEmail; else prompt">
-  <mat-dialog-content>
+  <mat-dialog-content class="mat-dialog-container">
     <p>Please Enter Your Email</p>
     <mat-form-field appearance="standard">
       <mat-label>Email</mat-label>
@@ -19,7 +19,7 @@
   </mat-dialog-content>
 </div>
 <ng-template #prompt>
-  <mat-dialog-content>
+  <mat-dialog-content class="mat-dialog-container">
     <p>
       We were unable to submit your vote at this time, but
       we can keep trying and notify you by email of our success.
