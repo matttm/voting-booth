@@ -37,7 +37,7 @@ router.post('/votes', isAuthenticated, async (req, res) => {
         return;
     }
     // if user has already voted, reject
-    if (hasVoted(chain, user, 'true')) {
+    if (hasVoted(chain, user)) {
         res.status(200).json({
             success: false,
             message: 'User has already voted'
@@ -72,7 +72,7 @@ router.get('/user', isAuthenticated, async (req, res) => {
         res.status(503).send('Voting store not reachable');
         return;
     }
-    const answer = hasVoted(chain, user, assertVote);
+    const answer = hasVoted(chain, user);
     res.json({
         success: true,
         hasVoted: answer

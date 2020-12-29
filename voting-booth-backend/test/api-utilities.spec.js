@@ -16,7 +16,7 @@ describe('api-utilities', () => {
             "zip": "13363",
             "ssn": "290-90-7777"
         };
-        const answer = hasVoted(testChain, voter, 'true');
+        const answer = hasVoted(testChain, voter);
         expect(answer).toBeTruthy();
     });
 
@@ -27,7 +27,7 @@ describe('api-utilities', () => {
             "zip": "13363",
             "ssn": "290-90-7777"
         };
-        const answer = hasVoted(testChain, voter, 'true');
+        const answer = hasVoted(testChain, voter);
         expect(answer).toBeFalsy();
     });
 });

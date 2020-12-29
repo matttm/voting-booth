@@ -62,7 +62,7 @@ parentPort.on('message', async (message) => {
             return;
         }
         // if user has already voted, reject
-        if (hasVoted(chain, user, 'true')) {
+        if (hasVoted(chain, user)) {
             console.log('Fallback service determined that user already voted');
             clearInterval(interval);
         }
