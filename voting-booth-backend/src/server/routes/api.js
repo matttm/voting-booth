@@ -59,6 +59,7 @@ router.get('/user', isAuthenticated, async (req, res) => {
     // GET  REQUEST api/user?voted=true
     //
     const user = req.user;
+    const assertVote = req.query.voted;
     // This cannot be shortened, as it is a bool and could be false
     if (assertVote === undefined) {
         res.status(401).json({
