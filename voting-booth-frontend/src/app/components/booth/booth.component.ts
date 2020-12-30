@@ -20,6 +20,7 @@ export class BoothComponent {
   selected: string;
   isVoting: boolean;
   candidates$: Observable<string[]>;
+  snackbarDuration: number;
 
   constructor(private fb: FormBuilder,
               private snackbar: MatSnackBar,
@@ -32,6 +33,7 @@ export class BoothComponent {
     this.candidates$ = store.pipe(
       select(selectCandidatesNames)
     );
+    this.snackbarDuration = 5000;
   }
 
   /**
@@ -44,7 +46,10 @@ export class BoothComponent {
     this.votingService.vote(selected)
       .then(() => {
         this.isVoting = false;
-        this.snackbar.open('Vote Submitted', null, {duration: 5000});
+        this.snackbar.open('Vote Submitted', null, {
+          duration: this.snackbarDuration,
+          panelClass: ['success-snackbar']
+        });
       })
       .catch(err => {
         this.isVoting = false;
@@ -58,9 +63,10 @@ export class BoothComponent {
         } else {
           message = 'Unhandled Error';
         }
-        this.snackbar
-          .open(message, null, {duration: 6000})
-          .afterDismissed().subscribe();
+        this.snackbar.open(message, null, {
+          duration: this.snackbarDuration,
+          panelClass: ['failure-snackbar']
+        }).afterDismissed().subscribe();
         this.openFailsafeDialog();
       });
   }
