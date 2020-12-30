@@ -11,5 +11,19 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
+.success-snackbar {
+  color: black;
+  border-width: 1px;
+  border-color: black;
+  background: rgba(0,219,34,0.83);
+}
+
+.failure-snackbar {
+  color: black;
+  border-width: 1px;
+  border-color: black;
+  background: rgba(244, 0, 44, 1);
+}
+
 html, body { height: 100%; margin: 0 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

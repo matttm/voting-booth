@@ -74,8 +74,10 @@ export class LoginComponent {
       .then(res => {
         this.isAuthenticating = false;
         console.log('Logged in');
-        this.snackbar
-          .open('Login Successful', 'Reset', {duration: this.snackbarDuration});
+        this.snackbar.open('Login Successful', null, {
+          duration: this.snackbarDuration,
+          panelClass: ['success-snackbar']
+        });
         this.router.navigateByUrl('/booth');
       })
       .catch(err => {
@@ -86,10 +88,13 @@ export class LoginComponent {
           message = 'We are experiencing difficulties';
         } else if (status === 401) {
           message = 'Credentials were not found';
+        } else {
+          message = 'Unhandled Error';
         }
-        this.snackbar
-          .open(message, null, {duration: this.snackbarDuration})
-          .afterDismissed().subscribe(() => this.form.reset());
+        this.snackbar.open(message, null, {
+          duration: this.snackbarDuration,
+          panelClass: ['failure-snackbar']
+        }).afterDismissed().subscribe(() => this.form.reset());
       });
   }
 }
