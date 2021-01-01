@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {FormObject} from '../../types';
 import {MatSnackBar} from '@angular/material';
+import {environment} from "../../../environments/environment";
 
 /**
  * Component is responsible for providing authentication access
@@ -18,7 +19,6 @@ export class LoginComponent {
   form: FormGroup;
   fields: FormObject[];
   isAuthenticating: boolean;
-  snackbarDuration: number;
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
@@ -54,7 +54,6 @@ export class LoginComponent {
       zip:   ['' , [Validators.required, Validators.min(10000), Validators.max(99999)]]
     });
     this.isAuthenticating = false;
-    this.snackbarDuration = 5000;
   }
 
   /**
@@ -75,7 +74,7 @@ export class LoginComponent {
         this.isAuthenticating = false;
         console.log('Logged in');
         this.snackbar.open('Login Successful', null, {
-          duration: this.snackbarDuration,
+          duration: environment.snackbarDurationMS,
           panelClass: ['success-snackbar']
         });
         this.router.navigateByUrl('/booth');
@@ -92,7 +91,7 @@ export class LoginComponent {
           message = 'Unhandled Error';
         }
         this.snackbar.open(message, null, {
-          duration: this.snackbarDuration,
+          duration: environment.snackbarDurationMS,
           panelClass: ['failure-snackbar']
         }).afterDismissed().subscribe(() => this.form.reset());
       });

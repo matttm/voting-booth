@@ -6,6 +6,7 @@ import {selectCandidatesNames} from '../../selectors';
 import {Observable} from 'rxjs';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {FailsafeComponent} from '../failsafe/failsafe.component';
+import {environment} from "../../../environments/environment";
 
 /**
  * Component represents the actual voting booth, in which a person
@@ -20,7 +21,6 @@ export class BoothComponent {
   selected: string;
   isVoting: boolean;
   candidates$: Observable<string[]>;
-  snackbarDuration: number;
 
   constructor(private fb: FormBuilder,
               private snackbar: MatSnackBar,
@@ -33,7 +33,6 @@ export class BoothComponent {
     this.candidates$ = store.pipe(
       select(selectCandidatesNames)
     );
-    this.snackbarDuration = 5000;
   }
 
   /**
@@ -47,7 +46,7 @@ export class BoothComponent {
       .then(() => {
         this.isVoting = false;
         this.snackbar.open('Vote Submitted', null, {
-          duration: this.snackbarDuration,
+          duration: environment.snackbarDurationMS,
           panelClass: ['success-snackbar']
         });
       })
@@ -64,7 +63,7 @@ export class BoothComponent {
           message = 'Unhandled Error';
         }
         this.snackbar.open(message, null, {
-          duration: this.snackbarDuration,
+          duration: environment.snackbarDurationMS,
           panelClass: ['failure-snackbar']
         }).afterDismissed().subscribe();
         this.openFailsafeDialog();
