@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {FailsafeComponent} from '../failsafe/failsafe.component';
 import {environment} from '../../../environments/environment';
-import {handleError} from '../../utilities';
+import {openFailureSnackbar, openSuccessSnackbar} from '../../utilities';
 
 /**
  * Component represents the actual voting booth, in which a person
@@ -51,15 +51,12 @@ export class BoothComponent {
     this.votingService.vote(selected)
       .then(() => {
         this.isVoting = false;
-        this.snackbar.open('Vote Submitted', null, {
-          duration: environment.snackbarDurationMS,
-          panelClass: ['success-snackbar']
-        });
+        openSuccessSnackbar(this.snackbar, 'Vote Submitted', () => null);
       })
       .catch(err => {
         this.isVoting = false;
-        handleError(this.snackbar, this.errorMap, err.status, () => null);
-        this.openFailsafeDialog();
+        openFailureSnackbar(this.snackbar, this.errorMap, err.status,
+          () => this.openFailsafeDialog());
       });
   }
 

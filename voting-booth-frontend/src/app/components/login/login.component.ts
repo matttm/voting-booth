@@ -5,7 +5,7 @@ import {AuthService} from '../../services/auth/auth.service';
 import {FormObject} from '../../types';
 import {MatSnackBar} from '@angular/material';
 import {environment} from '../../../environments/environment';
-import {handleError} from '../../utilities';
+import {openFailureSnackbar, openSuccessSnackbar} from '../../utilities';
 
 /**
  * Component is responsible for providing authentication access
@@ -79,15 +79,13 @@ export class LoginComponent {
       .then(res => {
         this.isAuthenticating = false;
         console.log('Logged in');
-        this.snackbar.open('Login Successful', null, {
-          duration: environment.snackbarDurationMS,
-          panelClass: ['success-snackbar']
-        });
-        this.router.navigateByUrl('/booth');
+        openSuccessSnackbar(this.snackbar, 'Login Successful',
+          () => this.router.navigateByUrl('/booth'));
       })
       .catch(err => {
         this.isAuthenticating = false;
-        handleError(this.snackbar, this.errorMap, err.status, () => this.form.reset());
+        openFailureSnackbar(this.snackbar, this.errorMap, err.status,
+          () => this.form.reset());
       });
   }
 }
