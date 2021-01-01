@@ -1,15 +1,18 @@
+import {environment} from '../environments/environment';
 import {MatSnackBar} from '@angular/material';
-import {HttpErrorResponse} from '@angular/common/http';
 
-function handleError(err: HttpErrorResponse, snackbar: MatSnackBar) {
-  let message = '';
-  const status = err.status;
-  if (status === 503) {
-    message = 'We are experiencing difficulties';
-  } else if (status === 401) {
-    message = 'Login before voting';
+export function handleError(
+  snackbar: MatSnackBar,
+  errorMap: any,
+  status: number,
+  cb: any
+) {
+  let message = errorMap[status];
+  if (!message) {
+    message = 'Unhandled Error';
   }
-  snackbar
-    .open(message, null, {duration: 6000})
-    .afterDismissed().subscribe(() => this.form.reset());
+  snackbar.open(message, null, {
+    duration: environment.snackbarDurationMS,
+    panelClass: ['failure-snackbar']
+  }).afterDismissed().subscribe(cb);
 }

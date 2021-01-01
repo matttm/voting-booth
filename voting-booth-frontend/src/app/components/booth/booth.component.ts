@@ -6,7 +6,8 @@ import {selectCandidatesNames} from '../../selectors';
 import {Observable} from 'rxjs';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {FailsafeComponent} from '../failsafe/failsafe.component';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
+import {handleError} from '../../utilities';
 
 /**
  * Component represents the actual voting booth, in which a person
@@ -21,6 +22,7 @@ export class BoothComponent {
   selected: string;
   isVoting: boolean;
   candidates$: Observable<string[]>;
+  errorMap: any;
 
   constructor(private fb: FormBuilder,
               private snackbar: MatSnackBar,
@@ -33,6 +35,10 @@ export class BoothComponent {
     this.candidates$ = store.pipe(
       select(selectCandidatesNames)
     );
+    this.errorMap = {
+      503: 'We are experiencing difficulties',
+      401: 'Login before voting'
+    };
   }
 
   /**
@@ -52,20 +58,7 @@ export class BoothComponent {
       })
       .catch(err => {
         this.isVoting = false;
-        // TODO: factor to an error handler
-        let message = '';
-        const status = err.status;
-        if (status === 503) {
-          message = 'We are experiencing difficulties';
-        } else if (status === 401) {
-          message = 'Login before voting';
-        } else {
-          message = 'Unhandled Error';
-        }
-        this.snackbar.open(message, null, {
-          duration: environment.snackbarDurationMS,
-          panelClass: ['failure-snackbar']
-        }).afterDismissed().subscribe();
+        handleError(this.snackbar, this.errorMap, err.status, () => null);
         this.openFailsafeDialog();
       });
   }

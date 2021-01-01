@@ -4,7 +4,8 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {FormObject} from '../../types';
 import {MatSnackBar} from '@angular/material';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
+import {handleError} from '../../utilities';
 
 /**
  * Component is responsible for providing authentication access
@@ -19,6 +20,7 @@ export class LoginComponent {
   form: FormGroup;
   fields: FormObject[];
   isAuthenticating: boolean;
+  errorMap: any;
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
@@ -54,6 +56,10 @@ export class LoginComponent {
       zip:   ['' , [Validators.required, Validators.min(10000), Validators.max(99999)]]
     });
     this.isAuthenticating = false;
+    this.errorMap = {
+      503: 'We are experiencing difficulties',
+      401: 'Credentials were not found'
+    };
   }
 
   /**
@@ -81,19 +87,7 @@ export class LoginComponent {
       })
       .catch(err => {
         this.isAuthenticating = false;
-        let message = '';
-        const status = err.status;
-        if (status === 503) {
-          message = 'We are experiencing difficulties';
-        } else if (status === 401) {
-          message = 'Credentials were not found';
-        } else {
-          message = 'Unhandled Error';
-        }
-        this.snackbar.open(message, null, {
-          duration: environment.snackbarDurationMS,
-          panelClass: ['failure-snackbar']
-        }).afterDismissed().subscribe(() => this.form.reset());
+        handleError(this.snackbar, this.errorMap, err.status, () => this.form.reset());
       });
   }
 }
