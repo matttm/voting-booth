@@ -16,4 +16,8 @@ This project is a voting booth simulator consisting of four subprojects:
 ```blockchain-server``` is a blockchain that communicates with other blockchains through WebSockets and offers a RESTful API for interacting with the blockchain.
 
 ## Getting Started
+To properly run this web app, you must follow the ```Getting Started``` section in each of the four subprojects, and then continue following this section.
+
+After following the ```Getting Started``` in the subprojects, the best order to start the projects is records-backend, blockchain-server, voting-booth-backend, voting-booth-frontend.
 ## Architecture
+
