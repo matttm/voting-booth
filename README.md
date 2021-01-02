@@ -18,7 +18,7 @@ This project is a voting booth simulator consisting of four subprojects:
 ## Getting Started
 To properly run this web app, you must follow the ```Getting Started``` section in each of the four subprojects, and then continue following this section.
 
-After following the ```Getting Started``` in the subprojects, the best order to start the projects is records-backend, blockchain-server, voting-booth-backend, voting-booth-frontend.
+After following the ```Getting Started``` in the subprojects, the best order to start the projects is records-backend, blockchain-server, voting-booth-backend, voting-booth-frontend, so start each subproject according to the method documented in its README.Once all subprojects are running, the voting-booth-frontend will be able to successfully login and vote. If all services are not running, the frontend will display an error message in a snackbar indicating the reason for failure. This error will implicitly denote the service not running.
 ## Architecture
 ```
 +-------------------+  +--------------------+                       
