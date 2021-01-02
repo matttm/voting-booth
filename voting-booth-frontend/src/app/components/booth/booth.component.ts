@@ -6,7 +6,6 @@ import {selectCandidatesNames} from '../../selectors';
 import {Observable} from 'rxjs';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {FailsafeComponent} from '../failsafe/failsafe.component';
-import {environment} from '../../../environments/environment';
 import {openFailureSnackbar, openSuccessSnackbar} from '../../utilities';
 
 /**
