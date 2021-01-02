@@ -27,13 +27,13 @@ After following the ```Getting Started``` in the subprojects, the best order to 
 |                   |  |                    |                                          
 +-------------------+  +----------|---------+                       
           |                       |                                 
-          +-----------+-----------+                                 
-                      |                                             
-           +----------|----------+          +----------------------+
-           |                     |          |                      |
-           |voting-booth-backend |          |voting-booth-frontend |
-           |                     -----------+                      |
-           +---------------------+          +----------------------+
+          +------------+----------+                                 
+                       |                                             
+           +-----------|----------+          +-----------------------+
+           |                      |          |                       |
+           | voting-booth-backend +----------+ voting-booth-frontend |
+           |                      |          |                       |
+           +----------------------+          +-----------------------+
 ```
 The voting-booth-backend uses the records-backend and the blockchain-server as services. The records-backend is used to authenticate user information that is provided in the vb-frontend and sent to the vb-backend. The blockchain-server is used to store the votes that are submitted in the vb-frontend and sent to the vb-backend.
 ## Built With
