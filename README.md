@@ -1,4 +1,4 @@
-#Voting Booth
+# Voting Booth
 
 This project is a voting booth simulator consisting of four subprojects:
 - voting-booth-frontend
@@ -13,5 +13,6 @@ This project is a voting booth simulator consisting of four subprojects:
 ```records-backend``` is a SpringBoot application that offers a RESTful API for interacting with citizens
 
 ```blockchain-server``` is a blockchain that communicates with other blockchains through WebSockets and offers a RESTful API for interacting with the blockchain.
-##Getting Started
-##Architecture
+
+## Getting Started
+## Architecture
