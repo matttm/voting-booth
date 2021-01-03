@@ -1,4 +1,12 @@
-Blockchain API Specification
+# Blockchain Server
+
+## Description
+## Getting Started
+### Prerequisites
+### Installing
+### Running Tests
+### Runninng
+## Blockchain API Specification
 
 The following endpoints are part of the ```/api``` path:
 
