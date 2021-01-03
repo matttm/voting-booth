@@ -5,7 +5,7 @@
 ### Prerequisites
 ### Installing
 ### Running Tests
-### Runninng
+### Running
 ## Blockchain API Specification
 
 The following endpoints are part of the ```/api``` path:
