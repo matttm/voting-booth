@@ -29,7 +29,7 @@ After following the ```Getting Started``` in the subprojects, the best order to 
           |                       |                                 
           +------------+----------+                                 
                        |                                             
-           +-----------|----------+          +-----------------------+
+           +-----------+----------+          +-----------------------+
            |                      |          |                       |
            | voting-booth-backend +----------+ voting-booth-frontend |
            |                      |          |                       |
