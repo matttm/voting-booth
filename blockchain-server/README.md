@@ -4,7 +4,6 @@
 ### Prerequisites
 - Node 12.13.0
 - yarn
-To-do
 ### Installing
 In this subproject's root, to install, run:
 ```
