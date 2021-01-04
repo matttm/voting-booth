@@ -1,5 +1,7 @@
 # Blockchain Server
 
+## Description
+This is a single blockchain server, in which its local blockchain can be manipulated using HTTP requests. This blockchain can also be updated by other blockcchain servers through WebSockets, as well as updating connected peer blockchains on a local update.
 ## Getting Started
 ### Prerequisites
 - Node 12.13.0
