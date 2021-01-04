@@ -1,6 +1,8 @@
 # Voting Booth Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+## Description
+
+This is the frontend server that communicatws with the backend. In this, a user can view candidate information, view voting results, and vote, where voting requores logging in.
 
 ## Development server
 
