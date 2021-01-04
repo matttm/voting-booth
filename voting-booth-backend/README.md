@@ -1,7 +1,7 @@
 # Voting Booth Backend
 
 ## Description
-This the backend which does all processing for the voting-booth-frontend. This will use the records server for initial requests invollving authentication and JWT (JSON Web Tokens) there after.It will also use the locally running blockchain to submit voting data to.
+This the backend which does all processing for the voting-booth-frontend. This will use the records server for initial requests invollving authentication and JWT (JSON Web Tokens) there after. It will also use the locally running blockchain to submit voting data to.
 ## Getting Started
 ### Prerequisites
 - Node 12.13.0
