@@ -8,11 +8,21 @@
 #### Making an environment file
 To-do
 ### Installing
-To install, run ```yarn``` in this subproject's root.
+In this subproject's root, to install, run:
+```
+yarn
+```
 ### Running Tests
-Once everything is installed, you can enter ```yarn test```
+Running the tests are encouraged!
+Once everything is installed, you can enter:
+```
+yarn test
+```
 ### Running
-To run the this subproject in development mode, run ```yarn dev```
+To run the this subproject in development mode, run:
+```
+yarn dev
+```
 
 ## API Specification
 The API specification can be found in ```API.md```
