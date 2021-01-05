@@ -8,7 +8,7 @@ This the backend which does all processing for the voting-booth-frontend. This w
 - yarn
 - environment file (optional)
 #### Making an environment file
-The subprojet will still work if you do not or cannot make the environment file. You will, however, loose the failsafe functionality, which is when a user is logged in but cannot vote due to an internal error (blockchain server not running), another thread will be spawned, dedicated to resubmitting the vote and emailing some completion message.
+The subproject will still work if you do not or cannot make the environment file. You will, however, loose the failsafe functionality, which is when a user is logged in but cannot vote due to an internal error (blockchain server not running), another thread will be spawned, dedicated to resubmitting the vote on some interval and emailing some completion message, whether a success or failure, depeends on whether server is eventually reachable.
 The file should look like:
 ```
 SENDGRID_USER=<username>
