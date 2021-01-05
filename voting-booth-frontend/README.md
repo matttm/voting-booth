@@ -2,7 +2,7 @@
 
 ## Description
 
-This is the frontend server that communicatws with the backend. In this, a user can view candidate information, view voting results, and vote, where voting requores logging in.
+This is the frontend server that communicatws with the backend. In this, a user can view candidate information, view voting results, and vote, where voting requires logging in.
 
 ## Running
 
@@ -17,7 +17,7 @@ If you want to see more interesting voting results than just seeing that only yo
 yarn simulate
 ```
 This will submit a vote for every person in the database except the last person, which will be the user's credentials, meaning everyone but the user has voted.
-** Note: This requires you to have generated a database in the records backend **
+**Note: This requires you to have generated a database in the records backend**
 
 ## Build
 
