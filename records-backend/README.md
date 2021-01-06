@@ -32,7 +32,7 @@ exit
 
 
 ## Running
-The server can be ran with:
+Once the ```Getting Started``` section has been followed, the server can be ran with:
 ```
 ./gradlew bootRun
 ```
