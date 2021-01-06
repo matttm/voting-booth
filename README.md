@@ -44,6 +44,8 @@ The voting-booth-backend uses the records-backend and the blockchain-server as s
 - Java 14
 - Gradle 6.4.1
 - SpringBoot
+- Python
+- PipEnv
 - SQLite
 ## Authors
 - matttm : Matt Maloney
