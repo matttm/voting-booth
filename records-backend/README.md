@@ -1,29 +1,36 @@
-Records backend API Specification
+# Voting Booth Frontend
 
-The following endpoints are prefixed by the ```api/persons``` path:
+## Description
 
-- GET - ```/test```
-Returns a string containing ```Testing...``` for testing
+This is the frontend server that communicatws with the backend. In this, a user can view candidate information, view voting results, and vote, where voting requires logging in.
 
-- POST - ```/```
-Creates a new person entry in the persons collection with attriubutes dictated by the request body
-request body should be a JSON object with ```fname```, ```lname```, ```ssn```, ```zip``` keys
+## Running
 
-- GET - ```/```
-Returns the entire persons collection as an array where each element is a person object in JSON
+To run, we will use a development for better seperation of concerns during development.
 
-- GET - ```/forgot-id```
-When this endpoint is provided with a ```ssn``` (currently unencrypted) as a field in the request header,
-the response will contain a JSON message with a success and a data key, where the data will be the id
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-- GET - ```/validate```
-When provided a person object in the request body, the controller's response will contain a JSON message
-with a success and a data key, where the data's value is a boolean of whether the database contains this
-person
+## Simulating Votes
 
-- PUT - ```/{id:[0-9]+}```
-When provided a person object in the request body, the controller will update the person in the database with an
-id matching the one specified in the path
+If you want to see more interesting voting results than just seeing that only you voted, you can run:
+```
+yarn simulate
+```
+This will submit a vote for every person in the database except the last person, which will be the user's credentials, meaning everyone but the user has voted.
+**Note: This requires you to have generated a database in the records backend**
 
-- DELETE - ```{id:[0-9]+}```
-Delete a person from the database, with an id matching the id specified the one in the endpoint's path
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
