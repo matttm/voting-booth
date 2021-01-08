@@ -22,6 +22,7 @@ To run the this subproject in development mode, run:
 ```
 yarn dev
 ```
+### Connecting to other blockchain servers
 
 ## API Specification
 The API specification can be found in ```API.md```
