@@ -25,6 +25,7 @@ export async function authenticate(fname, lname, ssn, zip) {
  * @type {middleware}
  */
 export const isAuthenticated = expressJwt({
+    // TODO: fix to be env var
     secret: `secret`,
     algorithms: ['HS256']
 });

@@ -47,5 +47,16 @@ app.use((err, req, res, next) => {
         res.status(401).send('Unauthorized user');
     }
 });
+app.use((req, res, next) => {
+    if (req.secure) {
+        next();
+    } else {
+        const url = `${req.headers.host}${req.url}`;
+        const insecureUrl = `http://${url}`;
+        const secureUrl = `https://${url}`;
+        console.log(`Redirecting from ${insecureUrl} to ${secureUrl}`);
+        res.redirect(secureUrl);
+    }
+});
 
 export default app;

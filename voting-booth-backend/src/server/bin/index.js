@@ -3,10 +3,13 @@
 /**
  * Module dependencies.
  */
-
+// import pkg from '../../../package.json';
+// import * as greensock from 'greenlock-express';
 import app   from '../app';
 import debug from 'debug';
-import http  from 'http';
+import https  from 'https';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Get port from environment and store in Express.
@@ -18,8 +21,10 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
-const server = http.createServer(app);
+const certFile = path.resolve(process.cwd(), `./certificate`);
+const key = fs.readFileSync(`${certFile}.key`);
+const cert = fs.readFileSync(`${certFile}.crt`);
+const server = https.createServer({key: key, cert: cert }, app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -28,7 +33,24 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
+// greensock
+//     .init({
+//       // where to find .greenlockrc and set default paths
+//       packageRoot: __dirname,
+//
+//       // where config and certificate stuff go
+//       configDir: "../../../greenlock.d",
+//
+//       // contact for security and critical bug notices
+//       maintainerEmail: 'matttmaloney@gmail.comm',
+//
+//       // name & version for ACME client user agent
+//       packageAgent: 'test/test',  // pkg.name + "/" + pkg.version,
+//
+//       // whether or not to run at cloudscale
+//       cluster: false
+//     })
+//     .serve(app);
 /**
  * Normalize a port into a number, string, or false.
  */
