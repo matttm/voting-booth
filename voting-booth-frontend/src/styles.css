@@ -15,14 +15,14 @@ h1, h2, h3, h4, h5 {
   color: black;
   border-width: 1px;
   border-color: black;
-  background: rgba(0,219,34,0.83);
+  background: rgba(105, 191, 70, 0.6);
 }
 
 .failure-snackbar {
   color: black;
   border-width: 1px;
   border-color: black;
-  background: rgba(244, 0, 44, 1);
+  background: rgba(195, 5, 0, 0.53);
 }
 
 html, body { height: 100%; margin: 0 }

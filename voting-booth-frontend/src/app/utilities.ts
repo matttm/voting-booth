@@ -40,6 +40,6 @@ export function openSuccessSnackbar(
 ) {
   snackbar.open(message, null, {
     duration: environment.snackbarDurationMS,
-    panelClass: ['failure-snackbar']
+    panelClass: ['success-snackbar']
   }).afterOpened().subscribe(cb);
 }
