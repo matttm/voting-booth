@@ -1,14 +1,23 @@
-# VotingBoothFrontend
+# Voting Booth Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+## Description
 
-## Development server
+This is the frontend server that communicatws with the backend. In this, a user can view candidate information, view voting results, and vote, where voting requires logging in.
+
+## Running
+
+To run, we will use a development for better seperation of concerns during development.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Simulating Votes
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+If you want to see more interesting voting results than just seeing that only you voted, you can run:
+```
+yarn simulate
+```
+This will submit a vote for every person in the database except the last person, which will be the user's credentials, meaning everyone but the user has voted.
+**Note: This requires you to have generated a database in the records backend**
 
 ## Build
 

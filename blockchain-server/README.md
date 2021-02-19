@@ -1,21 +1,28 @@
-Blockchain API Specification
+# Blockchain Server
 
-The following endpoints are part of the ```/api``` path:
-
-- GET ```/blocks```
-returns a response with a body containing a success message and an array of linked blocks
+## Description
+This is a single blockchain server that can connect to other blockchain server, through WebSockets, in which case, the local blockchain instances will be synchronized. The local blockchain of a server can be manipulated through HTTP requests, as well as other servers can be added to the list of peers of a server to be synchronized with.
+## Getting Started
+### Prerequisites
+- Node 12.13.0
+- yarn
+### Installing
+In this subproject's root, to install, run:
 ```
-success: boolean,
-chain: []
+yarn
 ```
-
-- POST - ```/blocks```
-creates a new block in the blocks collection, iff the data is valid
+### Running Tests
+Running the tests are encouraged!
+Once everything is installed, you can enter:
 ```
-data: any
+yarn test
 ```
+### Running
+To run the this subproject in development mode, run:
+```
+yarn dev
+```
+### Connecting to other blockchain servers
 
-To be implemented:
-
-- GET - ```/peers```
-- POST - ```/peers```
+## API Specification
+The API specification can be found in ```API.md```
