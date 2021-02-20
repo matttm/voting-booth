@@ -1,2 +1,4 @@
 certificate.crt
 certificate.key
+certificate.p12
+keystore.jks
