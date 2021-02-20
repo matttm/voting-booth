@@ -85,6 +85,7 @@ router.post('/login', async (req, res) => {
 
     let [authenticated, err] = await handle(authenticate(fname, lname, ssn, zip));
     if (err) {
+        console.error(err);
         res.status(503).send('Authentication server not reachable');
         return;
     }
