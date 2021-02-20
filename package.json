@@ -1,0 +1,12 @@
+{
+  "name": "voting-booth",
+  "version": "1.0.0",
+  "description": "The container voting booth project",
+  "scripts": {
+      "gen-cert": "openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout localhost.key -days 3560 -out localhost.crt -config certificate.cnf"
+  },
+  "repository": "https://github.com/matttm/voting-booth.git",
+  "author": "matttm <matttmaloney@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
