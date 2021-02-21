@@ -19,9 +19,11 @@ This project is a voting booth simulator consisting of four subprojects:
 Since this project is managing sensitive information, personally identifiable information (PII). This project secures transmission of data with SSL, meaning it uses the HTTPS protocol. Hence, you need to generate a certificate and key.
 To do this, run
 ```
-yarn gen-cert
+yarn gen-certs
 ```
-This will generate a certificate and key based on ```certificate.cnf```, a config file. This certificate will be used by all subprojects for securing their server's communication. You will need to add this certificate--```certificate.crt```--to your system's trusted certificates, if you wish to not see a warning about the certificate not being trusted, when viewing the frontend in Chrome.
+This will generate a two certificates and a key based on ```certificate.cnf```, a config file. These certificates will be used by the subprojects for securing their server's communication. The ```crt``` and ```key``` are used by the node servers, whereas the Spring Boot server uses the ```p12``` certificate, as it only understands this PCKS format. This is not used directly though. A keystore has been generated from the ```p12``` file, through the yarn command, and is then moved to the records server's resources folder. This is moved automatically through the ```gen-certs``` command.
+
+You will need to add this certificate--```certificate.crt```--to your system's trusted certificates, if you wish to not see a warning about the certificate not being trusted, when viewing the frontend in Chrome.
 
 To properly run this web app, you must follow the ```Getting Started``` section in each of the four subprojects, and then continue following this section.
 
