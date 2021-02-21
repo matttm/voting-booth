@@ -6,3 +6,6 @@ openssl pkcs12 -export -in certificate.crt -inkey certificate.key -name localhos
 
 # import p12 to jks store
 keytool -importkeystore -deststorepass password -destkeystore keystore.jks -srckeystore certificate.p12 -srcstoretype PKCS12
+
+# moving store to record's resources
+mv keystore.jks records-backend/src/main/resources

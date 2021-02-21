@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The container voting booth project",
   "scripts": {
-      "gen-cert": "sh gen-certs.sh"
+      "gen-certs": "sh gen-certs.sh"
   },
   "repository": "https://github.com/matttm/voting-booth.git",
   "author": "matttm <matttmaloney@gmail.com>",
