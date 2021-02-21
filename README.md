@@ -21,6 +21,8 @@ To do this, run
 ```
 yarn gen-certs
 ```
+**Note: while I am trying to move these credentials to the environment. If this cert generation asks for a password, make it ```password```, as it must match the record backend's keystore password**
+
 This will generate a two certificates and a key based on ```certificate.cnf```, a config file. These certificates will be used by the subprojects for securing their server's communication. The ```crt``` and ```key``` are used by the node servers, whereas the Spring Boot server uses the ```p12``` certificate, as it only understands this PCKS format. This is not used directly though. A keystore has been generated from the ```p12``` file, through the yarn command, and is then moved to the records server's resources folder. This is moved automatically through the ```gen-certs``` command.
 
 You will need to add this certificate--```certificate.crt```--to your system's trusted certificates, if you wish to not see a warning about the certificate not being trusted, when viewing the frontend in Chrome.
