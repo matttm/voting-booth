@@ -1,5 +1,5 @@
 import request from 'supertest';
-import {HttpServer} from "../src/servers";
+import {HttpsServer} from "../src/servers";
 import {Blockchain} from "../src/blockchain";
 
 describe('http-server unit test', () => {
@@ -7,7 +7,7 @@ describe('http-server unit test', () => {
     let server;
 
     beforeEach(() => {
-        server = new HttpServer(
+        server = new HttpsServer(
             new Blockchain()
             , 'localhost',
             '3001'

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-import { HttpServer, P2pServer } from '../servers';
+import { HttpsServer, P2pServer } from '../servers';
 import _debug from 'debug';
 import { Blockchain } from "../blockchain";
 import { getEnvVar } from '../utilities';
@@ -28,7 +28,7 @@ const peers       = process.env.PEERS ? process.env.PEERS.split(",") : [];
  */
 debug("Instantiating blockchain and servers");
 const blockchain = new Blockchain(filename);
-const httpServer = new HttpServer(blockchain, httpAddress, httpPort);
+const httpServer = new HttpsServer(blockchain, httpAddress, httpPort);
 // TODO: Add another layer of encapsulation?
 // TODO: rename p2pserver to Node?
 const p2pServer = new P2pServer(blockchain, p2pAddress, p2pPort, peers);

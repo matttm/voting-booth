@@ -1,4 +1,3 @@
-import http from 'http';
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -7,13 +6,15 @@ import logger from 'morgan';
 import { IndexRouter } from './routers';
 import { ApiRouter } from './routers/api';
 import {onListening, onError, normalizePort} from "../utilities";
+import fs from "fs";
+import https from "https";
 
 /**
  * This class is a container for an express app
  * that will be used to host endpoints for an api to
  * the blockchain.
  */
-export class HttpServer {
+export class HttpsServer {
     constructor(blockchain, host, port) {
         this.host = host;
         this.port = normalizePort(port);
@@ -45,7 +46,10 @@ export class HttpServer {
      * @returns {*} an configured http server
      */
     createServer(app) {
-        const server = http.createServer(app);
+        const certFile = path.resolve(process.cwd(), `../certificate`);
+        const key = fs.readFileSync(`${certFile}.key`);
+        const cert = fs.readFileSync(`${certFile}.crt`);
+        const server = https.createServer({key: key, cert: cert }, app);
         server.on('error', onError(this.port));
         server.on('listening', onListening(server));
         return server;
