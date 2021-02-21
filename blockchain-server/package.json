@@ -6,13 +6,13 @@
   "scripts": {
     "start": "yarn run prod",
     "build": "npx yarn-run-all clean transpile",
-    "server": "node ./dist/bin/index",
+    "server": "cross-env NODE_TLS_REJECT_UNAUTHORIZED='0'  node ./dist/bin/index",
     "dev": "cross-env NODE_ENV=development npx yarn-run-all build server",
     "prod": "cross-env NODE_ENV=production npx yarn-run-all build server",
     "transpile": "babel ./src --out-dir dist",
     "clean": "rimraf dist",
     "watch:dev": "nodemon",
-    "test": "jest"
+    "test": "cross-env NODE_TLS_REJECT_UNAUTHORIZED='0' jest"
   },
   "nodemonConfig": {
     "exec": "yarn run dev",
