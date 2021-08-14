@@ -1,8 +1,9 @@
-import {Directive, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Directive, Host, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
 import {NgControl} from '@angular/forms';
-import {Subject} from 'rxjs';
+import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { InjectionToken } from '@angular/core';
+import {FormSubmitDirective} from '../form-submit/form-submit.directive';
 
 export const defaultErrors = {
   required: (error) => `This field is required`,
@@ -20,16 +21,23 @@ export const FORM_ERRORS = new InjectionToken('FORM_ERRORS', {
 })
 export class FormControlErrorDirective implements OnInit, OnDestroy {
   private destroy$: Subject<boolean>;
+  // tslint:disable-next-line:variable-name
+  private _submit$: Observable<Event>;
 
   constructor(
     private control: NgControl,
+    @Optional() @Host() private form: FormSubmitDirective,
     @Inject(FORM_ERRORS) private errors
   ) {
     this.destroy$ = new Subject<boolean>();
+    this._submit$ = this.form ? this.form.submit$ : EMPTY;
   }
 
   ngOnInit() {
-    this.control.statusChanges.pipe(
+    combineLatest([
+      this.control.statusChanges,
+      this._submit$
+    ]).pipe(
       takeUntil(this.destroy$)
     ).subscribe(() => {
       const controlErrors = this.control.errors;
@@ -38,7 +46,6 @@ export class FormControlErrorDirective implements OnInit, OnDestroy {
         const errorFn = this.errors[firstError];
         const text = errorFn(controlErrors[firstError]);
       }
-
     });
   }
 
@@ -47,4 +54,7 @@ export class FormControlErrorDirective implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  get submit$(): Observable<Event> {
+    return this._submit$;
+  }
 }

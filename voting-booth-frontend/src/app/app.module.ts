@@ -34,7 +34,8 @@ import {AuthInterceptor} from './services/interceptors/auth/auth.interceptor';
 import { ResultComponent } from './components/result/result.component';
 import { SubmissionComponent } from './components/submission/submission.component';
 import { FailsafeComponent } from './components/failsafe/failsafe.component';
-import { FormControlErrorDirective } from './directives/form-control-error.directive';
+import { FormControlErrorDirective } from './directives/form-control-error/form-control-error.directive';
+import { FormSubmitDirective } from './directives/form-submit/form-submit.directive';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { FormControlErrorDirective } from './directives/form-control-error.direc
     SubmissionComponent,
     CandidateInfoComponent,
     FailsafeComponent,
-    FormControlErrorDirective
+    FormControlErrorDirective,
+    FormSubmitDirective
   ],
   imports: [
     BrowserModule,
