@@ -36,6 +36,7 @@ import { SubmissionComponent } from './components/submission/submission.componen
 import { FailsafeComponent } from './components/failsafe/failsafe.component';
 import { FormControlErrorDirective } from './directives/form-control-error/form-control-error.directive';
 import { FormSubmitDirective } from './directives/form-submit/form-submit.directive';
+import { FormControlErrorComponent } from './components/form-control-error/form-control-error.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { FormSubmitDirective } from './directives/form-submit/form-submit.direct
     CandidateInfoComponent,
     FailsafeComponent,
     FormControlErrorDirective,
-    FormSubmitDirective
+    FormSubmitDirective,
+    FormControlErrorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,20 @@
-import {Directive, Host, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
+import {
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  Host,
+  Inject,
+  OnDestroy,
+  OnInit,
+  Optional,
+  ViewContainerRef
+} from '@angular/core';
 import {NgControl} from '@angular/forms';
 import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { InjectionToken } from '@angular/core';
 import {FormSubmitDirective} from '../form-submit/form-submit.directive';
+import {FormControlErrorComponent} from '../../components/form-control-error/form-control-error.component';
 
 export const defaultErrors = {
   required: (error) => `This field is required`,
@@ -23,11 +34,14 @@ export class FormControlErrorDirective implements OnInit, OnDestroy {
   private destroy$: Subject<boolean>;
   // tslint:disable-next-line:variable-name
   private _submit$: Observable<Event>;
+  ref: ComponentRef<FormControlErrorComponent>;
 
   constructor(
     private control: NgControl,
     @Optional() @Host() private form: FormSubmitDirective,
-    @Inject(FORM_ERRORS) private errors
+    @Inject(FORM_ERRORS) private errors,
+    private resolver: ComponentFactoryResolver,
+    private vcr: ViewContainerRef
   ) {
     this.destroy$ = new Subject<boolean>();
     this._submit$ = this.form ? this.form.submit$ : EMPTY;
@@ -47,6 +61,14 @@ export class FormControlErrorDirective implements OnInit, OnDestroy {
         const text = errorFn(controlErrors[firstError]);
       }
     });
+  }
+
+  setError(text: string) {
+    if (!this.ref) {
+      const factory = this.resolver.resolveComponentFactory(FormControlErrorComponent);
+      this.ref = this.vcr.createComponent(factory);
+    }
+    this.ref.instance.text = text;
   }
 
   ngOnDestroy() {
