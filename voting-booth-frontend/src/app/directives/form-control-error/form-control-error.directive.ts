@@ -18,7 +18,9 @@ import {FormControlErrorComponent} from '../../components/form-control-error/for
 
 export const defaultErrors = {
   required: (error) => `This field is required`,
-  minlength: ({ requiredLength, actualLength }) => `Expect ${requiredLength} but got ${actualLength}`
+  minlength: ({ requiredLength, actualLength }) => `Expected at least ${requiredLength} but got ${actualLength}`,
+  maxLength: ({ requiredLength, actualLength }) => `Expected no more than ${requiredLength} but got ${actualLength}`,
+  pattern: () => `Unexpected paattern`
 };
 
 export const FORM_ERRORS = new InjectionToken('FORM_ERRORS', {
