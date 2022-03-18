@@ -1,5 +1,7 @@
 # Voting Booth
 
+Development Status: 🟢 Complete
+
 ## Description
 This project is a voting booth simulator consisting of four subprojects:
 - voting-booth-frontend
