@@ -45,4 +45,4 @@ The unit tests can be ran with
 
 ## API Specification
 
-The API specification can b found in the file ```API.md```.
+The API specification can be found in the file ```API.md```.
